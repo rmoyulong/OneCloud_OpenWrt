@@ -15,8 +15,22 @@ on:
 #权限
 permissions: write-all 
 
+env:
+  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_BRANCH: master
+  CONFIG_FILE: arm7.config
+  DIY_P1_SH: sh/lean1.sh
+  DIY_P2_SH: sh/lean2.sh
+  UPLOAD_FIRMWARE: true
+  UPLOAD_RELEASE: true
+  OWRT_IP: 192.168.1.110
+  OWRT_NAME: OneCloud
+  OWRT_FILES: onecloud/files
+  USE_CACHEWRTBUILD: true
+  TZ: Asia/Shanghai 
+
 jobs:
-  Build_meson8b:
+  Build_meson8b_OneCloud:
     runs-on: ubuntu-20.04
     steps:
     - name: 克隆仓库
