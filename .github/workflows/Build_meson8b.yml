@@ -74,6 +74,13 @@ jobs:
         git config --global user.name 'GitHub Actions' && git config --global user.email 'noreply@github.com'
         df -h
         
+    - name: 检查脚本
+      run: |
+        cd ./sh
+
+        dos2unix ./*.sh
+        chmod +x ./*.sh        
+        
     - name: 克隆源仓库
       env: 
         REPO_URL: https://github.com/coolsnowwolf/lede
@@ -99,7 +106,9 @@ jobs:
         CONFIG_FILE: './Config/arm7.config'
       run: |
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        cd openwrt && make defconfig
+        cd openwrt 
+        rm -rf ./tmp* ./.config*
+        make defconfig
         
     - name: 下载编译环境
       working-directory: ./openwrt
