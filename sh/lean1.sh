@@ -33,7 +33,7 @@ svn export https://github.com/immortalwrt/luci/branches/openwrt-18.06/applicatio
 
 # 科学上网插件
 git clone --depth=1 -b main https://github.com/stupidloud/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
-svn export https://github.com/haiibo/packages/trunk/luci-app-vssr package/luci-app-vssr
+#svn export https://github.com/haiibo/packages/trunk/luci-app-vssr package/luci-app-vssr
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb package/lua-maxminddb
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
 svn export https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall package/luci-app-passwall
