@@ -33,7 +33,7 @@ jobs:
   Build_meson8b_OneCloud:
     runs-on: ubuntu-20.04
     steps:
-    - name: 克隆仓库
+    - name: 克隆存储库
       uses: actions/checkout@v3
 
     - name: 初始化环境
