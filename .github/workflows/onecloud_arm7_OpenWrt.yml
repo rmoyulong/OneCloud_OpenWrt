@@ -81,7 +81,7 @@ jobs:
         chmod +x ./AmlImg
         curl -L -o ./uboot.img https://github.com/shiyu1314/u-boot-onecloud/releases/download/build-20230901-0443/eMMC.burn.img
         mkdir -p openwrt/out 
-        curl -L -o openwrt/out/onecloud.img.gz https://github.com/YumesomeZakura/OpenWrtBuild_Occupied/releases/download/20231124082828/openwrt-20231124_c7ac68d573.img.gz
+        curl -L -o openwrt/out/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/20231126185915/openwrt-20231126_646c13f953.img.gz
         
         ./AmlImg unpack ./uboot.img burn/
         echo "::endgroup::"
