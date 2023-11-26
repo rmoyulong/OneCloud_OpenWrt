@@ -1,16 +1,19 @@
-name: meson8b测试
+name: meson8b OneCloud OpenWrt
 
 on: 
   repository_dispatch:
   workflow_dispatch:
 
 # 定时触发编译
-  schedule:
-    - cron: 1 20 * * 4
+  #schedule:
+    #- cron: 1 20 * * 4
 
 # 点赞☆Star触发编译
 #  watch:
 #    types: [started]
+
+#权限
+permissions: write-all 
 
 jobs:
   Build_meson8b:
