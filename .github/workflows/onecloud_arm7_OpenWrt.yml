@@ -1,4 +1,4 @@
-name: immortalwrt-oncloud-builder
+name: immortalwrt-burn-builder
 
 on:
   workflow_dispatch:
