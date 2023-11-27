@@ -1,4 +1,4 @@
-name: immortalwrt-burn-builder
+name: immortalwrt-[生成直刷包]
 
 on:
   workflow_dispatch:
