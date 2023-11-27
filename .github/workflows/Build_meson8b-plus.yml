@@ -1,0 +1,187 @@
+name: OneCloud Images Plus
+
+on: 
+  repository_dispatch:
+  workflow_dispatch:
+
+# 定时触发编译
+  #schedule:
+    #- cron: 1 20 * * 4
+
+# 点赞☆Star触发编译
+#  watch:
+#    types: [started]
+
+#权限
+permissions: write-all 
+
+env:
+  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_BRANCH: master
+  CONFIG_FILE: arm7.config
+  DIY_P1_SH: sh/lean1.sh
+  DIY_P2_SH: sh/Settings.sh
+  UPLOAD_FIRMWARE: true
+  UPLOAD_RELEASE: true
+  OWRT_IP: 192.168.1.110
+  OWRT_NAME: OneCloud
+  OWRT_FILES: onecloud/files
+  USE_CACHEWRTBUILD: true
+  TZ: Asia/Shanghai
+
+jobs:
+  Build_meson8b_OneCloud:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: 检查项目
+      uses: actions/checkout@v3
+      
+    - name: 检查分配的服务器性能
+      run: |
+        echo "警告⚠"
+        echo "若分配的服务器性能不足，务必及时取消，重新运行！"
+        echo "已知编译成功CPU型号：8370C,8171M,7763"
+        echo "已知性能不足CPU型号：8272CL"
+        echo -e "-------------- ------------CPU信息------------------------------------------\n"
+        echo "CPU物理数量:$(cat /proc/cpuinfo| grep "physical id"| sort| uniq| wc -l)"
+        echo -e "CPU核心及版本信息：$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c) \n"
+        echo "-------------------------------内存信息-------------------------------------------"
+        echo "已安装内存详细信息："
+        sudo lshw -short -C memory | grep GiB
+        echo -e "\n"
+        echo "-----------------------------硬盘信息---------------------------------------------"
+        echo -e  "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l) \n"
+        echo "硬盘详情："
+        df -Th  
+
+    - name: 初始化环境
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo timedatectl set-timezone "Asia/Shanghai" 
+        sudo -E swapoff -a
+        sudo -E rm -f /swapfile
+        sudo -E docker image prune -a -f
+        sudo -E snap set system refresh.retain=2
+        sudo -E apt-get -y purge dotnet* firefox ghc* google* hhvm llvm* mono* mysql* openjdk* php* zulu*
+        sudo -E apt-get -y autoremove --purge
+        sudo -E rm -rf /usr/share/dotnet /usr/local/lib/android/sdk /etc/mysql /etc/php /usr/local/share/boost
+        [ -n "$AGENT_TOOLSDIRECTORY" ] && sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+        sudo -E apt-get update -y
+        sudo -E apt-get install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pyelftools libpython3-dev qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev python3-setuptools dos2unix
+        pip install aligo
+        sudo -E apt-get clean
+        git config --global user.name 'GitHub Actions' && git config --global user.email 'noreply@github.com'
+        df -h
+        
+    - name: 检查脚本
+      run: |
+        cd ./sh
+
+        dos2unix ./*.sh
+        chmod +x ./*.sh        
+        
+    - name: 克隆源仓库
+      env: 
+        REPO_URL: https://github.com/coolsnowwolf/lede
+        REPO_BRANCH: master
+      run: |
+        git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
+        cd openwrt
+        echo 'src-git mo_zerotier https://github.com/mwarning/zerotier-openwrt.git' >>feeds.conf.default
+        echo 'src-git mo_small https://github.com/kenzok8/small-package' >>feeds.conf.default
+        
+        ##删除冲突插件
+        rm -rf $(find ./feeds/luci/ -type d -regex ".*\(argon\|design\).*")
+        rm -rf feeds/mo_small/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
+
+    - name: 更新安装订阅源
+      working-directory: ./openwrt
+      run: |
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
+        
+         rm -rf ./tmp* ./.config*
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
+        cp -f ../sh/Settings.sh ./        
+        chmod +x ./Settings.sh && ./Settings.sh
+               
+    - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
+      env:
+        CONFIG_FILE: './Config/arm7.config'
+      run: |
+        cp -rf $GITHUB_WORKSPACE/$OWRT_FILES openwrt/files
+        cd openwrt && make defconfig
+        
+    - name: 下载编译环境
+      working-directory: ./openwrt
+      run: |
+        make download -j$(nproc)
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+
+    - name: 编译固件
+      working-directory: ./openwrt
+      run: |
+        make -j$(nproc) V=s
+
+    - name: 上传 bin 目录
+      uses: actions/upload-artifact@main
+      with:
+        name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        path: openwrt/bin
+        
+    - name: 整理固件
+      id: assemble_artifact
+      run: |
+        rm -rf ./ARM_Out
+        mkdir -p ./ARM_Out/
+        
+        getmd5()
+        {
+        md5sum=`md5sum $1`
+        md5=`echo ${md5sum% *}`
+        md5=`echo ${md5:0:10}`
+        }
+        
+        rom=openwrt/bin/targets/meson/meson8b/openwrt-*.img.gz
+        getmd5 $rom
+                
+        cp -a $rom ./ARM_Out/openwrt-$(date +%Y%m%d)_${md5}.img.gz
+               
+    - name: 上传固件
+      uses: actions/upload-artifact@main
+      with:
+        name: meson8b
+        path: ARM_Out/*.img.gz 
+
+    - name: 上传配置文件
+      uses: actions/upload-artifact@main
+      with:
+        name: meson8b-config
+        path: openwrt/.config  
+ 
+    - name: 上传脚本包
+      uses: actions/upload-artifact@main
+      with:
+        name: armv7-Packages
+        path: openwrt/bin/packages 
+
+
+    - name: 生成标记和标签
+      id: generate_name
+      run: |
+        time=$(date +%Y%m%d%H%M%S)
+        release_tag="$time"
+        release_name="meson8b-$(date +%Y%m%d)"
+        echo "release_name=$release_name" >> $GITHUB_OUTPUT
+        echo "release_tag=$release_tag" >> $GITHUB_OUTPUT       
+
+    - name: 生成标签上传
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: ARM_Out/*.img.gz
+        name: ${{ steps.generate_name.outputs.release_name }}
+        tag: ${{ steps.generate_name.outputs.release_tag }}
+        token: ${{ secrets.GITHUB_TOKEN }}                        
