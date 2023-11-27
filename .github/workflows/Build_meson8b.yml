@@ -95,19 +95,19 @@ jobs:
       working-directory: ./openwrt
       run: |
         ./scripts/feeds update -a
-
         ./scripts/feeds install -a
-
-        cp -f ../sh/lean2.sh ./        
-        chmod +x ./lean2.sh && ./lean2.sh
-        rm -rf ./tmp* ./.config*
+        
+         rm -rf ./tmp* ./.config*
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
+        cp -f ../sh/Settings.sh ./        
+        chmod +x ./Settings.sh && ./Settings.sh
                
     - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
       env:
         CONFIG_FILE: './Config/arm7.config'
       run: |
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
+        cp -rf $GITHUB_WORKSPACE/$OWRT_FILES openwrt/files
         cd openwrt && make defconfig
         
     - name: 下载编译环境
