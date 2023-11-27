@@ -1,0 +1,176 @@
+name: immortalwrt-burn-builder
+
+on:
+  workflow_dispatch:
+    inputs:
+      manual:
+        description: '手动触发一次编译'
+
+#权限
+permissions: write-all 
+
+env:
+  REPO_URL: https://github.com/immortalwrt/immortalwrt
+  REPO_BRANCH: master
+  CONFIG_FILE: .config
+  DIY_P1_SH: op1.sh
+  DIY_P2_SH: op2.sh
+  DIY_P3_SH: op3.sh
+  UPLOAD_FIRMWARE: true
+  UPLOAD_RELEASE: true
+  OWRT_IP: 192.168.1.110
+  OWRT_NAME: OneCloud
+  OWRT_FILES: onecloud/files
+  USE_CACHEWRTBUILD: true
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    
+    permissions:
+      contents: write
+      actions: write
+
+    steps:
+    - name: 检查分支
+      uses: actions/checkout@v3
+      
+    - name: 检查分配的服务器性能
+      run: |
+        echo "警告⚠"
+        echo "若分配的服务器性能不足，务必及时取消，重新运行！"
+        echo "已知编译成功CPU型号：8370C,8171M,7763"
+        echo "已知性能不足CPU型号：8272CL"
+        echo -e "-------------- ------------CPU信息------------------------------------------\n"
+        echo "CPU物理数量:$(cat /proc/cpuinfo| grep "physical id"| sort| uniq| wc -l)"
+        echo -e "CPU核心及版本信息：$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c) \n"
+        echo "-------------------------------内存信息-------------------------------------------"
+        echo "已安装内存详细信息："
+        sudo lshw -short -C memory | grep GiB
+        echo -e "\n"
+        echo "-----------------------------硬盘信息---------------------------------------------"
+        echo -e  "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l) \n"
+        echo "硬盘详情："
+        df -Th   
+        
+    - name: 编译环境
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+        sudo bash -c 'bash <(curl -s https://build-scripts.immortalwrt.eu.org/init_build_environment.sh)'
+        sudo timedatectl set-timezone "$TZ"
+        git config --global user.email "1052672227@qq.com"
+        git config --global user.name "shiyu1314"
+        sudo mkdir -p /workdir
+        sudo chown $USER:$GROUPS /workdir
+
+    - name: 克隆源代码
+      working-directory: /workdir
+      run: |
+        df -hT $PWD
+        git clone $REPO_URL -b $REPO_BRANCH openwrt
+        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+        
+    - name: 打包直刷包
+      run: |
+        sudo apt install img2simg
+        ver="v0.3.1"
+        curl -L -o ./AmlImg https://github.com/hzyitc/AmlImg/releases/download/$ver/AmlImg_${ver}_linux_amd64
+        chmod +x ./AmlImg
+        curl -L -o ./uboot.img https://github.com/shiyu1314/u-boot-onecloud/releases/download/build-20230901-0443/eMMC.burn.img
+        mkdir -p openwrt/out 
+        curl -L -o openwrt/out/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/20231126185915/openwrt-20231126_646c13f953.img.gz
+        
+        ./AmlImg unpack ./uboot.img burn/
+        echo "::endgroup::"
+        gunzip  openwrt/out/*.gz
+        diskimg=$(ls  openwrt/out/*.img)
+        loop=$(sudo losetup --find --show --partscan $diskimg)
+        img_ext="openwrt.img"
+        img_mnt="xd"
+        rootfs_mnt="img"
+        boot_img=$1${img_ext}
+        boot_img_mnt=$1${img_mnt}
+        rootfs_img_mnt=$1${rootfs_mnt}
+        echo ${boot_img}
+        echo ${boot_img_mnt}
+        echo ${rootfs_img_mnt}
+        sudo rm -rf ${boot_img}
+        sudo rm -rf ${boot_img_mnt}
+        sudo rm -rf ${rootfs_img_mnt}
+        sudo dd if=/dev/zero of=${boot_img} bs=1M count=2000
+        sudo mkfs.ext4 ${boot_img}
+        sudo mkdir ${boot_img_mnt}
+        sudo mkdir ${rootfs_img_mnt}
+        sudo mount ${boot_img} ${boot_img_mnt}
+        sudo mount ${loop}p2 ${rootfs_img_mnt}
+        cd ${rootfs_img_mnt}
+        sudo cp -r * ../${boot_img_mnt}
+        cd ..
+        sudo sync
+        sudo umount ${boot_img_mnt}
+        sudo umount ${rootfs_img_mnt}
+        sudo img2simg ${loop}p1 burn/boot.simg
+        sudo img2simg openwrt.img burn/rootfs.simg
+        sudo rm -rf *.img
+        sudo losetup -d $loop
+        cat <<EOF >>burn/commands.txt
+        PARTITION:boot:sparse:boot.simg
+        PARTITION:rootfs:sparse:rootfs.simg
+        EOF
+        prefix=$(ls openwrt/out/*.img | sed 's/\.img$//')
+        burnimg=${prefix}.burn.img
+        ./AmlImg pack $burnimg burn/
+        for f in openwrt/out/*.burn.img; do
+        sha256sum "$f" >"${f}.sha"
+        xz -9 --threads=0 --compress "$f"
+        done
+        sudo rm -rf openwrt/out/*.img
+        sudo rm -rf openwrt/out/*.gz   
+
+    - name: 整理文件
+      id: organize
+      run: |
+        cd openwrt/out
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        echo "status=success" >> $GITHUB_OUTPUT
+        echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+    
+    - name: 上传文件到Actions
+      uses: actions/upload-artifact@main
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      with:
+        name: OpenWrt_firmware_onecloud_${{ env.FILE_DATE }}
+        path: ${{ env.FIRMWARE }}
+        
+    - name: 生成Releases标签
+      id: tag
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      run: |
+        echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
+        touch release.txt
+        [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
+        [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
+        echo "status=success" >> $GITHUB_OUTPUT
+    
+    - name: 上传固件到Releases
+      uses: softprops/action-gh-release@v1
+      if: steps.tag.outputs.status == 'success' && !cancelled()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.tag.outputs.release_tag }}
+        body_path: release.txt
+        files: ${{ env.FIRMWARE }}/*
+        
+    - name: 清理Releases
+      uses: dev-drprasad/delete-older-releases@v0.2.1
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      with:
+        keep_latest: 6
+        delete_tags: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
