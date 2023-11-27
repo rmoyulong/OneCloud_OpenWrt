@@ -1,5 +1,55 @@
 #!/bin/bash
 
+#Design Theme
+#git clone --depth=1 --single-branch --branch $(echo $OWRT_URL | grep -iq "lede" && echo "main" || echo "js") https://github.com/gngpp/luci-theme-design.git
+#git clone --depth=1 --single-branch https://github.com/gngpp/luci-app-design-config.git
+#sed -i 's/dark/light/g' luci-app-design-config/root/etc/config/design
+#Argon Theme
+#git clone --depth=1 --single-branch --branch $(echo $OWRT_URL | grep -iq "lede" && echo "18.06" || echo "master") https://github.com/jerrykuku/luci-theme-argon.git
+#git clone --depth=1 --single-branch --branch $(echo $OWRT_URL | grep -iq "lede" && echo "18.06" || echo "master") https://github.com/jerrykuku/luci-app-argon-config.git
+#Linkease
+#git clone --depth=1 --single-branch https://github.com/linkease/istore.git
+#git clone --depth=1 --single-branch https://github.com/linkease/nas-packages.git
+#git clone --depth=1 --single-branch https://github.com/linkease/nas-packages-luci.git
+#Open Clash
+#git clone --depth=1 --single-branch --branch "dev" https://github.com/vernesong/OpenClash.git
+#Pass Wall
+#git clone --depth=1 --single-branch --branch "main" https://github.com/xiaorouji/openwrt-passwall.git ./pw_luci
+#git clone --depth=1 --single-branch --branch "main" https://github.com/xiaorouji/openwrt-passwall-packages.git ./pw_packages
+
+#预置OpenClash内核和GEO数据
+#export CORE_VER=https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version
+#export CORE_TUN=https://github.com/vernesong/OpenClash/raw/core/dev/premium/clash-linux
+#export CORE_DEV=https://github.com/vernesong/OpenClash/raw/core/dev/dev/clash-linux
+#export CORE_MATE=https://github.com/vernesong/OpenClash/raw/core/dev/meta/clash-linux
+
+#export CORE_TYPE=$(echo $OWRT_TARGET | grep -Eiq "64|86" && echo "amd64" || echo "arm64")
+#export TUN_VER=$(curl -sfL $CORE_VER | sed -n "2{s/\r$//;p;q}")
+
+#export GEO_MMDB=https://github.com/alecthw/mmdb_china_ip_list/raw/release/lite/Country.mmdb
+#export GEO_SITE=https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat
+#export GEO_IP=https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geoip.dat
+
+#cd ./OpenClash/luci-app-openclash/root/etc/openclash
+
+#curl -sfL -o ./Country.mmdb $GEO_MMDB
+#curl -sfL -o ./GeoSite.dat $GEO_SITE
+#curl -sfL -o ./GeoIP.dat $GEO_IP
+
+#mkdir ./core && cd ./core
+
+#curl -sfL -o ./tun.gz "$CORE_TUN"-"$CORE_TYPE"-"$TUN_VER".gz
+#gzip -d ./tun.gz && mv ./tun ./clash_tun
+
+#curl -sfL -o ./meta.tar.gz "$CORE_MATE"-"$CORE_TYPE".tar.gz
+#tar -zxf ./meta.tar.gz && mv ./clash ./clash_meta
+
+#curl -sfL -o ./dev.tar.gz "$CORE_DEV"-"$CORE_TYPE".tar.gz
+#tar -zxf ./dev.tar.gz
+
+#chmod +x ./clash* ; rm -rf ./*.gz
+
+
 # 修改默认IP
 # sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
 
@@ -35,37 +85,37 @@ svn export https://github.com/immortalwrt/luci/branches/openwrt-18.06/applicatio
 git clone --depth 1 https://github.com/rmoyulong/luci-app-vssr package/luci-app-vssr
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb package/lua-maxminddb
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
-svn export https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall package/luci-app-passwall
+svn export https://github.com/kenzok8/small-package/trunk/luci-app-passwall package/luci-app-passwall
 svn export https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwall2 package/luci-app-passwall2
 svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/luci-app-openclash
-svn export https://github.com/stupidloud/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
+svn export https://github.com/kenzok8/small-package/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
 
 # 科学上网插件依赖
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/brook package/brook
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/chinadns-ng package/chinadns-ng
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/dns2socks package/dns2socks
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/dns2tcp package/dns2tcp
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/hysteria package/hysteria
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ipt2socks package/ipt2socks
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/microsocks package/microsocks
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/naiveproxy package/naiveproxy
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/pdnsd-alt package/pdnsd-alt
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/sagernet-core package/sagernet-core
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ssocks package/ssocks
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/tcping package/tcping
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan-go package/trojan-go
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan-plus package/trojan-plus
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/v2ray-geodata package/v2ray-geodata
-svn co https://github.com/stupidloud/helloworld/trunk/simple-obfs package/simple-obfs
-svn co https://github.com/stupidloud/helloworld/trunk/v2ray-core package/v2ray-core
-svn co https://github.com/stupidloud/helloworld/trunk/v2ray-plugin package/v2ray-plugin
-svn co https://github.com/stupidloud/helloworld/trunk/shadowsocks-rust package/shadowsocks-rust
-svn co https://github.com/stupidloud/helloworld/trunk/shadowsocksr-libev package/shadowsocksr-libev
-svn co https://github.com/stupidloud/helloworld/trunk/xray-core package/xray-core
-svn co https://github.com/stupidloud/helloworld/trunk/xray-plugin package/xray-plugin
-svn co https://github.com/stupidloud/helloworld/trunk/lua-neturl package/lua-neturl
-svn co https://github.com/stupidloud/helloworld/trunk/trojan package/trojan
-svn co https://github.com/stupidloud/helloworld/trunk/redsocks2 package/redsocks2
+svn co https://github.com/kenzok8/small-package/trunk/brook package/brook
+svn co https://github.com/kenzok8/small-package/trunk/chinadns-ng package/chinadns-ng
+svn co https://github.com/kenzok8/small-package/trunk/dns2socks package/dns2socks
+svn co https://github.com/kenzok8/small-package/trunk/dns2tcp package/dns2tcp
+svn co https://github.com/kenzok8/small-package/trunk/hysteria package/hysteria
+svn co https://github.com/kenzok8/small-package/trunk/ipt2socks package/ipt2socks
+svn co https://github.com/kenzok8/small-package/trunk/microsocks package/microsocks
+svn co https://github.com/kenzok8/small-package/trunk/naiveproxy package/naiveproxy
+svn co https://github.com/kenzok8/small-package/trunk/pdnsd-alt package/pdnsd-alt
+svn co https://github.com/kenzok8/small-package/trunk/sagernet-core package/sagernet-core
+svn co https://github.com/kenzok8/small-package/trunk/ssocks package/ssocks
+svn co https://github.com/kenzok8/small-package/trunk/tcping package/tcping
+svn co https://github.com/kenzok8/small-package/trunk/trojan-go package/trojan-go
+svn co https://github.com/kenzok8/small-package/trunk/trojan-plus package/trojan-plus
+svn co https://github.com/kenzok8/small-package/trunk/v2ray-geodata package/v2ray-geodata
+svn co https://github.com/kenzok8/small-package/trunk/simple-obfs package/simple-obfs
+svn co https://github.com/kenzok8/small-package/trunk/v2ray-core package/v2ray-core
+svn co https://github.com/kenzok8/small-package/trunk/v2ray-plugin package/v2ray-plugin
+svn co https://github.com/kenzok8/small-package/trunk/shadowsocks-rust package/shadowsocks-rust
+svn co https://github.com/kenzok8/small-package/trunk/shadowsocksr-libev package/shadowsocksr-libev
+svn co https://github.com/kenzok8/small-package/trunk/xray-core package/xray-core
+svn co https://github.com/kenzok8/small-package/trunk/xray-plugin package/xray-plugin
+svn co https://github.com/kenzok8/small-package/trunk/lua-neturl package/lua-neturl
+svn co https://github.com/kenzok8/small-package/trunk/trojan package/trojan
+svn co https://github.com/kenzok8/small-package/trunk/redsocks2 package/redsocks2
 
 # Themes
 git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/luci-theme-edge
