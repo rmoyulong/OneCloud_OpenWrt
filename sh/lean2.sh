@@ -1,3 +1,4 @@
+#!/bin/bash
 #补充汉化
 echo -e "\nmsgid \"Control\"" >> feeds/luci/modules/luci-base/po/zh-cn/base.po
 echo -e "msgstr \"控制\"" >> feeds/luci/modules/luci-base/po/zh-cn/base.po
