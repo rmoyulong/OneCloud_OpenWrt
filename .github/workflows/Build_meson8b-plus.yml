@@ -18,7 +18,7 @@ permissions: write-all
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: Config/arm7.config
+  CONFIG_FILE: Config/arm7_mini.config
   DIY_P1_SH: sh/lean1.sh
   DIY_P2_SH: sh/Settings.sh
   UPLOAD_FIRMWARE: true
@@ -85,7 +85,7 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a        
         
-        #rm -rf $(find ./feeds/luci/ -type d -regex ".*\(argon\|design\|openclash\).*")
+        rm -rf $(find ./feeds/luci/ -type d -regex ".*\(argon\|design\|openclash\).*")
 
     - name: 更新安装订阅源
       working-directory: ./openwrt
@@ -96,7 +96,8 @@ jobs:
         ./scripts/feeds install -a  
         
         ##删除冲突插件
-        #rm -rf feeds/mo_small/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}  
+        rm -rf feeds/mo_small/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
+        svn co https://github.com/ophub/luci-app-amlogic/trunk/luci-app-amlogic package/luci-app-amlogic
         
          rm -rf ./tmp* ./.config*
         [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && mv $GITHUB_WORKSPACE/$CONFIG_FILE .config
