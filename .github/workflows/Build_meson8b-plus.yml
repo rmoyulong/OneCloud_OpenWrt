@@ -1,4 +1,4 @@
-name: OneCloud Plus Images
+name: OneCloud Mini Images
 
 on: 
   repository_dispatch:
@@ -30,7 +30,7 @@ env:
   TZ: Asia/Shanghai 
 
 jobs:
-  Build_meson8b_OneCloud:
+  Build_meson8b_OneCloud_Mini:
     runs-on: ubuntu-latest
     steps:
     - name: 检查项目
