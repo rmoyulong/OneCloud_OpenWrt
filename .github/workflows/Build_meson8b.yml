@@ -107,8 +107,8 @@ jobs:
         CONFIG_FILE: './Config/arm7.config'
       run: |
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        cd openwrt 
-        make defconfig
+        cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
+        cd openwrt && make defconfig
         
     - name: 下载编译环境
       working-directory: ./openwrt
