@@ -80,20 +80,18 @@ jobs:
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+        cd openwrt
+        $GITHUB_WORKSPACE/$DIY_P1_SH
 
     - name: 更新安装订阅源
       working-directory: ./openwrt
       run: |
-        echo 'src-git mo_zerotier https://github.com/mwarning/zerotier-openwrt.git' >>feeds.conf.default
-        echo 'src-git mo_small https://github.com/kenzok8/small-package' >>feeds.conf.default
-        
         ./scripts/feeds update -a
-        ./scripts/feeds install -a 
+        ./scripts/feeds install -a
         
-        rm -rf ./tmp* ./.config*
+         rm -rf ./tmp* ./.config*
         [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && mv $GITHUB_WORKSPACE/$CONFIG_FILE .config
         cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
-        svn co https://github.com/ophub/luci-app-amlogic/trunk/luci-app-amlogic package/luci-app-amlogic
         $GITHUB_WORKSPACE/$DIY_P2_SH
                
     - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
