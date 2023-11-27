@@ -85,7 +85,7 @@ jobs:
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
-        $GITHUB_WORKSPACE/DIY_P1_SH
+        $GITHUB_WORKSPACE/$DIY_P1_SH
 
     - name: 更新安装订阅源
       working-directory: ./openwrt
@@ -96,7 +96,7 @@ jobs:
          rm -rf ./tmp* ./.config*
         [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && mv $GITHUB_WORKSPACE/$CONFIG_FILE .config
         cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
-        $GITHUB_WORKSPACE/DIY_P2_SH
+        $GITHUB_WORKSPACE/$DIY_P2_SH
                
     - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
       run: |
