@@ -20,7 +20,7 @@ env:
   REPO_BRANCH: master
   CONFIG_FILE: Config/arm7_mini.config
   DIY_P1_SH: sh/lean1.sh
-  DIY_P2_SH: sh/Settings.sh
+  DIY_P2_SH: sh/lean2.sh
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   OWRT_IP: 192.168.1.110
