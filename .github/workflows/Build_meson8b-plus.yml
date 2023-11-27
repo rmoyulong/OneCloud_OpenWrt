@@ -1,4 +1,4 @@
-name: OneCloud Images Plus
+name: OneCloud Plus Images
 
 on: 
   repository_dispatch:
@@ -100,7 +100,7 @@ jobs:
         ./scripts/feeds install -a  
         
         ##删除冲突插件
-        #rm -rf feeds/mo_small/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}  
+        rm -rf feeds/mo_small/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}  
         
          rm -rf ./tmp* ./.config*
         [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && mv $GITHUB_WORKSPACE/$CONFIG_FILE .config
