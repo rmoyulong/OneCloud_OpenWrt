@@ -99,7 +99,8 @@ jobs:
         ./scripts/feeds install -a
 
         cp -f ../sh/lean2.sh ./        
-        chmod +x ./lean2.sh && ./lean2.sh    
+        chmod +x ./lean2.sh && ./lean2.sh
+        rm -rf ./tmp* ./.config*
                
     - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
       env:
@@ -107,7 +108,6 @@ jobs:
       run: |
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         cd openwrt 
-        rm -rf ./tmp* ./.config*
         make defconfig
         
     - name: 下载编译环境
