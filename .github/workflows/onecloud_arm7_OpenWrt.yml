@@ -123,7 +123,7 @@ jobs:
         sha256sum "$f" >"${f}.sha"
         xz -9 --threads=0 --compress "$f"
         done
-        mv openwrt/out/*.xz openwrt/out/openwrt_$(date +"%Y%m%d%H%M")-*.xz
+        mv openwrt/out/onecloud.burn.img.xz openwrt/out/openwrt-onecloud_$(date +"%Y%m%d%H%M")-burn.img.xz
         sudo rm -rf openwrt/out/*.img
         sudo rm -rf openwrt/out/*.gz   
 
