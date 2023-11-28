@@ -196,9 +196,9 @@ jobs:
 
       - name: 上传 bin 目录
         uses: actions/upload-artifact@main
-          with:
-            name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-            path: openwrt/bin
+        with:
+          name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+          path: openwrt/bin
         
       - name: 整理固件
         id: assemble_artifact
