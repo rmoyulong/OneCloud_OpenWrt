@@ -25,7 +25,7 @@ env:
   TZ: Asia/Shanghai
 
 jobs:
-  build:
+  build_burn_onecloud:
     runs-on: ubuntu-20.04
     
     permissions:
@@ -117,7 +117,7 @@ jobs:
         PARTITION:rootfs:sparse:rootfs.simg
         EOF
         prefix=$(ls openwrt/out/*.img | sed 's/\.img$//')
-        burnimg=openwrt-${prefix}_$(date +"%Y%m%d%H%M").burn.img
+        burnimg=${prefix}.burn.img
         ./AmlImg pack $burnimg burn/
         for f in openwrt/out/*.burn.img; do
         sha256sum "$f" >"${f}.sha"

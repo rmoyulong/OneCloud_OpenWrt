@@ -1,4 +1,4 @@
-name: 快速构建onecloud直刷包
+name: 一站式构建onecloud直刷包
 
 on:
   repository_dispatch:
@@ -27,12 +27,26 @@ env:
   TZ: Asia/Shanghai
 
 jobs:
-  build:
+  build_burn_onecloud_quick:
     runs-on: ubuntu-20.04
 
     steps:
     - name: 检查项目
       uses: actions/checkout@main
+ 
+    - name: 检查分配的服务器性能
+      run: |
+        echo "警告⚠"
+        echo "分配的服务器性能有限，若选择的插件过多，务必注意CPU性能！"
+        echo -e "已知CPU型号（降序）：7763，8370C，8272CL，8171M，E5-2673 \n"
+        echo "--------------------------CPU信息--------------------------"
+        echo "CPU物理数量：$(cat /proc/cpuinfo | grep "physical id" | sort | uniq | wc -l)"
+        echo -e "CPU核心信息：$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c) \n"
+        echo "--------------------------内存信息--------------------------"
+        echo "已安装内存详细信息："
+        echo -e "$(sudo lshw -short -C memory | grep GiB) \n"
+        echo "--------------------------硬盘信息--------------------------"
+        echo "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT 
 
     - name: 初始化编译环境
       env:
