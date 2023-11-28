@@ -1,4 +1,4 @@
-name: immortalwrt-[生成直刷包]
+name: 将IMAGES转换成直刷包
 
 on:
   workflow_dispatch:
@@ -75,7 +75,7 @@ jobs:
         ver="v0.3.1"
         curl -L -o ./AmlImg https://github.com/hzyitc/AmlImg/releases/download/$ver/AmlImg_${ver}_linux_amd64
         chmod +x ./AmlImg
-        curl -L -o ./uboot.img https://github.com/shiyu1314/u-boot-onecloud/releases/download/build-20230901-0443/eMMC.burn.img
+        curl -L -o ./uboot.img https://github.com/hzyitc/u-boot-onecloud/releases/download/build-20221028-0940/eMMC.burn.img
         mkdir -p openwrt/out 
         curl -L -o openwrt/out/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/20231127164138/openwrt-20231127_06c92705eb.img.gz
         
@@ -117,7 +117,7 @@ jobs:
         PARTITION:rootfs:sparse:rootfs.simg
         EOF
         prefix=$(ls openwrt/out/*.img | sed 's/\.img$//')
-        burnimg=${prefix}.burn.img
+        burnimg=openwrt-${prefix}_$(date +"%Y%m%d%H%M").burn.img
         ./AmlImg pack $burnimg burn/
         for f in openwrt/out/*.burn.img; do
         sha256sum "$f" >"${f}.sha"
