@@ -14,13 +14,16 @@ env:
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: Config/quicker.config
-  DIY_P1_SH: diy-part1.sh
+  DIY_P1_SH: sh/lean1.sh
   DIY_P2_SH: sh/lean2.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: true
+  OWRT_IP: 192.168.1.110
+  OWRT_NAME: OneCloud
+  OWRT_FILES: onecloud/files  
   TZ: Asia/Shanghai
 
 jobs:
