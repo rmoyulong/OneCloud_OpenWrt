@@ -82,15 +82,16 @@ svn export https://github.com/immortalwrt/luci/branches/openwrt-18.06/applicatio
 # svn export https://github.com/syb999/openwrt-19.07.1/trunk/package/network/services/msd_lite package/msd_lite
 
 # 科学上网插件
-git clone --depth 1 https://github.com/rmoyulong/luci-app-vssr package/luci-app-vssr
+git clone --depth=1 -b main https://github.com/stupidloud/helloworld package/luci-app-ssr-plus
+svn export https://github.com/haiibo/packages/trunk/luci-app-vssr package/luci-app-vssr
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb package/lua-maxminddb
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
 svn export https://github.com/kenzok8/small-package/trunk/luci-app-passwall package/luci-app-passwall
 svn export https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwall2 package/luci-app-passwall2
 svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/luci-app-openclash
-svn export https://github.com/kenzok8/small-package/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
 
 # 科学上网插件依赖
+svn co https://github.com/kenzok8/small-package/tree/main/shadow-tls package/shadow-tls
 svn co https://github.com/kenzok8/small-package/trunk/brook package/brook
 svn co https://github.com/kenzok8/small-package/trunk/chinadns-ng package/chinadns-ng
 svn co https://github.com/kenzok8/small-package/trunk/dns2socks package/dns2socks
