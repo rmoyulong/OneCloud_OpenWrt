@@ -186,13 +186,18 @@ jobs:
         working-directory: ./openwrt
         run: |
           make download -j$(nproc)
+          #make download -j8
+          #make -j16 download
           find dl -size -1024c -exec ls -l {} \;
           find dl -size -1024c -exec rm -f {} \;
 
       - name: 编译固件
         working-directory: ./openwrt
         run: |
-          make -j$(nproc) V=s
+          echo -e "$(nproc) thread compile"
+          make -j$(nproc) || make -j1 || make -j1 V=s
+          echo "status=success" >> $GITHUB_OUTPUT
+          echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV 
 
       - name: 上传 bin 目录
         uses: actions/upload-artifact@main
