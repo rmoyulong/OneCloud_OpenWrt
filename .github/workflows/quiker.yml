@@ -1,0 +1,223 @@
+name: 快速构建onecloud直刷包
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
+
+env:
+  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_BRANCH: master
+  FEEDS_CONF: feeds.conf.default
+  CONFIG_FILE: Config/quicker.config
+  DIY_P1_SH: diy-part1.sh
+  DIY_P2_SH: sh/lean2.sh
+  UPLOAD_BIN_DIR: false
+  UPLOAD_FIRMWARE: true
+  UPLOAD_COWTRANSFER: false
+  UPLOAD_WETRANSFER: false
+  UPLOAD_RELEASE: true
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: 检查项目
+      uses: actions/checkout@main
+
+    - name: 初始化编译环境
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+        sudo -E apt-get -qq update
+        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean
+        sudo timedatectl set-timezone "$TZ"
+        sudo mkdir -p /workdir
+        sudo chown $USER:$GROUPS /workdir
+        
+    - name: 克隆源仓库
+      working-directory: /workdir
+      run: |
+        df -hT $PWD
+        git clone $REPO_URL -b $REPO_BRANCH openwrt
+        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+        
+    - name: 设置订阅源
+      run: |
+        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
+        
+        cd openwrt
+        echo 'src-git mo_small https://github.com/kenzok8/small-package' >>feeds.conf.default
+        echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
+        
+    - name: 更新安装订阅源
+      working-directory: ./openwrt
+      run: |
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
+        
+         rm -rf ./tmp* ./.config*
+        [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && mv $GITHUB_WORKSPACE/$CONFIG_FILE .config
+        cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
+        $GITHUB_WORKSPACE/$DIY_P2_SH
+               
+    - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
+      run: |
+        cp -rf $GITHUB_WORKSPACE/$OWRT_FILES openwrt/files
+        cd openwrt && make defconfig
+        
+    - name: 下载编译环境
+      working-directory: ./openwrt
+      run: |
+        make download -j$(nproc)
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+
+    - name: 编译固件
+      working-directory: ./openwrt
+      run: |
+        echo -e "$(nproc) thread compile"
+        make -j$(nproc) || make -j1 || make -j1 V=s
+        echo "status=success" >> $GITHUB_OUTPUT
+        echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV 
+        
+    - name: 制作直刷包
+      run: |
+          sudo apt install img2simg
+          ver="v0.3.1"
+          curl -L -o ./AmlImg https://github.com/hzyitc/AmlImg/releases/download/$ver/AmlImg_${ver}_linux_amd64
+          chmod +x ./AmlImg
+          curl -L -o ./uboot.img https://github.com/hzyitc/u-boot-onecloud/releases/download/build-20221028-0940/eMMC.burn.img
+          ./AmlImg unpack ./uboot.img burn/
+          echo "::endgroup::"
+          diskimg=$(ls openwrt/bin/targets/*/*/*.img)
+          loop=$(sudo losetup --find --show --partscan $diskimg)
+          img_ext="openwrt.img"
+          img_mnt="xd"
+          rootfs_mnt="img"
+          boot_img=$1${img_ext}
+          boot_img_mnt=$1${img_mnt}
+          rootfs_img_mnt=$1${rootfs_mnt}
+          echo ${boot_img}
+          echo ${boot_img_mnt}
+          echo ${rootfs_img_mnt}
+          sudo rm -rf ${boot_img}
+          sudo rm -rf ${boot_img_mnt}
+          sudo rm -rf ${rootfs_img_mnt}
+          sudo dd if=/dev/zero of=${boot_img} bs=1M count=400
+          sudo mkfs.ext4 ${boot_img}
+          sudo mkdir ${boot_img_mnt}
+          sudo mkdir ${rootfs_img_mnt}
+          sudo mount ${boot_img} ${boot_img_mnt}
+          sudo mount ${loop}p2 ${rootfs_img_mnt}
+          cd ${rootfs_img_mnt}
+          sudo cp -r * ../${boot_img_mnt}
+          cd ..
+          sudo sync
+          sudo umount ${boot_img_mnt}
+          sudo umount ${rootfs_img_mnt}
+          sudo img2simg ${loop}p1 burn/boot.simg
+          sudo img2simg openwrt.img burn/rootfs.simg
+          sudo rm -rf *.img
+          sudo losetup -d $loop
+          cat <<EOF >>burn/commands.txt
+          PARTITION:boot:sparse:boot.simg
+          PARTITION:rootfs:sparse:rootfs.simg
+          EOF
+          prefix=$(ls openwrt/bin/targets/*/*/*.img | sed 's/\.img$//')
+          burnimg=${prefix}.burn.img
+          ./AmlImg pack $burnimg burn/
+          for f in openwrt/bin/targets/*/*/*.burn.img; do
+            sha256sum "$f" >"${f}.sha"
+            xz --threads=0 --compress "$f"
+          done
+          sudo rm -rf openwrt/bin/targets/*/*/*.img
+          
+    - name: 检查服务器空间
+      if: (!cancelled())
+      run: df -hT
+
+    - name: 上传bin目录
+      uses: actions/upload-artifact@main
+      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
+      with:
+        name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        path: openwrt/bin
+
+    - name: 整理固件
+      id: organize
+      if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      run: |
+        cd openwrt/bin/targets/*/*
+        rm -rf packages
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        echo "::set-output name=status::success"
+        
+    - name: 上传firmware目录
+      uses: actions/upload-artifact@main
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      with:
+        name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        path: ${{ env.FIRMWARE }}
+
+    - name: 上传firmware到cowtransfer
+      id: cowtransfer
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
+        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
+        echo "::set-output name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
+        
+    - name: 上传firmware到WeTransfer
+      id: wetransfer
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
+        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
+        echo "::set-output name=url::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
+        
+    - name: 生成标签
+      id: tag
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      run: |
+        echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
+        touch release.txt
+        [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
+        [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
+        echo "::set-output name=status::success"
+        
+    - name: 上传固件到release
+      uses: softprops/action-gh-release@v1
+      if: steps.tag.outputs.status == 'success' && !cancelled()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.tag.outputs.release_tag }}
+        body_path: release.txt
+        files: ${{ env.FIRMWARE }}/*   
+
+    - name: 删除工作流
+      uses: GitRML/delete-workflow-runs@main
+      with:
+        retain_days: 1
+        keep_minimum_runs: 3
+
+    - name: 删除老标签
+      uses: dev-drprasad/delete-older-releases@v0.1.0
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      with:
+        keep_latest: 3
+        delete_tags: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
