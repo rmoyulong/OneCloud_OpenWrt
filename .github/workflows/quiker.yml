@@ -81,7 +81,7 @@ jobs:
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
         
         cd openwrt
-        echo 'src-git mo_small https://github.com/kenzok8/small-package' >>feeds.conf.default
+        $GITHUB_WORKSPACE/$DIY_P1_SH
         echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
         
     - name: 更新安装订阅源

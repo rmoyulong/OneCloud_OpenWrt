@@ -77,7 +77,7 @@ jobs:
         chmod +x ./AmlImg
         curl -L -o ./uboot.img https://github.com/hzyitc/u-boot-onecloud/releases/download/build-20221028-0940/eMMC.burn.img
         mkdir -p openwrt/out 
-        curl -L -o openwrt/out/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/2023.11.29-0014/openwrt-meson-meson8b-thunder-onecloud-rootfs.tar.gz
+        curl -L -o openwrt/out/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/20231129060127/openwrt-20231129_275e0fba82.img.gz
         
         ./AmlImg unpack ./uboot.img burn/
         echo "::endgroup::"
@@ -123,7 +123,7 @@ jobs:
         sha256sum "$f" >"${f}.sha"
         xz -9 --threads=0 --compress "$f"
         done
-        mv openwrt/out/onecloud.burn.img.xz openwrt/out/openwrt-onecloud_$(date +"%Y%m%d%H%M")-burn.img.xz
+        mv openwrt/out/${burnimg}.xz openwrt/out/openwrt-onecloud_$(date +"%Y-%m-%d:%H%M")-burn.img.xz
         sudo rm -rf openwrt/out/*.img
         sudo rm -rf openwrt/out/*.gz   
 
