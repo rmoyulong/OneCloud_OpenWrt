@@ -1,4 +1,4 @@
-name: 将IMAGES转换成直刷包
+name: 将指定的IMAGES转换成直刷包
 
 on:
   workflow_dispatch:
