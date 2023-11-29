@@ -138,7 +138,7 @@ jobs:
           sudo rm -rf ${boot_img}
           sudo rm -rf ${boot_img_mnt}
           sudo rm -rf ${rootfs_img_mnt}
-          sudo dd if=/dev/zero of=${boot_img} bs=1M count=400
+          sudo dd if=/dev/zero of=${boot_img} bs=1M count=2000
           sudo mkfs.ext4 ${boot_img}
           sudo mkdir ${boot_img_mnt}
           sudo mkdir ${rootfs_img_mnt}
