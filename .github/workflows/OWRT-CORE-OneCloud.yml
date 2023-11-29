@@ -275,7 +275,7 @@ jobs:
             sha256sum "$f" >"${f}.sha"
             xz --threads=0 --compress "$f"
           done
-          mv ${burnimg}.xz ./ARM_Out//openwrt-onecloud_$(date +"%Y-%m-%d_%H_%M")-burn.img.xz
+          mv ${burnimg}.xz ./ARM_Out/openwrt-onecloud_$(date +"%Y-%m-%d_%H_%M")-burn.img.xz
           sudo rm -rf openwrt/bin/targets/*/*/*.img
                
       - name: 上传固件
