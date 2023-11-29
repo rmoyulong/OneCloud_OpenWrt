@@ -180,6 +180,7 @@ jobs:
       - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
         run: |
           cp -rf $GITHUB_WORKSPACE/$OWRT_FILES openwrt/files
+          rm -rf openwrt/files/etc/config
           cd openwrt && make defconfig
         
       - name: 下载编译环境
