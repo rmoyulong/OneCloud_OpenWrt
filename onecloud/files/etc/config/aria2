@@ -1,1 +1,17 @@
 
+config aria2 'main'
+        option bt_enable_lpd 'true'
+        option enable_dht 'true'
+        option follow_torrent 'true'
+        option file_allocation 'none'
+        option save_session_interval '30'
+        list header ''
+        list extra_settings ''
+        option enabled '1'
+        option rpc_listen_port '6800'
+        option config_dir '/mnt/sda1/aria2'
+        option dir '/mnt/sda1/aria2/download'
+        option enable_log 'false'
+        option rpc_auth_method 'none'
+        option user 'root'
+

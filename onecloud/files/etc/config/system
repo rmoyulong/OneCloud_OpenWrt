@@ -1,0 +1,17 @@
+
+config system
+	option hostname 'OneCloud'
+	option timezone 'CST-8'
+	option zonename 'Asia/Shanghai'
+	option ttylogin '0'
+	option log_size '64'
+	option urandom_seed '0'
+
+config timeserver 'ntp'
+	option enabled '1'
+	option enable_server '1'
+	list server 'ntp.ntsc.ac.cn'
+	list server 'ntp.aliyun.com'
+	list server 'cn.ntp.org.cn'
+	list server 'pool.ntp.org'
+
