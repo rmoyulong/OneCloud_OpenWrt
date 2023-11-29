@@ -1,4 +1,4 @@
-name: 一站式构建onecloud直刷包
+name: 一站式快建精简onecloud直刷包
 
 on:
   repository_dispatch:
@@ -125,7 +125,7 @@ jobs:
           ./AmlImg unpack ./uboot.img burn/
           echo "::endgroup::"
           
-          gunzip  openwrt/bin/targets/*/*/*.gz          
+          gunzip  openwrt/bin/targets/*/*/*.gz
           diskimg=$(ls openwrt/bin/targets/*/*/*.img)
           loop=$(sudo losetup --find --show --partscan $diskimg)
           img_ext="openwrt.img"
