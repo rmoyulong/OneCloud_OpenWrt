@@ -263,11 +263,11 @@ jobs:
       - name: 清理Releases
         uses: rmoyulong/delete-older-releases@master
         with:
-          keep_latest: 6
+          keep_latest: 10
           delete_tags: true
 
-      - name: 清理Workflows
-        uses: rmoyulong/delete-workflow-runs@main
+      - name: 删除工作流
+        uses: GitRML/delete-workflow-runs@main
         with:
           retain_days: 0
           keep_minimum_runs: 1
