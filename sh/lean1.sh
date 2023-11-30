@@ -55,7 +55,6 @@ svn export https://github.com/Lienol/openwrt-package/trunk/luci-app-ssr-mudb-ser
 svn export https://github.com/immortalwrt/luci/branches/openwrt-18.06/applications/luci-app-eqos package/luci-app-eqos
 # svn export https://github.com/syb999/openwrt-19.07.1/trunk/package/network/services/msd_lite package/msd_lite
 svn export https://github.com/Lienol/openwrt-package/trunk/luci-app-filebrowser package/luci-app-filebrowser
-svn export https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-smartdns package/luci-app-smartdns
 
 # 科学上网插件
 git clone --depth=1 -b main https://github.com/stupidloud/helloworld package/luci-app-ssr-plus
