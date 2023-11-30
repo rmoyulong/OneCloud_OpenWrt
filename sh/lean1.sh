@@ -43,7 +43,6 @@ wget -qO- $GEO_MMDB_URL > files/etc/openclash/Country.mmdb
 # sed -i 's|/bin/login|/bin/login -f root|g' feeds/packages/utils/ttyd/files/ttyd.config
 
 # 添加额外插件
-git clone https://github.com/riverscn/openwrt-iptvhelper.git package/openwrt-iptvhelper
 git clone --depth=1 https://github.com/kongfl888/luci-app-adguardhome package/luci-app-adguardhome
 git clone --depth=1 -b openwrt-18.06 https://github.com/tty228/luci-app-wechatpush package/luci-app-serverchan
 git clone --depth=1 https://github.com/ilxp/luci-app-ikoolproxy package/luci-app-ikoolproxy
@@ -55,6 +54,8 @@ svn export https://github.com/Lienol/openwrt-package/trunk/luci-app-ssr-mudb-ser
 svn export https://github.com/immortalwrt/luci/branches/openwrt-18.06/applications/luci-app-eqos package/luci-app-eqos
 # svn export https://github.com/syb999/openwrt-19.07.1/trunk/package/network/services/msd_lite package/msd_lite
 svn export https://github.com/Lienol/openwrt-package/trunk/luci-app-filebrowser package/luci-app-filebrowser
+svn export https://github.com/NueXini/NueXini_Packages/trunk/luci-app-vlmcsd package/luci-app-vlmcsd
+svn export https://github.com/NueXini/NueXini_Packages/trunk/luci-app-qbittorrent package/luci-app-qbittorrent
 
 # 科学上网插件
 git clone --depth=1 -b main https://github.com/stupidloud/helloworld package/luci-app-ssr-plus
@@ -93,6 +94,9 @@ svn co https://github.com/kenzok8/small-package/trunk/xray-plugin package/xray-p
 svn co https://github.com/kenzok8/small-package/trunk/lua-neturl package/lua-neturl
 svn co https://github.com/kenzok8/small-package/trunk/trojan package/trojan
 svn co https://github.com/kenzok8/small-package/trunk/redsocks2 package/redsocks2
+svn co https://github.com/NueXini/NueXini_Packages/trunk/ipv6-helper package/ipv6-helper
+svn co https://github.com/NueXini/NueXini_Packages/trunk/UnblockNeteaseMusic-Go package/UnblockNeteaseMusic-Go
+svn co https://github.com/NueXini/NueXini_Packages/trunk/UnblockNeteaseMusic package/UnblockNeteaseMusic 
 
 # Themes
 git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/luci-theme-edge
