@@ -13,7 +13,6 @@ echo -e "msgstr \"常规\"" >> package/feeds/luci/luci-app-dnsforwarder/po/zh-cn
 
 echo -e "\nmsgid \"LOG\"" >> package/feeds/luci/luci-app-dnsforwarder/po/zh-cn/dnsforwarder.po
 echo -e "msgstr \"日志\"" >> package/feeds/luci/luci-app-dnsforwarder/po/zh-cn/dnsforwarder.po
-
               
 ##配置ip等
 #sed -i 's/192.168.1.1/192.168.1.110/g' package/base-files/files/bin/config_generate
