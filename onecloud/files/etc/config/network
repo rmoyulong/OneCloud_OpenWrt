@@ -1,20 +1,18 @@
 
 config interface 'loopback'
-	option ifname 'lo'
 	option proto 'static'
 	option ipaddr '127.0.0.1'
 	option netmask '255.0.0.0'
+	option device 'lo'
 
 config globals 'globals'
-	option ula_prefix 'fd2c:c6a4:b0d4::/48'
 
 config interface 'lan'
-	option type 'bridge'
-	option ifname 'eth0'
 	option proto 'static'
 	option ipaddr '192.168.1.110'
 	option netmask '255.255.255.0'
 	option ip6assign '60'
+	option device 'br-lan'
 
 config interface 'utun'
 	option proto 'none'
@@ -22,11 +20,23 @@ config interface 'utun'
 	option device 'utun'
 
 config interface 'docker'
-	option ifname 'docker0'
 	option proto 'none'
 	option auto '0'
+	option device 'docker0'
 
 config device
 	option type 'bridge'
 	option name 'docker0'
+
+config device
+	option name 'br-lan'
+	option type 'bridge'
+	list ports 'eth0'
+
+config interface 'lan6'
+	option proto 'dhcpv6'
+	option reqaddress 'try'
+	option reqprefix 'auto'
+	option device 'br-lan'
+	
 
