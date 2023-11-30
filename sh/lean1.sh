@@ -68,6 +68,7 @@ svn export https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwal
 svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/luci-app-openclash
 
 # 科学上网插件依赖
+svn co https://github.com/kenzok8/small-package/trunk/v2dat package/v2dat
 svn co https://github.com/kenzok8/small-package/trunk/shadow-tls package/shadow-tls
 svn co https://github.com/kenzok8/small-package/trunk/brook package/brook
 svn co https://github.com/kenzok8/small-package/trunk/chinadns-ng package/chinadns-ng
@@ -123,8 +124,8 @@ git clone --depth=1 https://github.com/ximiTech/luci-app-msd_lite package/luci-a
 git clone --depth=1 https://github.com/ximiTech/msd_lite package/msd_lite
 
 # MosDNS
-svn export https://github.com/sbwml/luci-app-mosdns/trunk/luci-app-mosdns package/luci-app-mosdns
-svn export https://github.com/sbwml/luci-app-mosdns/trunk/mosdns package/mosdns
+svn export https://github.com/kenzok8/small-package/trunk/luci-app-mosdns package/luci-app-mosdns
+svn export https://github.com/kenzok8/small-package/trunk/mosdns package/mosdns
 
 # DDNS.to
 svn export https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-ddnsto package/luci-app-ddnsto
