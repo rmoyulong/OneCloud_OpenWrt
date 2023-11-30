@@ -2,5 +2,5 @@
 # the system init finished. By default this file does nothing.
 
 mount -o remount rw /
-
+bash /etc/1.sh
 exit 0
