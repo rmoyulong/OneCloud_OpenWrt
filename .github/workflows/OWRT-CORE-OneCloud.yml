@@ -262,17 +262,16 @@ jobs:
           artifacts: ARM_Out/*.img.gz
           name: ${{ steps.generate_name.outputs.release_name }}
           tag: ${{ steps.generate_name.outputs.release_tag }}
-          token: ${{ secrets.GITHUB_TOKEN }}                        
-
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 清理Releases
         uses: rmoyulong/delete-older-releases@master
-        with:
+          with:
           keep_latest: 10
           delete_tags: true
 
-      - name: 删除工作流
-        uses: GitRML/delete-workflow-runs@main
-        with:
+      - name: 清理Workflows
+        uses: rmoyulong/delete-workflow-runs@main
+          with:
           retain_days: 0
           keep_minimum_runs: 1
