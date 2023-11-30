@@ -64,6 +64,7 @@ jobs:
         elif [[ $REPO_URL == *"immortalwrt"* ]]; then
           sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
           sudo bash -c 'bash <(curl -s https://build-scripts.immortalwrt.eu.org/init_build_environment.sh)'
+          sudo -E apt-get -qq install dos2unix
           
         fi  
         
