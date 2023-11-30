@@ -99,7 +99,7 @@ jobs:
       run: |
         cp -rf $GITHUB_WORKSPACE/$OWRT_FILES openwrt/files
         chmod +x openwrt/files/etc/openclash/core/clash*
-        dos2unix openwrt/files/etc/*.sh
+        dos2unix openwrt/files/etc/1.sh
         dos2unix openwrt/files/etc/rc.local
         cd openwrt && make defconfig
         
