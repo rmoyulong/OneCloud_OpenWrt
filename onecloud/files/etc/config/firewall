@@ -1,19 +1,22 @@
 
 config defaults
-	option syn_flood '1'
 	option input 'ACCEPT'
 	option output 'ACCEPT'
-	option forward 'REJECT'
+	option forward 'ACCEPT'
 	option flow_offloading '1'
 	option flow_offloading_hw '1'
-	option fullcone '2'
+	option synflood_protect '1'
+	option fullcone '1'
+	option fullcone6 '1'
 
 config zone
 	option name 'lan'
 	option input 'ACCEPT'
 	option output 'ACCEPT'
 	option forward 'ACCEPT'
-	option network 'lan utun'
+	list network 'lan'
+	list network 'utun'
+	list network 'lan6'
 
 config zone
 	option name 'wan'
@@ -147,10 +150,41 @@ config include 'mia'
 	option path '/etc/mia.include'
 	option reload '1'
 
+config zone 'docker'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'ACCEPT'
+	option name 'docker'
+	list network 'docker'
+
+config rule
+	option target 'ACCEPT'
+	option proto 'tcp udp'
+	option dest_port '1099'
+	option name 'TG'
+	option src '*'
+	option src_port '1099'
+
+config rule
+	option target 'ACCEPT'
+	option proto 'tcp udp'
+	option dest_port '1088'
+	option name 'www'
+	option src '*'
+	option src_port '1088'
+
+config rule
+	option enabled '1'
+	option target 'ACCEPT'
+	option proto 'tcp udp'
+	option dest_port '1092'
+	option name 'onecloud'
+	option src '*'
+	option src_port '1092'
+
 config include 'openclash'
 	option type 'script'
 	option path '/var/etc/openclash.include'
-	option reload '1'
 
 config include 'passwall'
 	option type 'script'
@@ -183,39 +217,4 @@ config rule 'kms'
 	option src 'wan'
 	option proto 'tcp'
 	option dest_port '1688'
-
-config zone 'docker'
-	option input 'ACCEPT'
-	option output 'ACCEPT'
-	option forward 'ACCEPT'
-	option name 'docker'
-	list network 'docker'
-
-
-config rule
-	option target 'ACCEPT'
-	option proto 'tcp udp'
-	option dest_port '1099'
-	option name 'TG'
-	option src '*'
-	option src_port '1099'
-
-config rule
-	option target 'ACCEPT'
-	option proto 'tcp udp'
-	option dest_port '1088'
-	option name 'www'
-	option src '*'
-	option src_port '1088'
-
-config rule
-	option enabled '1'
-	option target 'ACCEPT'
-	option proto 'tcp udp'
-	option dest_port '1092'
-	option name 'onecloud'
-	option src '*'
-	option src_port '1092'
-
-
 

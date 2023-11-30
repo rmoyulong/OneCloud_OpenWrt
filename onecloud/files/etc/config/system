@@ -10,8 +10,14 @@ config system
 config timeserver 'ntp'
 	option enabled '1'
 	option enable_server '1'
+	list server 'ntp.tencent.com'
+	list server 'ntp1.aliyun.com'
 	list server 'ntp.ntsc.ac.cn'
-	list server 'ntp.aliyun.com'
 	list server 'cn.ntp.org.cn'
-	list server 'pool.ntp.org'
+
+config imm_init
+	option ipv6 '1'
+	option lang '1'
+	option system_chn '1'
+	option opkg_mirror 'https://mirrors.vsean.net/openwrt'
 
