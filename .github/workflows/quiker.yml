@@ -98,7 +98,6 @@ jobs:
     - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
       run: |
         cp -rf $GITHUB_WORKSPACE/$OWRT_FILES openwrt/files
-        cp $GITHUB_WORKSPACE/sh/1.sh openwrt/files/root/1.sh
         chmod +x openwrt/files/etc/openclash/core/clash*
         cd openwrt && make defconfig
         
