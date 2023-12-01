@@ -92,7 +92,8 @@ jobs:
         
         cd openwrt
         if [[ $REPO_URL == *"immortalwrt"* ]]; then
-          svn export https://github.com/shiyu1314/openwrt-onecloud/trunk/target/linux/meson target/linux/meson
+          #svn export https://github.com/shiyu1314/openwrt-onecloud/trunk/target/linux/meson target/linux/meson
+          svn export https://github.com/rmoyulong/OneCloud_OpenWrt/trunk/target/linux/meson target/linux/meson
         fi
         
         $GITHUB_WORKSPACE/$DIY_P1_SH
