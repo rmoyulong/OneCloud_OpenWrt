@@ -13,6 +13,8 @@ config interface 'lan'
 	option netmask '255.255.255.0'
 	option ip6assign '60'
 	option device 'br-lan'
+	option gateway '192.168.1.1'
+	list dns '192.168.1.1'
 
 config interface 'utun'
 	option proto 'none'
@@ -38,5 +40,4 @@ config interface 'lan6'
 	option reqaddress 'try'
 	option reqprefix 'auto'
 	option device 'br-lan'
-	
 
