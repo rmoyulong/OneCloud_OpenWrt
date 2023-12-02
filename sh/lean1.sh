@@ -97,9 +97,10 @@ svn co https://github.com/kenzok8/small-package/trunk/trojan package/trojan
 svn co https://github.com/kenzok8/small-package/trunk/redsocks2 package/redsocks2
 svn co https://github.com/NueXini/NueXini_Packages/trunk/ipv6-helper package/ipv6-helper
 svn co https://github.com/NueXini/NueXini_Packages/trunk/UnblockNeteaseMusic-Go package/UnblockNeteaseMusic-Go
-svn co https://github.com/NueXini/NueXini_Packages/trunk/UnblockNeteaseMusic package/UnblockNeteaseMusic 
+svn co https://github.com/NueXini/NueXini_Packages/trunk/UnblockNeteaseMusic package/UnblockNeteaseMusic
 svn co https://github.com/kenzok8/small-package/trunk/aria2 package/aria2
-svn co https://github.com/kenzok8/small-package/trunk/ariang package/ariang 
+svn co https://github.com/kenzok8/small-package/trunk/ariang package/ariang
+svn co https://github.com/kenzok8/small-package/trunk/qBittorrent-static package/qBittorrent-static
 
 # Themes
 git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/luci-theme-edge
@@ -160,3 +161,4 @@ find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/
 # sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/controller/*.lua
 # sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/model/cbi/v2ray_server/*.lua
 # sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/view/v2ray_server/*.htm
+
