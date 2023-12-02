@@ -1,7 +1,4 @@
 #!/bin/sh
-# SPDX-License-Identifier: GPL-2.0-only
-#
-# Copyright (C) 2017 OpenWrt.org
 
 set -x
 [ $# -eq 5 ] || {
@@ -16,7 +13,7 @@ BOOTFSSIZE="$4"
 ROOTFSSIZE="$5"
 
 head=4
-sect=2048
+sect=63
 
 set $(ptgen -o $OUTPUT -h $head -s $sect -l 4096 -t c -p ${BOOTFSSIZE}M -t 83 -p ${ROOTFSSIZE}M)
 
@@ -27,3 +24,6 @@ ROOTFSSIZE="$(($4 / 512))"
 
 dd bs=512 if="$BOOTFS" of="$OUTPUT" seek="$BOOTOFFSET" conv=notrunc
 dd bs=512 if="$ROOTFS" of="$OUTPUT" seek="$ROOTFSOFFSET" conv=notrunc
+
+
+
