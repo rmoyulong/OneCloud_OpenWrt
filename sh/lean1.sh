@@ -56,6 +56,7 @@ svn export https://github.com/immortalwrt/luci/branches/openwrt-18.06/applicatio
 svn export https://github.com/Lienol/openwrt-package/trunk/luci-app-filebrowser package/luci-app-filebrowser
 svn export https://github.com/NueXini/NueXini_Packages/trunk/luci-app-vlmcsd package/luci-app-vlmcsd
 svn export https://github.com/NueXini/NueXini_Packages/trunk/luci-app-qbittorrent package/luci-app-qbittorrent
+svn export https://github.com/NueXini/NueXini_Packages/trunk/luci-app-unblockmusic package/luci-app-unblockmusic
 
 # 科学上网插件
 git clone --depth=1 https://github.com/fw876/helloworld.git package/helloworld
@@ -101,6 +102,7 @@ svn co https://github.com/NueXini/NueXini_Packages/trunk/UnblockNeteaseMusic pac
 svn co https://github.com/kenzok8/small-package/trunk/aria2 package/aria2
 svn co https://github.com/kenzok8/small-package/trunk/ariang package/ariang
 svn co https://github.com/kenzok8/small-package/trunk/qBittorrent-static package/qBittorrent-static
+svn co https://github.com/NueXini/NueXini_Packages/trunk/vlmcsd package/vlmcsd
 
 # Themes
 git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/luci-theme-edge
