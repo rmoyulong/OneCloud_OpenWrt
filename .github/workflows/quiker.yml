@@ -253,7 +253,7 @@ jobs:
         
         #信息
         export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
-        export OWRT_SOURCE=$(echo $OWRT_URL | cut -d '/' -f 5-)
+        export OWRT_SOURCE=$(echo $REPO_URL | cut -d '/' -f 5-)
         echo "OWRT_SOURCE=$OWRT_SOURCE" >> $GITHUB_ENV
         echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
         
