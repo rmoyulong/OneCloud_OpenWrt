@@ -269,7 +269,7 @@ jobs:
 
     - name: 上传固件
       uses: rmoyulong/action-gh-release@master
-      if: !cancelled()
+      if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
