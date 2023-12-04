@@ -251,15 +251,37 @@ jobs:
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
         echo "::set-output name=status::success"
         
-    - name: 上传固件到release
-      uses: softprops/action-gh-release@v1
-      if: steps.tag.outputs.status == 'success' && !cancelled()
+        #信息
+        export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+        export OWRT_SOURCE=$(echo $OWRT_URL | cut -d '/' -f 5-)
+        echo "OWRT_SOURCE=$OWRT_SOURCE" >> $GITHUB_ENV
+        echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
+        
+    #- name: 上传固件到release
+      #uses: softprops/action-gh-release@v1
+      #if: steps.tag.outputs.status == 'success' && !cancelled()
+      #env:
+        #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #with:
+        #tag_name: ${{ steps.tag.outputs.release_tag }}
+        #body_path: release.txt
+        #files: ${{ env.FIRMWARE }}/* 
+
+    - name: 上传固件
+      uses: rmoyulong/action-gh-release@master
+      if: !cancelled()
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.tag.outputs.release_tag }}
-        body_path: release.txt
-        files: ${{ env.FIRMWARE }}/*   
+        tag_name: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
+        files: ${{ env.FIRMWARE }}/*
+        body: |
+          自用玩客云固件！首次使用建议全新刷写！
+          =============基本信息============
+
+          源码：${{env.OWRT_SOURCE}}
+          密码：password
+          地址：${{env.OWRT_IP}}
 
     - name: 清理Releases
       uses: rmoyulong/delete-older-releases@master
