@@ -153,15 +153,21 @@ jobs:
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
         echo "status=success" >> $GITHUB_OUTPUT
     
-    - name: 上传固件到Releases
-      uses: softprops/action-gh-release@v1
+    - name: 上传直刷固件
+      uses: rmoyulong/action-gh-release@master
       if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.tag.outputs.release_tag }}
-        body_path: release.txt
+        tag_name: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
         files: ${{ env.FIRMWARE }}/*
+        body: |
+          自用玩客云直刷固件！使用双USB公头线刷机！
+          =============基本信息============
+
+          源码：${{env.OWRT_SOURCE}}
+          密码：password
+          地址：${{env.OWRT_IP}}
         
     - name: 清理Releases
       uses: dev-drprasad/delete-older-releases@v0.2.1
