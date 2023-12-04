@@ -267,7 +267,7 @@ jobs:
         #body_path: release.txt
         #files: ${{ env.FIRMWARE }}/* 
 
-    - name: 上传固件
+    - name: 上传直刷固件
       uses: rmoyulong/action-gh-release@master
       if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
@@ -276,7 +276,7 @@ jobs:
         tag_name: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
         files: ${{ env.FIRMWARE }}/*
         body: |
-          自用玩客云固件！首次使用建议全新刷写！
+          自用玩客云直刷固件！使用双USB公头线刷机！
           =============基本信息============
 
           源码：${{env.OWRT_SOURCE}}
