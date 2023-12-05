@@ -228,11 +228,11 @@ jobs:
                 
           cp -a $rom ./ARM_Out/openwrt-$(date +%Y%m%d)_${md5}.img.gz
 
-      - name: 上传固件
-        uses: actions/upload-artifact@main
-        with:
-          name: meson8b
-          path: ARM_Out/*
+      #- name: 上传固件
+        #uses: actions/upload-artifact@main
+        #with:
+          #name: meson8b
+          #path: ARM_Out/*
 
       - name: 上传配置文件
         uses: actions/upload-artifact@main
