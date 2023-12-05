@@ -57,8 +57,7 @@ svn export https://github.com/Lienol/openwrt-package/trunk/luci-app-filebrowser 
 svn export https://github.com/kenzok8/small-package/trunk/luci-app-unblockneteasemusic package/luci-app-unblockneteasemusic
 svn export https://github.com/kenzok8/small-package/trunk/luci-app-homeproxy package/luci-app-homeproxy
 svn export https://github.com/kenzok8/small-package/trunk/luci-app-easymesh package/luci-app-easymesh
-git clone --depth=1 https://github.com/openwrt-develop/luci-app-vlmcsd package/luci-app-vlmcsd
-#git clone --depth=1 https://github.com/openwrt-develop/openwrt-vlmcsd package/vlmcsd
+svn export https://github.com/kiddin9/openwrt-packages/trunk/luci-app-vlmcsd package/luci-app-vlmcsd
 
 # 科学上网插件
 git clone --depth=1 https://github.com/fw876/helloworld.git package/helloworld
@@ -71,6 +70,7 @@ svn export https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwal
 svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/luci-app-openclash
 
 # 科学上网插件依赖
+svn so  https://github.com/kiddin9/openwrt-packages/trunk/vlmcsd package/vlmcsd
 svn co https://github.com/kenzok8/small-package/trunk/v2dat package/v2dat
 svn co https://github.com/kenzok8/small-package/trunk/shadow-tls package/shadow-tls
 svn co https://github.com/kenzok8/small-package/trunk/brook package/brook
