@@ -153,7 +153,7 @@ jobs:
         tag_name: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
         files: openwrt/out/*
         body: |
-          自用玩客云${{ env.OWRT_TYPE }}固件！使用双USB公头线刷机！
+          自用玩客云${{ env.OWRT_TYPE }}直刷版固件！使用双USB公头线刷机！
           =============基本信息============
 
           源码：${{env.OWRT_SOURCE}}
