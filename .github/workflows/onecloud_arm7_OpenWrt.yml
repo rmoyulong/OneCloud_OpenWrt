@@ -78,7 +78,10 @@ jobs:
         chmod +x ./AmlImg
         curl -L -o ./uboot.img https://github.com/hzyitc/u-boot-onecloud/releases/download/build-20221028-0940/eMMC.burn.img
         mkdir -p openwrt/out 
-        curl -L -o openwrt/out/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/20231201003450/openwrt-20231201_d8bc7ca04d.img.gz
+        curl -L -o openwrt/out/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/OpenWrt_lede_23.12.05_09.17.43/openwrt-20231205_71768e995f.img.gz
+        
+        echo "OWRT_TYPE=[迷你版]" >> $GITHUB_ENV
+        #echo "OWRT_TYPE=[全版]" >> $GITHUB_ENV        
         
         ./AmlImg unpack ./uboot.img burn/
         echo "::endgroup::"
@@ -135,24 +138,7 @@ jobs:
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
         echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
-    
-    - name: 上传文件到Actions
-      uses: actions/upload-artifact@main
-      if: steps.organize.outputs.status == 'success' && !cancelled()
-      with:
-        name: OpenWrt_firmware_onecloud_${{ env.FILE_DATE }}
-        path: ${{ env.FIRMWARE }}
-        
-    - name: 生成Releases标签
-      id: tag
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-      run: |
-        echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
-        touch release.txt
-        [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
-        [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
-        echo "status=success" >> $GITHUB_OUTPUT
-    
+  
     - name: 上传直刷固件
       uses: rmoyulong/action-gh-release@master
       if: steps.tag.outputs.status == 'success' && !cancelled()
@@ -162,7 +148,7 @@ jobs:
         tag_name: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
         files: ${{ env.FIRMWARE }}/*
         body: |
-          自用玩客云直刷固件！使用双USB公头线刷机！
+          自用玩客云${{ env.OWRT_TYPE }}固件！使用双USB公头线刷机！
           =============基本信息============
 
           源码：${{env.OWRT_SOURCE}}
@@ -170,11 +156,14 @@ jobs:
           地址：${{env.OWRT_IP}}
         
     - name: 清理Releases
-      uses: dev-drprasad/delete-older-releases@v0.2.1
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      uses: rmoyulong/delete-older-releases@master
       with:
         keep_latest: 10
         delete_tags: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: 清理Workflows
+      uses: rmoyulong/delete-workflow-runs@main
+      with:
+        retain_days: 0
+        keep_minimum_runs: 1
         

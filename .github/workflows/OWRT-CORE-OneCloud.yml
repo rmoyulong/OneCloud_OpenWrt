@@ -203,12 +203,6 @@ jobs:
           make -j$(nproc) || make -j1 || make -j1 V=s
           echo "status=success" >> $GITHUB_OUTPUT
           echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV 
-
-      #- name: 上传 bin 目录
-        #uses: actions/upload-artifact@main
-        #with:
-          #name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-          #path: openwrt/bin
         
       - name: 整理固件
         id: assemble_artifact
@@ -228,25 +222,6 @@ jobs:
                 
           cp -a $rom ./ARM_Out/openwrt-$(date +%Y%m%d)_${md5}.img.gz
 
-      #- name: 上传固件
-        #uses: actions/upload-artifact@main
-        #with:
-          #name: meson8b
-          #path: ARM_Out/*
-
-      - name: 上传配置文件
-        uses: actions/upload-artifact@main
-        with:
-          name: meson8b-config
-          path: openwrt/.config  
- 
-      #- name: 上传脚本包
-        #uses: actions/upload-artifact@main
-        #with:
-          #name: armv7-Packages
-          #path: openwrt/bin/packages 
-
-
       - name: 生成标记和标签
         id: generate_name
         run: |
@@ -254,15 +229,13 @@ jobs:
           release_tag="$time"
           release_name="meson8b-$(date +%Y%m%d)"
           echo "release_name=$release_name" >> $GITHUB_OUTPUT
-          echo "release_tag=$release_tag" >> $GITHUB_OUTPUT       
-
-      #- name: 生成标签上传
-        #uses: ncipollo/release-action@v1
-        #with:
-          #artifacts: ARM_Out/*.img.gz
-          #name: ${{ steps.generate_name.outputs.release_name }}
-          #tag: ${{ steps.generate_name.outputs.release_tag }}
-          #token: ${{ secrets.GITHUB_TOKEN }}
+          echo "release_tag=$release_tag" >> $GITHUB_OUTPUT
+          
+          if [[ "${{ inputs.OWRT_TYPE }}" == *"OneCloud-ALL"* ]]; then
+            echo "OWRT_TYPE=[全版]" >> $GITHUB_ENV
+          else
+            echo "OWRT_TYPE=[迷你版]" >> $GITHUB_ENV          
+          fi
           
       - name: 上传IMAGES
         uses: rmoyulong/action-gh-release@master
@@ -272,7 +245,7 @@ jobs:
           tag_name: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
           files: ARM_Out/*.img.gz
           body: |
-            自用玩客云固件！首次使用rufus写盘启动！
+            自用玩客云${{ env.OWRT_TYPE }}固件！首次使用rufus写盘启动！
             =============基本信息============
 
             源码：${{env.OWRT_SOURCE}}

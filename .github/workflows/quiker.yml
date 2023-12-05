@@ -200,13 +200,6 @@ jobs:
       if: (!cancelled())
       run: df -hT
 
-    #- name: 上传bin目录
-      #uses: actions/upload-artifact@main
-      #if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
-      #with:
-        #name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        #path: openwrt/bin
-
     - name: 整理固件
       id: organize
       #if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
@@ -215,13 +208,6 @@ jobs:
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
-        
-    #- name: 上传firmware目录
-      #uses: actions/upload-artifact@main
-      #if: steps.organize.outputs.status == 'success' && !cancelled()
-      #with:
-        #name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        #path: ${{ env.FIRMWARE }}
 
     - name: 上传firmware到cowtransfer
       id: cowtransfer
@@ -256,16 +242,6 @@ jobs:
         export OWRT_SOURCE=$(echo $REPO_URL | cut -d '/' -f 5-)
         echo "OWRT_SOURCE=$OWRT_SOURCE" >> $GITHUB_ENV
         echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
-        
-    #- name: 上传固件到release
-      #uses: softprops/action-gh-release@v1
-      #if: steps.tag.outputs.status == 'success' && !cancelled()
-      #env:
-        #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #with:
-        #tag_name: ${{ steps.tag.outputs.release_tag }}
-        #body_path: release.txt
-        #files: ${{ env.FIRMWARE }}/* 
 
     - name: 上传直刷固件
       uses: rmoyulong/action-gh-release@master
@@ -276,7 +252,7 @@ jobs:
         tag_name: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
         files: ${{ env.FIRMWARE }}/*
         body: |
-          自用玩客云直刷固件！使用双USB公头线刷机！
+          自用玩客云一站式直刷固件！使用双USB公头线刷机！
           =============基本信息============
 
           源码：${{env.OWRT_SOURCE}}
