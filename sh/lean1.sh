@@ -54,11 +54,11 @@ svn export https://github.com/Lienol/openwrt-package/trunk/luci-app-ssr-mudb-ser
 svn export https://github.com/immortalwrt/luci/branches/openwrt-18.06/applications/luci-app-eqos package/luci-app-eqos
 # svn export https://github.com/syb999/openwrt-19.07.1/trunk/package/network/services/msd_lite package/msd_lite
 svn export https://github.com/Lienol/openwrt-package/trunk/luci-app-filebrowser package/luci-app-filebrowser
-#svn export https://github.com/NueXini/NueXini_Packages/trunk/luci-app-vlmcsd package/luci-app-vlmcsd
-#svn export https://github.com/NueXini/NueXini_Packages/trunk/luci-app-qbittorrent package/luci-app-qbittorrent
 svn export https://github.com/kenzok8/small-package/trunk/luci-app-unblockneteasemusic package/luci-app-unblockneteasemusic
 svn export https://github.com/kenzok8/small-package/trunk/luci-app-homeproxy package/luci-app-homeproxy
 svn export https://github.com/kenzok8/small-package/trunk/luci-app-easymesh package/luci-app-easymesh
+git clone --depth=1 https://github.com/openwrt-develop/luci-app-vlmcsd package/luci-app-vlmcsd
+git clone --depth=1 https://github.com/openwrt-develop/openwrt-vlmcsd package/vlmcsd
 
 # 科学上网插件
 git clone --depth=1 https://github.com/fw876/helloworld.git package/helloworld
@@ -98,13 +98,10 @@ svn co https://github.com/kenzok8/small-package/trunk/xray-plugin package/xray-p
 svn co https://github.com/kenzok8/small-package/trunk/lua-neturl package/lua-neturl
 svn co https://github.com/kenzok8/small-package/trunk/trojan package/trojan
 svn co https://github.com/kenzok8/small-package/trunk/redsocks2 package/redsocks2
-#svn co https://github.com/NueXini/NueXini_Packages/trunk/ipv6-helper package/ipv6-helper
 svn co https://github.com/kenzok8/small-package/trunk/UnblockNeteaseMusic-Go package/UnblockNeteaseMusic-Go
 svn co https://github.com/kenzok8/small-package/trunk/UnblockNeteaseMusic package/UnblockNeteaseMusic
 svn co https://github.com/kenzok8/small-package/trunk/aria2 package/aria2
 svn co https://github.com/kenzok8/small-package/trunk/ariang package/ariang
-#svn co https://github.com/kenzok8/small-package/trunk/qBittorrent-static package/qBittorrent-static
-#svn co https://github.com/NueXini/NueXini_Packages/trunk/vlmcsd package/vlmcsd
 
 # Themes
 git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/luci-theme-edge
