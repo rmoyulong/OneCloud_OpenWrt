@@ -58,7 +58,7 @@ svn export https://github.com/kenzok8/small-package/trunk/luci-app-unblockneteas
 svn export https://github.com/kenzok8/small-package/trunk/luci-app-homeproxy package/luci-app-homeproxy
 svn export https://github.com/kenzok8/small-package/trunk/luci-app-easymesh package/luci-app-easymesh
 git clone --depth=1 https://github.com/openwrt-develop/luci-app-vlmcsd package/luci-app-vlmcsd
-git clone --depth=1 https://github.com/openwrt-develop/openwrt-vlmcsd package/vlmcsd
+#git clone --depth=1 https://github.com/openwrt-develop/openwrt-vlmcsd package/vlmcsd
 
 # 科学上网插件
 git clone --depth=1 https://github.com/fw876/helloworld.git package/helloworld
