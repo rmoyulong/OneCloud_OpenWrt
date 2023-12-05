@@ -98,7 +98,7 @@ svn co https://github.com/kenzok8/small-package/trunk/xray-plugin package/xray-p
 svn co https://github.com/kenzok8/small-package/trunk/lua-neturl package/lua-neturl
 svn co https://github.com/kenzok8/small-package/trunk/trojan package/trojan
 svn co https://github.com/kenzok8/small-package/trunk/redsocks2 package/redsocks2
-svn co https://github.com/NueXini/NueXini_Packages/trunk/ipv6-helper package/ipv6-helper
+#svn co https://github.com/NueXini/NueXini_Packages/trunk/ipv6-helper package/ipv6-helper
 svn co https://github.com/kenzok8/small-package/trunk/UnblockNeteaseMusic-Go package/UnblockNeteaseMusic-Go
 svn co https://github.com/kenzok8/small-package/trunk/UnblockNeteaseMusic package/UnblockNeteaseMusic
 svn co https://github.com/kenzok8/small-package/trunk/aria2 package/aria2
