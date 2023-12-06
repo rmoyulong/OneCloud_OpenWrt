@@ -182,6 +182,16 @@ config rule
 	option src '*'
 	option src_port '1092'
 
+config include 'homeproxy_pre'
+	option type 'nftables'
+	option path '/var/run/homeproxy/fw4_pre.nft'
+	option position 'table-pre'
+
+config include 'homeproxy_post'
+	option type 'nftables'
+	option path '/var/run/homeproxy/fw4_post.nft'
+	option position 'table-post'
+
 config include 'openclash'
 	option type 'script'
 	option path '/var/etc/openclash.include'
