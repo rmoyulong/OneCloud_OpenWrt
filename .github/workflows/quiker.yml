@@ -102,7 +102,7 @@ jobs:
           #svn export https://github.com/shiyu1314/openwrt-onecloud/trunk/target/linux/meson target/linux/meson
           #svn export https://github.com/coolsnowwolf/lede/tree/master/target/linux/meson target/linux/meson
           
-          mv $GITHUB_WORKSPACE/target/linux/meson target/linux/meson
+          mv $GITHUB_WORKSPACE/lede/target/linux/meson target/linux/meson
           chmod -Rf 755 target/linux/meson
         fi
         
