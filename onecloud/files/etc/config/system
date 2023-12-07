@@ -16,7 +16,7 @@ config timeserver 'ntp'
 	list server 'cn.ntp.org.cn'
 
 config imm_init
-	option ipv6 '1'
+	option ipv6 '2'
 	option lang '1'
 	option system_chn '1'
 	option opkg_mirror 'https://mirrors.vsean.net/openwrt'

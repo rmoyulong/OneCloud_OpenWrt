@@ -221,6 +221,11 @@ config include 'shadowsocksr'
 	option path '/var/etc/shadowsocksr.include'
 	option reload '1'
 
+config include 'unblockmusic'
+	option type 'script'
+	option path '/var/etc/unblockmusic.include'
+	option reload '1'
+
 config rule 'kms'
 	option name 'kms'
 	option target 'ACCEPT'
