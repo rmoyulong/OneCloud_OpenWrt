@@ -63,9 +63,9 @@ svn export https://github.com/kiddin9/openwrt-packages/trunk/luci-app-xunlei pac
 git clone --depth=1 https://github.com/immortalwrt/homeproxy package/luci-app-homeproxy
 git clone --depth=1 https://github.com/fw876/helloworld.git package/helloworld
 svn export https://github.com/haiibo/packages/trunk/luci-app-vssr package/luci-app-vssr
-svn export https://github.com/kenzok8/small-package/trunk/luci-app-bypass package/luci-app-bypass
-svn export https://github.com/kenzok8/small-package/trunk/luci-app-passwall package/luci-app-passwall
-svn export https://github.com/kenzok8/small-package/trunk/luci-app-passwall2 package/luci-app-passwall2
+svn export https://github.com/kiddin9/openwrt-packages/trunk/luci-app-bypass package/luci-app-bypass
+svn export https://github.com/kiddin9/openwrt-packages/trunk/luci-app-passwall package/luci-app-passwall
+svn export https://github.com/kiddin9/openwrt-packages/trunk/luci-app-passwall2 package/luci-app-passwall2
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb package/lua-maxminddb
 #git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
 #svn export https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall package/luci-app-passwall
@@ -85,8 +85,8 @@ svn co https://github.com/kenzok8/small-package/trunk/UnblockNeteaseMusic-Go pac
 svn co https://github.com/kenzok8/small-package/trunk/UnblockNeteaseMusic package/UnblockNeteaseMusic
 svn co https://github.com/kenzok8/small-package/trunk/aria2 package/aria2
 svn co https://github.com/kenzok8/small-package/trunk/ariang package/ariang
-svn so https://github.com/kenzok8/small-package/trunk/filebrowser package/filebrowser
-svn so https://github.com/kiddin9/openwrt-packages/trunk/vlmcsd package/vlmcsd
+svn co https://github.com/kenzok8/small-package/trunk/filebrowser package/filebrowser
+svn co https://github.com/kiddin9/openwrt-packages/trunk/vlmcsd package/vlmcsd
 svn co https://github.com/kiddin9/openwrt-packages/trunk/sing-box package/sing-box
 
 # Themes
@@ -148,4 +148,3 @@ find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/
 # sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/controller/*.lua
 # sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/model/cbi/v2ray_server/*.lua
 # sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/view/v2ray_server/*.htm
-
