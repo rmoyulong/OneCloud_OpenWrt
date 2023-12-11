@@ -134,7 +134,7 @@ config rule
 	option proto 'udp'
 	option family 'ipv4'
 	option target 'REJECT'
-	option enabled 'false'
+	option enabled '0'
 
 config include
 	option path '/etc/firewall.user'
@@ -174,7 +174,6 @@ config rule
 	option src_port '1088'
 
 config rule
-	option enabled '1'
 	option target 'ACCEPT'
 	option proto 'tcp udp'
 	option dest_port '1092'
@@ -232,4 +231,11 @@ config rule 'kms'
 	option src 'wan'
 	option proto 'tcp'
 	option dest_port '1688'
+
+config rule
+	option name 'homeproxy'
+	option src '*'
+	option src_port '5330'
+	option dest_port '5330'
+	option target 'ACCEPT'
 
