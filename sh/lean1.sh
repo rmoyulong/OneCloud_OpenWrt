@@ -91,6 +91,7 @@ svn co https://github.com/kiddin9/openwrt-packages/trunk/vlmcsd package/vlmcsd
 svn co https://github.com/kiddin9/openwrt-packages/trunk/sing-box package/sing-box
 svn co https://github.com/kiddin9/openwrt-packages/trunk/UnblockNeteaseMusic-Go package/UnblockNeteaseMusic-Go
 svn co https://github.com/kiddin9/openwrt-packages/trunk/UnblockNeteaseMusic package/UnblockNeteaseMusic
+svn co https://github.com/kiddin9/openwrt-packages/trunk/wrtbwmon package/wrtbwmon
 # Themes
 git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/luci-theme-edge
 git clone --depth=1 https://github.com/Joecaicai/luci-theme-ifit package/luci-theme-ifit 
