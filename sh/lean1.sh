@@ -38,3 +38,10 @@ svn export https://github.com/kiddin9/openwrt-packages/trunk/luci-app-unblockmus
 svn export https://github.com/kiddin9/openwrt-packages/trunk/luci-app-vlmcsd package/luci-app-vlmcsd
 svn export https://github.com/kiddin9/openwrt-packages/trunk/luci-app-zerotier package/luci-app-zerotier
 svn co https://github.com/kiddin9/openwrt-packages/trunk/vlmcsd package/vlmcsd
+
+
+# Themes
+git clone --depth=1 https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom package/luci-theme-infinityfreedom
+
+# 取消主题默认设置
+find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/set luci.main.mediaurlbase/d' {} \;
