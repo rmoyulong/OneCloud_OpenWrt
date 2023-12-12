@@ -74,12 +74,10 @@ git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb package/lua-maxmi
 #svn export https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwall2 package/luci-app-passwall2
 svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/luci-app-openclash
 
-if [[ $OWRT_URL == *"immortalwrt"* ]]; then
-  git clone --depth=1 https://github.com/immortalwrt/homeproxy package/luci-app-homeproxy
-fi
-
 if [[ $OWRT_URL == *"lede"* ]]; then
   svn export https://github.com/kiddin9/openwrt-packages/trunk/luci-app-homeproxy package/luci-app-homeproxy
+else
+  git clone --depth=1 https://github.com/immortalwrt/homeproxy package/luci-app-homeproxy
 fi
 
 # 科学上网插件依赖
