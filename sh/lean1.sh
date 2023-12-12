@@ -78,6 +78,10 @@ if [[ $OWRT_URL == *"immortalwrt"* ]]; then
   git clone --depth=1 https://github.com/immortalwrt/homeproxy package/luci-app-homeproxy
 fi
 
+if [[ $OWRT_URL == *"lede"* ]]; then
+  svn export https://github.com/kiddin9/openwrt-packages/trunk/luci-app-homeproxy package/luci-app-homeproxy
+fi
+
 # 科学上网插件依赖
 svn co https://github.com/kenzok8/small-package/trunk/v2dat package/v2dat
 svn co https://github.com/kenzok8/small-package/trunk/shadowsocks-libev package/shadowsocks-libev
