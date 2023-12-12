@@ -63,7 +63,6 @@ svn export https://github.com/kiddin9/openwrt-packages/trunk/luci-app-zerotier p
 svn export https://github.com/kiddin9/openwrt-packages/trunk/luci-app-xunlei package/luci-app-xunlei
 
 # 科学上网插件
-git clone --depth=1 https://github.com/immortalwrt/homeproxy package/luci-app-homeproxy
 git clone --depth=1 https://github.com/fw876/helloworld.git package/helloworld
 svn export https://github.com/haiibo/packages/trunk/luci-app-vssr package/luci-app-vssr
 svn export https://github.com/kiddin9/openwrt-packages/trunk/luci-app-bypass package/luci-app-bypass
@@ -74,6 +73,10 @@ git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb package/lua-maxmi
 #svn export https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall package/luci-app-passwall
 #svn export https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwall2 package/luci-app-passwall2
 svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/luci-app-openclash
+
+if [[ $OWRT_URL == *"immortalwrt"* ]]; then
+  git clone --depth=1 https://github.com/immortalwrt/homeproxy package/luci-app-homeproxy
+fi
 
 # 科学上网插件依赖
 svn co https://github.com/kenzok8/small-package/trunk/v2dat package/v2dat
