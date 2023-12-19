@@ -16,6 +16,9 @@ on:
   #schedule:
     #- cron: '05 2 * * 4'
 
+#权限
+permissions: write-all
+
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   REPO_URL: https://github.com/immortalwrt/immortalwrt
