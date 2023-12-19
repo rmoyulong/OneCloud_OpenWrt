@@ -105,9 +105,6 @@ jobs:
       id: hubdocker
       run: |
         TAG=latest
-        if [ ! -z "$1" ];then
-          TAG=$1
-        fi      
         echo "OWRT_TAG=$TAG" >> $GITHUB_ENV
         
         curl -L -o openwrt-armvirt-onecloud-rootfs.tar https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/OpenWrt_immortalwrt_23.12.15_02.51.30/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
