@@ -13,13 +13,16 @@ IMG_NAME=mojialin/openwrt_onecloud
 
 [ -d "$TMPDIR" ] && rm -rf "$TMPDIR"
 mkdir -p "$OUTDIR"
-mkdir -p "$TMPDIR"  && \
-gzip -dc openwrt-armvirt-onecloud-rootfs.tar.gz | ( cd "$TMPDIR" && tar xf - ) && \
-cp -f rc.local "$TMPDIR/etc/" && \
-rm -f "$TMPDIR/etc/bench.log" && \
+mkdir -p "$TMPDIR"
 
-(cd "$TMPDIR" && tar -czvf ../openwrt-armvirt-onecloud-rootfs.tar.gz .) && \
+cd "$TMPDIR"
+tar zxvfp gzip openwrt-armvirt-onecloud-rootfs.tar.gz
+mv ../rc.local "$TMPDIR/etc/"
 
-docker build -t ${IMG_NAME}:${TAG} . && \
-rm -rf "$TMPDIR" && \
+tar zcvfp ../openwrt-armvirt-onecloud-rootfs.tar.gz .
+
+cd ..
+
+docker build -t ${IMG_NAME}:${TAG} .
+rm -rf "$TMPDIR" 
 docker save ${IMG_NAME}:${TAG} | pigz -9 > $OUTDIR/docker-img-openwrt-oncloud-${TAG}.gz
