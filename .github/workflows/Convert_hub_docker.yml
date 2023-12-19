@@ -113,7 +113,7 @@ jobs:
         #转换为.tar.gz文件
         curl -L -o hubdocker/openwrt-armvirt-onecloud-rootfs.tar https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/OpenWrt_immortalwrt_23.12.15_02.51.30/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
         
-        tar -czvf hubdocker/openwrt-armvirt-onecloud-rootfs.tar.gz hubdocker/openwrt-armvirt-onecloud-rootfs.tar
+        tar zcvfp hubdocker/openwrt-armvirt-onecloud-rootfs.tar.gz hubdocker/openwrt-armvirt-onecloud-rootfs.tar
         
         cd hubdocker
         dos2unix ./*.sh
