@@ -10,7 +10,7 @@ mkdir -p "$TMPDIR"
 
 cd "$TMPDIR"
 tar zxvfp ../openwrt-armvirt-onecloud-rootfs.tar.gz
-cp ../rc.local etc/rc.local
+mv $GITHUB_WORKSPACE/docker/rc.local ./etc/rc.local
 
 tar zcvfp ../openwrt-armvirt-onecloud-rootfs.tar.gz .
 
