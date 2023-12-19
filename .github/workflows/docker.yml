@@ -262,6 +262,7 @@ jobs:
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+        echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
     - name: 上传直刷固件
