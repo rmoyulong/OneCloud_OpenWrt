@@ -225,7 +225,7 @@ jobs:
         mv $GITHUB_WORKSPACE/docker/build-docker.sh hubdocker/build-docker.sh
         
         #转换为.tar.gz文件
-        tar -czvf hubdocker/openwrt-armvirt-onecloud-rootfs.tar.gz openwrt/bin/targets/*/*/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
+        tar zcvfp hubdocker/openwrt-armvirt-onecloud-rootfs.tar.gz openwrt/bin/targets/*/*/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
         
         cd hubdocker
         dos2unix ./*.sh
