@@ -116,12 +116,7 @@ jobs:
         
         #转换为.tar.gz文件
         cd /mnt/docker
-        sudo gzip openwrt-armvirt-onecloud-rootfs.tar
-        dos2unix ./*.sh
-        dos2unix ./rc.local
-        chmod +x ./*.sh
-        chmod +x ./rc.local
-        
+        sudo gzip openwrt-armvirt-onecloud-rootfs.tar        
         sudo bash build-docker.sh
         
         docker load < opt/imgs/docker-img-openwrt-oncloud-${{ env.OWRT_TAG }}.gz
