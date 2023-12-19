@@ -224,12 +224,12 @@ jobs:
         fi      
         echo "OWRT_TAG=$TAG" >> $GITHUB_ENV
         
-        cp openwrt/bin/targets/*/*/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar docker
+        cp openwrt/bin/targets/*/*/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar docker/openwrt-armvirt-onecloud-rootfs.tar 
         sudo cp -r docker /mnt
         
         #转换为.tar.gz文件
         cd /mnt/docker
-        tar zcvfp openwrt-armvirt-onecloud-rootfs.tar.gz immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
+        sudo gzip openwrt-armvirt-onecloud-rootfs.tar
         dos2unix ./*.sh
         dos2unix ./rc.local
         chmod +x ./*.sh
@@ -244,10 +244,6 @@ jobs:
         docker push mojialin/openwrt_onecloud
         docker push mojialin/openwrt_onecloud:${{ env.OWRT_TAG }}
         
-        cd /workdir
-        docker_name=docker-img-openwrt-oncloud-${{ env.OWRT_TAG }}.gz
-        mv /mnt/docker/opt/imgs/$docker_name openwrt/bin/targets/*/*/$docker_name
-        
         echo "::set-output name=status::success"
         
     - name: 整理固件
@@ -255,7 +251,9 @@ jobs:
       #if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         rm openwrt/bin/targets/*/*/*.tar
-        mv /mnt/docker/openwrt-armvirt-onecloud-rootfs.tar.gz openwrt/bin/targets/*/*/openwrt-armvirt-onecloud-rootfs.tar.gz
+        cp /mnt/docker/openwrt-armvirt-onecloud-rootfs.tar.gz openwrt/bin/targets/*/*/openwrt-armvirt-onecloud-rootfs.tar.gz
+        docker_name=docker-img-openwrt-oncloud-${{ env.OWRT_TAG }}.gz
+        cp /mnt/docker/opt/imgs/$docker_name openwrt/bin/targets/*/*/$docker_name
         
         cd openwrt/bin/targets/*/*
         rm -rf packages
