@@ -247,11 +247,12 @@ jobs:
       #if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         rm openwrt/bin/targets/*/*/*.tar
-        sudo cp onecloud/openwrt-armvirt-onecloud-rootfs.tar.gz openwrt/bin/targets/*/*/openwrt-armvirt-onecloud-rootfs.tar.gz
+        sudo cp onecloud/openwrt-armvirt-onecloud-rootfs.tar openwrt/bin/targets/*/*/openwrt-armvirt-onecloud-rootfs.tar
         docker_name=docker-img-openwrt-oncloud-${{ env.OWRT_TAG }}.gz
         sudo cp onecloud/opt/imgs/$docker_name openwrt/bin/targets/*/*/$docker_name
         
-        cd openwrt/bin/targets/*/*
+        cd openwrt/bin/targets/*/*        
+        sudo gzip openwrt-armvirt-onecloud-rootfs.tar
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
