@@ -13,8 +13,8 @@ on:
         description: 'SSH connection to Actions'
         required: false
         default: 'false'
-  schedule:
-    - cron: '05 2 * * 4'
+  #schedule:
+    #- cron: '05 2 * * 4'
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -204,7 +204,11 @@ jobs:
     - name: 整理固件
       id: organize
       #if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-      run: |
+      run: |      
+        #转换为.tar.gz文件
+        tar -czvf openwrt/bin/targets/*/*/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar.gz immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
+        rm openwrt/bin/targets/*/*/*.tar
+        
         cd openwrt/bin/targets/*/*
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
