@@ -110,16 +110,13 @@ jobs:
         fi      
         echo "OWRT_TAG=$TAG" >> $GITHUB_ENV
         
-        cd /mnt
-        mkdir -p hubdocker
-        cp $GITHUB_WORKSPACE/docker/rc.local /mnt/hubdocker/rc.local
-        cp $GITHUB_WORKSPACE/docker/.dockerignore /mnt/hubdocker/.dockerignore
-        cp $GITHUB_WORKSPACE/docker/Dockerfile /mnt/hubdocker/Dockerfile
-        cp $GITHUB_WORKSPACE/docker/build-docker.sh /mnt/hubdocker/build-docker.sh
+        curl -L -o openwrt-armvirt-onecloud-rootfs.tar https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/OpenWrt_immortalwrt_23.12.15_02.51.30/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
+        cp openwrt-armvirt-onecloud-rootfs.tar docker
+        sudo cp -r docker /mnt
         
         #转换为.tar.gz文件
-        cd /mnt/hubdocker
-        curl -L -o /mnt/hubdocker/openwrt-armvirt-onecloud-rootfs.tar https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/OpenWrt_immortalwrt_23.12.15_02.51.30/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
+        cd /mnt/docker
+
         tar zcvfp openwrt-armvirt-onecloud-rootfs.tar.gz openwrt-armvirt-onecloud-rootfs.tar
         dos2unix ./*.sh
         dos2unix ./rc.local
@@ -135,23 +132,13 @@ jobs:
         docker push mojialin/openwrt_onecloud
         docker push mojialin/openwrt_onecloud:${{ env.OWRT_TAG }}
         
-        #cd ..
-        #docker_name=docker-img-openwrt-oncloud-${{ env.OWRT_TAG }}.gz
-        #mv hubdocker/opt/imgs/$docker_name openwrt/bin/targets/*/*/$docker_name
-        
         echo "::set-output name=status::success"
         
     - name: 整理固件
       id: organize
       #if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        #rm openwrt/bin/targets/*/*/*.tar
-        #mv hubdocker/openwrt-armvirt-onecloud-rootfs.tar.gz openwrt/bin/targets/*/*/openwrt-armvirt-onecloud-rootfs.tar.gz
-        
-        #cd openwrt/bin/targets/*/*
-        #rm -rf packages
-        
-        cd /mnt/hubdocker/opt/imgs/
+        cd /mnt/docker/opt/imgs/
         
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
