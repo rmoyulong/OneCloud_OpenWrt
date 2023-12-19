@@ -64,7 +64,7 @@ jobs:
           sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
           sudo -E apt-get -qq update
           sudo -E apt-get -qq install $(curl -fsSL https://is.gd/depends_ubuntu_2204)
-          sudo -E apt-get -qq install libfuse-dev dos2unix
+          sudo -E apt-get -qq install libfuse-dev dos2unix          
           sudo -E apt-get -qq autoremove --purge
           sudo -E apt-get -qq clean
           
@@ -232,7 +232,21 @@ jobs:
         chmod +x ./*.sh
         chmod +x ./rc.local
         
-        build-docker.sh
+        sudo bash build-docker.sh
+        
+        gzip -dc $OUTDIR/*.gz | docker load
+        docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
+        
+        docker tag mojialin/openwrt_onecloud mojialin/openwrt_onecloud:${{ env.TAG }}
+        
+        docker push mojialin/openwrt_onecloud
+        docker push mojialin/openwrt_onecloud:${{ env.TAG }}
+        
+        cd ..
+        docker_name=docker-img-openwrt-oncloud-${{ env.TAG }}.gz
+        mv hubdocker/opt/imgs/$docker_name openwrt/bin/targets/*/*/$docker_name
+        
+        echo "::set-output name=status::success"
         
     - name: 整理固件
       id: organize
@@ -240,6 +254,7 @@ jobs:
       run: |
         rm openwrt/bin/targets/*/*/*.tar
         mv hubdocker/openwrt-armvirt-onecloud-rootfs.tar.gz openwrt/bin/targets/*/*/openwrt-armvirt-onecloud-rootfs.tar.gz
+        
         cd openwrt/bin/targets/*/*
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
