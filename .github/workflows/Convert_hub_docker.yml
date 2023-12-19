@@ -126,8 +126,7 @@ jobs:
         sudo bash build-docker.sh
         
         docker load < opt/imgs/docker-img-openwrt-oncloud-${TAG}.gz
-        #docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
-        docker login --username="mojialin" --password="a3VCpu,Vku2+M!G"
+        docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
         
         docker tag mojialin/openwrt_onecloud mojialin/openwrt_onecloud:${TAG}        
         docker push mojialin/openwrt_onecloud
@@ -142,21 +141,21 @@ jobs:
         cd onecloud/opt/imgs/
         
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
         echo "::set-output name=status::success"
 
     - name: 上传rootfs
       uses: rmoyulong/action-gh-release@master
-      if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
-        files: ${{ env.FIRMWARE }}/*
+        tag_name: hub_docker_$OWRT_DATE
+        files: onecloud/opt/imgs/*
         body: |
-          自用玩客云一站hub docker固件-[docker版底包]
+          自用玩客云hub docker 底包
           =============基本信息============
 
-          源码：${{env.OWRT_SOURCE}}
+          名称：${{env.OWRT_NAME}}
           密码：password
           地址：${{env.OWRT_IP}}
 
