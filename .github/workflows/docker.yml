@@ -35,7 +35,7 @@ env:
   TZ: Asia/Shanghai
 
 jobs:
-  build_burn_onecloud_quick:
+  build_burn_onecloud_docker:
     runs-on: ubuntu-22.04
 
     steps:
