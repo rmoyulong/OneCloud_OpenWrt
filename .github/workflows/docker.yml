@@ -241,11 +241,11 @@ jobs:
         
         sudo bash build-docker.sh
         
-        docker load < openwrt-armvirt-onecloud-rootfs.tar.gz
+        tar zcvfp openwrt-armvirt-onecloud-rootfs.tar.gz openwrt-armvirt-onecloud-rootfs.tar
+        docker load < opt/imgs/openwrt-armvirt-onecloud-rootfs.tar.gz
         docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
         
-        docker tag mojialin/openwrt_onecloud mojialin/openwrt_onecloud:${{ env.OWRT_TAG }}
-        
+        docker tag mojialin/openwrt_onecloud mojialin/openwrt_onecloud:${{ env.OWRT_TAG }}        
         docker push mojialin/openwrt_onecloud
         docker push mojialin/openwrt_onecloud:${{ env.OWRT_TAG }}
         
