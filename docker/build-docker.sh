@@ -16,7 +16,7 @@ mkdir -p "$OUTDIR"
 mkdir -p "$TMPDIR"
 
 cd "$TMPDIR"
-tar zxvfp gzip openwrt-armvirt-onecloud-rootfs.tar.gz
+tar zxvfp openwrt-armvirt-onecloud-rootfs.tar.gz
 mv ../rc.local "$TMPDIR/etc/"
 
 tar zcvfp ../openwrt-armvirt-onecloud-rootfs.tar.gz .
