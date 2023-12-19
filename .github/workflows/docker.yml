@@ -200,14 +200,46 @@ jobs:
       if: (!cancelled())
       run: df -hT
 
+    - name: 检查docker环境
+      working-directory: /workdir
+      run: |
+        echo "docker buildx 版本"
+        docker buildx version
+        echo "ls -l /proc/sys/fs/binfmt_misc"
+        ls -l /proc/sys/fs/binfmt_misc
+        echo "docker run --privileged --rm tonistiigi/binfmt --install all"
+        docker run --privileged --rm tonistiigi/binfmt --install all
+        echo "ls -l /proc/sys/fs/binfmt_misc"
+        ls -l /proc/sys/fs/binfmt_misc
+        echo "docker buildx ls"
+        docker buildx ls
+        
+    - name: 生成hub docker固件
+      id: hubdocker
+      run: |
+        mkdir -p hubdocker
+        mv $GITHUB_WORKSPACE/docker/rc.local hubdocker/rc.local
+        mv $GITHUB_WORKSPACE/docker/.dockerignore hubdocker/.dockerignore
+        mv $GITHUB_WORKSPACE/docker/Dockerfile hubdocker/Dockerfile
+        mv $GITHUB_WORKSPACE/docker/build-docker.sh hubdocker/build-docker.sh
+        
+        #转换为.tar.gz文件
+        tar -czvf hubdocker/openwrt-armvirt-onecloud-rootfs.tar.gz openwrt/bin/targets/*/*/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
+        
+        cd hubdocker
+        dos2unix ./*.sh
+        dos2unix ./rc.local
+        chmod +x ./*.sh
+        chmod +x ./rc.local
+        
+        build-docker.sh
+        
     - name: 整理固件
       id: organize
       #if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-      run: |      
-        #转换为.tar.gz文件
-        tar -czvf openwrt/bin/targets/*/*/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar.gz immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
+      run: |
         rm openwrt/bin/targets/*/*/*.tar
-        
+        mv hubdocker/openwrt-armvirt-onecloud-rootfs.tar.gz openwrt/bin/targets/*/*/openwrt-armvirt-onecloud-rootfs.tar.gz
         cd openwrt/bin/targets/*/*
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
