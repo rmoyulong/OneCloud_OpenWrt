@@ -123,7 +123,8 @@ jobs:
         sudo bash build-docker.sh
         
         docker load < opt/imgs/docker-img-openwrt-oncloud-${TAG}.gz
-        docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
+        #docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
+        docker login --username="mojialin" --password="a3VCpu,Vku2+M!G"
         
         docker tag mojialin/openwrt_onecloud mojialin/openwrt_onecloud:${TAG}        
         docker push mojialin/openwrt_onecloud
