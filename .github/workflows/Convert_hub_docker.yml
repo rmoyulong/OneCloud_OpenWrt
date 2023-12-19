@@ -107,13 +107,16 @@ jobs:
         TAG=latest
         echo "OWRT_TAG=$TAG" >> $GITHUB_ENV
         
-        curl -L -o openwrt-armvirt-onecloud-rootfs.tar https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/OpenWrt_immortalwrt_23.12.15_02.51.30/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
-        mv openwrt-armvirt-onecloud-rootfs.tar docker
-        sudo cp -r docker /mnt
+        mkdir -p onecloud
+        curl -L -o onecloud/openwrt-armvirt-onecloud-rootfs.tar https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/OpenWrt_immortalwrt_23.12.15_02.51.30/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
+        cp $GITHUB_WORKSPACE/docker/.dockerignore  onecloud/.dockerignore
+        cp $GITHUB_WORKSPACE/docker/build-docker.sh  onecloud/build-docker.sh
+        cp $GITHUB_WORKSPACE/docker/Dockerfile  onecloud/Dockerfile
+        cp $GITHUB_WORKSPACE/docker/rc.local  onecloud/rc.local
         
         #转换为.tar.gz文件
-        cd /mnt/docker
-        sudo gzip openwrt-armvirt-onecloud-rootfs.tar        
+        cd onecloud
+        sudo gzip openwrt-armvirt-onecloud-rootfs.tar
         sudo bash build-docker.sh
         
         docker load < opt/imgs/docker-img-openwrt-oncloud-${{ env.OWRT_TAG }}.gz
@@ -129,7 +132,7 @@ jobs:
       id: organize
       #if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        cd /mnt/docker/opt/imgs/
+        cd onecloud/opt/imgs/
         
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
