@@ -15,12 +15,12 @@ OUTDIR=opt/imgs
 mkdir -p "$OUTDIR"
 mkdir -p "$TMPDIR"
 
-cd /mnt/docker/openwrt_rootfs
-tar zxvfp /mnt/docker/openwrt-armvirt-onecloud-rootfs.tar.gz
-cp /mnt/docker/rc.local /mnt/docker/openwrt_rootfs/etc/rc.local
-tar zcvfp /mnt/docker/openwrt-armvirt-onecloud-rootfs.tar.gz .
+cd openwrt_rootfs
+tar zxvfp ../openwrt-armvirt-onecloud-rootfs.tar.gz
+cp ../rc.local etc/rc.local
+tar zcvfp ../openwrt-armvirt-onecloud-rootfs.tar.gz .
 
-cd /mnt/docker/
+cd ..
 docker build -t mojialin/openwrt_onecloud:${TAG} .
 rm -rf "$TMPDIR"  
 docker save mojialin/openwrt_onecloud:${TAG} | pigz -9 > $OUTDIR/docker-img-openwrt-oncloud-${TAG}.gz
