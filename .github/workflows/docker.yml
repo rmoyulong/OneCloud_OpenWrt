@@ -225,7 +225,7 @@ jobs:
         echo "OWRT_TAG=$TAG" >> $GITHUB_ENV
         
         cd /
-        mkdir -p /hubdocker
+        mkdir -p hubdocker
         cp $GITHUB_WORKSPACE/docker/rc.local /hubdocker/rc.local
         cp $GITHUB_WORKSPACE/docker/.dockerignore /hubdocker/.dockerignore
         cp $GITHUB_WORKSPACE/docker/Dockerfile /hubdocker/Dockerfile
