@@ -224,17 +224,12 @@ jobs:
         fi      
         echo "OWRT_TAG=$TAG" >> $GITHUB_ENV
         
-        cd /mnt
-        mkdir -p hubdocker
-        cp $GITHUB_WORKSPACE/docker/rc.local /mnt/hubdocker/rc.local
-        cp $GITHUB_WORKSPACE/docker/.dockerignore /mnt/hubdocker/.dockerignore
-        cp $GITHUB_WORKSPACE/docker/Dockerfile /mnt/hubdocker/Dockerfile
-        cp $GITHUB_WORKSPACE/docker/build-docker.sh /mnt/hubdocker/build-docker.sh
+        cp openwrt/bin/targets/*/*/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar docker
+        sudo cp -r docker /mnt
         
         #转换为.tar.gz文件
-        cd /mnt/hubdocker
-        cp /workdir/openwrt/bin/targets/*/*/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar /mnt/hubdocker/openwrt-armvirt-onecloud-rootfs.tar
-        tar zcvfp openwrt-armvirt-onecloud-rootfs.tar.gz openwrt-armvirt-onecloud-rootfs.tar
+        cd /mnt/docker
+        tar zcvfp openwrt-armvirt-onecloud-rootfs.tar.gz immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
         dos2unix ./*.sh
         dos2unix ./rc.local
         chmod +x ./*.sh
@@ -251,7 +246,7 @@ jobs:
         
         cd /workdir
         docker_name=docker-img-openwrt-oncloud-${{ env.OWRT_TAG }}.gz
-        mv /mnt/hubdocker/opt/imgs/$docker_name openwrt/bin/targets/*/*/$docker_name
+        mv /mnt/docker/opt/imgs/$docker_name openwrt/bin/targets/*/*/$docker_name
         
         echo "::set-output name=status::success"
         
@@ -260,7 +255,7 @@ jobs:
       #if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         rm openwrt/bin/targets/*/*/*.tar
-        mv hubdocker/openwrt-armvirt-onecloud-rootfs.tar.gz openwrt/bin/targets/*/*/openwrt-armvirt-onecloud-rootfs.tar.gz
+        mv /mnt/docker/openwrt-armvirt-onecloud-rootfs.tar.gz openwrt/bin/targets/*/*/openwrt-armvirt-onecloud-rootfs.tar.gz
         
         cd openwrt/bin/targets/*/*
         rm -rf packages
