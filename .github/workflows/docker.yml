@@ -221,12 +221,12 @@ jobs:
         TAG=latest
         echo "OWRT_TAG=$TAG" >> $GITHUB_ENV
         
-        mkdir -p onecloud
-        cp openwrt/bin/targets/*/*/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar onecloud/openwrt-armvirt-onecloud-rootfs.tar
-        cp $GITHUB_WORKSPACE/docker/.dockerignore  onecloud/.dockerignore
-        cp $GITHUB_WORKSPACE/docker/build-docker.sh  onecloud/build-docker.sh
-        cp $GITHUB_WORKSPACE/docker/Dockerfile  onecloud/Dockerfile
-        cp $GITHUB_WORKSPACE/docker/rc.local  onecloud/rc.local
+        sudo mkdir -p onecloud
+        sudo cp openwrt/bin/targets/*/*/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar onecloud/openwrt-armvirt-onecloud-rootfs.tar
+        sudo cp $GITHUB_WORKSPACE/docker/.dockerignore  onecloud/.dockerignore
+        sudo cp $GITHUB_WORKSPACE/docker/build-docker.sh  onecloud/build-docker.sh
+        sudo cp $GITHUB_WORKSPACE/docker/Dockerfile  onecloud/Dockerfile
+        sudo cp $GITHUB_WORKSPACE/docker/rc.local  onecloud/rc.local
         
         #转换为.tar.gz文件
         cd onecloud
@@ -247,9 +247,9 @@ jobs:
       #if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         rm openwrt/bin/targets/*/*/*.tar
-        cp onecloud/openwrt-armvirt-onecloud-rootfs.tar.gz openwrt/bin/targets/*/*/openwrt-armvirt-onecloud-rootfs.tar.gz
+        sudo cp onecloud/openwrt-armvirt-onecloud-rootfs.tar.gz openwrt/bin/targets/*/*/openwrt-armvirt-onecloud-rootfs.tar.gz
         docker_name=docker-img-openwrt-oncloud-${{ env.OWRT_TAG }}.gz
-        cp onecloud/opt/imgs/$docker_name openwrt/bin/targets/*/*/$docker_name
+        sudo cp onecloud/opt/imgs/$docker_name openwrt/bin/targets/*/*/$docker_name
         
         cd openwrt/bin/targets/*/*
         rm -rf packages
