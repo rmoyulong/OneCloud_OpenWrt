@@ -152,10 +152,10 @@ jobs:
         tag_name: hub_docker_$OWRT_DATE
         files: onecloud/opt/imgs/*
         body: |
-          自用玩客云hub docker 底包
+          自用玩客云 hub docker 底包
           =============基本信息============
 
-          名称：${{env.OWRT_NAME}}
+          名称：mojialin/openwrt_onecloud
           密码：password
           地址：${{env.OWRT_IP}}
 
