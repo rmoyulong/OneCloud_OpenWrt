@@ -9,12 +9,12 @@ mkdir -p "$OUTDIR"
 mkdir -p "$TMPDIR"
 
 cd "$TMPDIR"
-tar zxvfp /hubdocker/openwrt-armvirt-onecloud-rootfs.tar.gz
-cp /hubdocker/rc.local "$TMPDIR/etc/rc.local"
+tar zxvfp ../openwrt-armvirt-onecloud-rootfs.tar.gz
+cp ../rc.local etc/rc.local
 
 tar zcvfp ../openwrt-armvirt-onecloud-rootfs.tar.gz .
 
-cd /hubdocker
+cd ..
 
 docker build -t ${IMG_NAME}:${{ env.OWRT_TAG }} .
 rm -rf "$TMPDIR" 
