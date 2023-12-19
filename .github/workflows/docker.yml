@@ -21,8 +21,8 @@ env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: Config/quicker.config
-  DIY_P1_SH: sh/docker.sh
+  CONFIG_FILE: Config/docker.config
+  DIY_P1_SH: sh/quick.sh
   DIY_P2_SH: sh/lean2.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
@@ -31,7 +31,7 @@ env:
   UPLOAD_RELEASE: true
   OWRT_IP: 192.168.1.110
   OWRT_NAME: OneCloudOP
-  OWRT_FILES: onecloud/files  
+  OWRT_FILES: docker/files  
   TZ: Asia/Shanghai
 
 jobs:
@@ -124,11 +124,6 @@ jobs:
       run: |
         cp -rf $GITHUB_WORKSPACE/$OWRT_FILES/* openwrt/files
         chmod +x openwrt/files/etc/openclash/core/clash*
-        dos2unix openwrt/files/etc/1.sh
-        dos2unix openwrt/files/etc/rc.local
-        #去掉某些文件以适应docker版的需要
-        rm openwrt/files/etc/rc.local
-        rm openwrt/files/etc/1.sh
         
         cd openwrt && make defconfig
         

@@ -1,0 +1,32 @@
+# This file is interpreted as shell script.
+# Put your custom iptables rules here, they will
+# be executed with each firewall (re-)start.
+
+#注：如果用这个固件做旁路由的话不要忘了加自定义防火墙规则（网络->防火墙->自定义规则）：
+#注：如果旁路由速度慢，可以去掉 -o eth0 当然需要是主路由dhcp关闭旁路由开启时候才能设置
+#下是小米普联主路由不能上网时设置
+#iptables -t nat -I POSTROUTING  -j MASQUERADE
+
+#下是去掉桥接时设置
+#iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE
+
+#也可以尝试（有桥接存在的情况下）的设置
+iptables -t nat -I POSTROUTING -o br-lan -j MASQUERADE
+
+#单臂路由设置
+#iptables -t nat -I POSTROUTING -o pppoe-wan -j MASQUERADE
+
+#一般情况下都要加的设置
+#ip6tables -Fip6tables -Xip6tables -P INPUT ACCEPT
+#ip6tables -P OUTPUT ACCEPTip6tables -P FORWARD ACCEPT
+
+
+#sysctl net.nf_conntrack_max=16384
+#sysctl net.nf_conntrack_max=65535
+#sysctl net.ipv4.neigh.default.gc_thresh3=65535
+
+iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53
+iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53
+[ -n "$(command -v ip6tables)" ] && ip6tables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53
+[ -n "$(command -v ip6tables)" ] && ip6tables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53
+

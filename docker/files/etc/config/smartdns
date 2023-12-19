@@ -1,0 +1,121 @@
+
+config smartdns
+	option server_name 'smartdns'
+	option tcp_server '1'
+	option seconddns_tcp_server '1'
+	option prefetch_domain '1'
+	option dualstack_ip_selection '0'
+	option seconddns_enabled '1'
+	option seconddns_no_cache '1'
+	option seconddns_port '5335'
+	option seconddns_server_group 'www'
+	option seconddns_no_speed_check '1'
+	option port '6035'
+	option ipv6_server '1'
+	option serve_expired '1'
+	option resolve_local_hostnames '1'
+	option force_https_soa '0'
+	option auto_set_dnsmasq '0'
+	option bind_device '1'
+	option cache_persist '1'
+	option cache_size '1000'
+	option enabled '0'
+	option rr_ttl '300'
+	option rr_ttl_min '60'
+	option rr_ttl_max '300'
+	option old_port '6035'
+	option old_enabled '0'
+	option old_auto_set_dnsmasq '0'
+
+config server
+	option ip '223.5.5.5'
+	option port '53'
+	option type 'udp'
+	option name '阿里AliDNS'
+	option server_group 'china'
+	option enabled '1'
+
+config server
+	option ip '180.76.76.76'
+	option port '53'
+	option type 'tcp'
+	option server_group 'china'
+	option name 'BaiduDNS'
+	option enabled '0'
+
+config server
+	option name 'rubyfish'
+	option ip 'dns.rubyfish.cn'
+	option port '853'
+	option type 'tls'
+	option server_group 'china'
+	option enabled '1'
+
+config server
+	option enabled '1'
+	option type 'udp'
+	option ip '202.106.195.68'
+	option server_group 'china'
+	option name 'local'
+
+config server
+	option name 'dot.tiar.app'
+	option ip 'dot.tiar.app'
+	option type 'https'
+	option server_group 'www'
+	option enabled '0'
+
+config server
+	option name 'dns.cloudflare.com'
+	option ip 'dns.cloudflare.com/dns-query'
+	option type 'https'
+	option server_group 'www'
+	option enabled '0'
+
+config server
+	option enabled '1'
+	option ip '8.8.8.8'
+	option port '53'
+	option type 'udp'
+	option name 'Google DNS'
+	option server_group 'www'
+
+config server
+	option ip '203.80.96.10'
+	option port '53'
+	option type 'udp'
+	option name '香港宽频DNS'
+	option server_group 'www'
+	option enabled '0'
+
+config domain-rule
+
+config server
+	option enabled '0'
+	option name 'local2'
+	option ip '202.106.46.151'
+	option type 'udp'
+	option server_group 'china'
+
+config server
+	option enabled '1'
+	option name 'dns.google'
+	option ip 'dns.google'
+	option port '853'
+	option type 'tls'
+	option server_group 'www'
+
+config server
+	option enabled '1'
+	option name 'local_ipv6'
+	option ip '2408:8000:1010:1::8'
+	option type 'udp'
+	option server_group 'china'
+
+config server
+	option enabled '1'
+	option name 'www_ipv6'
+	option ip '2001:4860:4860::8888'
+	option type 'udp'
+	option server_group 'www'
+
