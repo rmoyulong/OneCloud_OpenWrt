@@ -110,19 +110,18 @@ jobs:
         fi      
         echo "OWRT_TAG=$TAG" >> $GITHUB_ENV
         
-        cd /
         mkdir -p hubdocker
-        cp $GITHUB_WORKSPACE/docker/rc.local /hubdocker/rc.local
-        cp $GITHUB_WORKSPACE/docker/.dockerignore /hubdocker/.dockerignore
-        cp $GITHUB_WORKSPACE/docker/Dockerfile /hubdocker/Dockerfile
-        cp $GITHUB_WORKSPACE/docker/build-docker.sh /hubdocker/build-docker.sh
+        cp $GITHUB_WORKSPACE/docker/rc.local hubdocker/rc.local
+        cp $GITHUB_WORKSPACE/docker/.dockerignore hubdocker/.dockerignore
+        cp $GITHUB_WORKSPACE/docker/Dockerfile hubdocker/Dockerfile
+        cp $GITHUB_WORKSPACE/docker/build-docker.sh hubdocker/build-docker.sh
         
         #转换为.tar.gz文件
-        curl -L -o /hubdocker/openwrt-armvirt-onecloud-rootfs.tar https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/OpenWrt_immortalwrt_23.12.15_02.51.30/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
+        curl -L -o hubdocker/openwrt-armvirt-onecloud-rootfs.tar https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/OpenWrt_immortalwrt_23.12.15_02.51.30/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
         
-        tar zcvfp /hubdocker/openwrt-armvirt-onecloud-rootfs.tar.gz /hubdocker/openwrt-armvirt-onecloud-rootfs.tar
+        tar zcvfp hubdocker/openwrt-armvirt-onecloud-rootfs.tar.gz hubdocker/openwrt-armvirt-onecloud-rootfs.tar
         
-        cd /hubdocker
+        cd hubdocker
         dos2unix ./*.sh
         dos2unix ./rc.local
         chmod +x ./*.sh
