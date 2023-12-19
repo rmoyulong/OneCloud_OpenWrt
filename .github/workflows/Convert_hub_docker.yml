@@ -110,18 +110,17 @@ jobs:
         fi      
         echo "OWRT_TAG=$TAG" >> $GITHUB_ENV
         
+        cd /mnt
         mkdir -p hubdocker
-        cp $GITHUB_WORKSPACE/docker/rc.local hubdocker/rc.local
-        cp $GITHUB_WORKSPACE/docker/.dockerignore hubdocker/.dockerignore
-        cp $GITHUB_WORKSPACE/docker/Dockerfile hubdocker/Dockerfile
-        cp $GITHUB_WORKSPACE/docker/build-docker.sh hubdocker/build-docker.sh
+        cp $GITHUB_WORKSPACE/docker/rc.local /mnt/hubdocker/rc.local
+        cp $GITHUB_WORKSPACE/docker/.dockerignore /mnt/hubdocker/.dockerignore
+        cp $GITHUB_WORKSPACE/docker/Dockerfile /mnt/hubdocker/Dockerfile
+        cp $GITHUB_WORKSPACE/docker/build-docker.sh /mnt/hubdocker/build-docker.sh
         
         #转换为.tar.gz文件
-        curl -L -o hubdocker/openwrt-armvirt-onecloud-rootfs.tar https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/OpenWrt_immortalwrt_23.12.15_02.51.30/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
-        
-        tar zcvfp hubdocker/openwrt-armvirt-onecloud-rootfs.tar.gz hubdocker/openwrt-armvirt-onecloud-rootfs.tar
-        
-        cd hubdocker
+        cd /mnt/hubdocker
+        curl -L -o /mnt/hubdocker/openwrt-armvirt-onecloud-rootfs.tar https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/OpenWrt_immortalwrt_23.12.15_02.51.30/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
+        tar zcvfp openwrt-armvirt-onecloud-rootfs.tar.gz openwrt-armvirt-onecloud-rootfs.tar
         dos2unix ./*.sh
         dos2unix ./rc.local
         chmod +x ./*.sh
@@ -129,7 +128,6 @@ jobs:
         
         sudo bash build-docker.sh
         
-        tar zcvfp openwrt-armvirt-onecloud-rootfs.tar.gz openwrt-armvirt-onecloud-rootfs.tar
         docker load < opt/imgs/docker-img-openwrt-oncloud-${{ env.OWRT_TAG }}.gz
         docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
         
@@ -153,7 +151,7 @@ jobs:
         #cd openwrt/bin/targets/*/*
         #rm -rf packages
         
-        cd hubdocker/opt/imgs/
+        cd /mnt/hubdocker/opt/imgs/
         
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
