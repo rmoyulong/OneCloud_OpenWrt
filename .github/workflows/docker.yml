@@ -32,7 +32,7 @@ env:
   OWRT_IP: 192.168.1.110
   OWRT_NAME: OneCloudOP
   OWRT_FILES: docker/files
-  TAG: latest
+  OWRT_TAG: latest
   TZ: Asia/Shanghai
 
 jobs:
@@ -218,16 +218,23 @@ jobs:
     - name: 生成hub docker固件
       id: hubdocker
       run: |
-        mkdir -p hubdocker
-        mv $GITHUB_WORKSPACE/docker/rc.local hubdocker/rc.local
-        mv $GITHUB_WORKSPACE/docker/.dockerignore hubdocker/.dockerignore
-        mv $GITHUB_WORKSPACE/docker/Dockerfile hubdocker/Dockerfile
-        mv $GITHUB_WORKSPACE/docker/build-docker.sh hubdocker/build-docker.sh
+        TAG=latest
+        if [ ! -z "$1" ];then
+          TAG=$1
+        fi      
+        echo "OWRT_TAG=$TAG" >> $GITHUB_ENV
+        
+        cd /
+        mkdir -p /hubdocker
+        cp $GITHUB_WORKSPACE/docker/rc.local /hubdocker/rc.local
+        cp $GITHUB_WORKSPACE/docker/.dockerignore /hubdocker/.dockerignore
+        cp $GITHUB_WORKSPACE/docker/Dockerfile /hubdocker/Dockerfile
+        cp $GITHUB_WORKSPACE/docker/build-docker.sh /hubdocker/build-docker.sh
         
         #转换为.tar.gz文件
-        tar zcvfp hubdocker/openwrt-armvirt-onecloud-rootfs.tar.gz openwrt/bin/targets/*/*/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
+        tar zcvfp /hubdocker/openwrt-armvirt-onecloud-rootfs.tar.gz openwrt/bin/targets/*/*/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
         
-        cd hubdocker
+        cd /hubdocker
         dos2unix ./*.sh
         dos2unix ./rc.local
         chmod +x ./*.sh
@@ -238,14 +245,14 @@ jobs:
         gzip -dc openwrt_rootfs/*.gz | docker load
         docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
         
-        docker tag mojialin/openwrt_onecloud mojialin/openwrt_onecloud:${{ env.TAG }}
+        docker tag mojialin/openwrt_onecloud mojialin/openwrt_onecloud:${{ env.OWRT_TAG }}
         
         docker push mojialin/openwrt_onecloud
-        docker push mojialin/openwrt_onecloud:${{ env.TAG }}
+        docker push mojialin/openwrt_onecloud:${{ env.OWRT_TAG }}
         
         cd ..
-        docker_name=docker-img-openwrt-oncloud-${{ env.TAG }}.gz
-        mv hubdocker/opt/imgs/$docker_name openwrt/bin/targets/*/*/$docker_name
+        docker_name=docker-img-openwrt-oncloud-${{ env.OWRT_TAG }}.gz
+        mv /hubdocker/opt/imgs/$docker_name openwrt/bin/targets/*/*/$docker_name
         
         echo "::set-output name=status::success"
         
@@ -254,7 +261,7 @@ jobs:
       #if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         rm openwrt/bin/targets/*/*/*.tar
-        mv hubdocker/openwrt-armvirt-onecloud-rootfs.tar.gz openwrt/bin/targets/*/*/openwrt-armvirt-onecloud-rootfs.tar.gz
+        mv /hubdocker/openwrt-armvirt-onecloud-rootfs.tar.gz openwrt/bin/targets/*/*/openwrt-armvirt-onecloud-rootfs.tar.gz
         
         cd openwrt/bin/targets/*/*
         rm -rf packages
