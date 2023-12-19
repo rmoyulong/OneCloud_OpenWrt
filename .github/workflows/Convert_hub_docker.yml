@@ -119,12 +119,12 @@ jobs:
         sudo gzip openwrt-armvirt-onecloud-rootfs.tar
         sudo bash build-docker.sh
         
-        docker load < opt/imgs/docker-img-openwrt-oncloud-${{ env.OWRT_TAG }}.gz
+        docker load < opt/imgs/docker-img-openwrt-oncloud-${TAG}.gz
         docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
         
-        docker tag mojialin/openwrt_onecloud mojialin/openwrt_onecloud:${{ env.OWRT_TAG }}        
+        docker tag mojialin/openwrt_onecloud mojialin/openwrt_onecloud:${TAG}        
         docker push mojialin/openwrt_onecloud
-        docker push mojialin/openwrt_onecloud:${{ env.OWRT_TAG }}
+        docker push mojialin/openwrt_onecloud:${TAG}
         
         echo "::set-output name=status::success"
         
