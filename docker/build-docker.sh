@@ -1,5 +1,8 @@
 #!/bin/bash
 
+TAG=latest
+echo "OWRT_TAG=$TAG" >> $GITHUB_ENV
+		
 dos2unix ./*.sh
 dos2unix ./rc.local
 chmod +x ./*.sh
@@ -18,6 +21,6 @@ cp /mnt/docker/rc.local /mnt/docker/openwrt_rootfs/etc/rc.local
 tar zcvfp /mnt/docker/openwrt-armvirt-onecloud-rootfs.tar.gz .
 
 cd /mnt/docker/
-docker build -t mojialin/openwrt_onecloud:${OWRT_TAG} .
+docker build -t mojialin/openwrt_onecloud:${TAG} .
 rm -rf "$TMPDIR"  
-docker save mojialin/openwrt_onecloud:${OWRT_TAG} | pigz -9 > $OUTDIR/docker-img-openwrt-oncloud-${OWRT_TAG}.gz
+docker save mojialin/openwrt_onecloud:${TAG} | pigz -9 > $OUTDIR/docker-img-openwrt-oncloud-${TAG}.gz
