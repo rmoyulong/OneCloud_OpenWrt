@@ -219,9 +219,6 @@ jobs:
       id: hubdocker
       run: |
         TAG=latest
-        if [ ! -z "$1" ];then
-          TAG=$1
-        fi      
         echo "OWRT_TAG=$TAG" >> $GITHUB_ENV
         
         cp openwrt/bin/targets/*/*/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar docker/openwrt-armvirt-onecloud-rootfs.tar 
