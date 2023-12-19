@@ -1,5 +1,10 @@
 #!/bin/bash
 
+dos2unix ./*.sh
+dos2unix ./rc.local
+chmod +x ./*.sh
+chmod +x ./rc.local
+		
 TMPDIR=openwrt_rootfs
 OUTDIR=opt/imgs
 
