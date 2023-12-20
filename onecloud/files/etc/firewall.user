@@ -21,9 +21,9 @@ iptables -t nat -I POSTROUTING -o br-lan -j MASQUERADE
 #ip6tables -P OUTPUT ACCEPTip6tables -P FORWARD ACCEPT
 
 
-#sysctl net.nf_conntrack_max=16384
-#sysctl net.nf_conntrack_max=65535
-#sysctl net.ipv4.neigh.default.gc_thresh3=65535
+sysctl net.nf_conntrack_max=16384
+sysctl net.nf_conntrack_max=65535
+sysctl net.ipv4.neigh.default.gc_thresh3=65535
 
 iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53
 iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53
