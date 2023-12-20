@@ -10,5 +10,5 @@ echo "# Put your custom commands here that should be executed once
 
 mount -o remount rw /
 exit 0">/etc/rc.local
-rm -rf /etc/1.sh && reboot
+rm -rf /etc/1.sh
 
