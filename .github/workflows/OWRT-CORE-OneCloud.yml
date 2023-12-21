@@ -269,6 +269,10 @@ jobs:
           else
             echo "OWRT_TYPE=[全版]" >> $GITHUB_ENV
           fi
+          
+          if [[ $OWRT_TYPE == *"OneCloud-docker"* ]]; then
+            echo "OWRT_TYPE=[hub docker]" >> $GITHUB_ENV          
+          fi
 
       #- name: 生成标签上传
         #uses: ncipollo/release-action@v1
