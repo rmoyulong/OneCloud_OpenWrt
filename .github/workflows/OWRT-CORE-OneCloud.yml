@@ -227,6 +227,15 @@ jobs:
           getmd5 $rom
                 
           cp -a $rom ./ARM_Out/openwrt-$(date +%Y%m%d)_${md5}.img.gz
+          
+          if [[ $OWRT_TYPE == *"OneCloud-docker"* ]]; then
+            rom=openwrt/bin/targets/meson/meson8b/openwrt-*.tar
+            getmd5 $rom
+                
+            cp -a $rom ./ARM_Out/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar        
+          fi
+          
+          cp -a openwrt/.config ./ARM_Out/config.txt
 
       #- name: 上传固件
         #uses: actions/upload-artifact@main
@@ -234,11 +243,11 @@ jobs:
           #name: meson8b
           #path: ARM_Out/*
 
-      - name: 上传配置文件
-        uses: actions/upload-artifact@main
-        with:
-          name: meson8b-config
-          path: openwrt/.config  
+      #- name: 上传配置文件
+        #uses: actions/upload-artifact@main
+        #with:
+          #name: meson8b-config
+          #path: openwrt/.config  
  
       #- name: 上传脚本包
         #uses: actions/upload-artifact@main
