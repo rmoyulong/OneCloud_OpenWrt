@@ -210,32 +210,41 @@ jobs:
           #name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
           #path: openwrt/bin
         
+      #- name: 整理固件
+        #id: assemble_artifact
+        #run: |
+          #rm -rf ./ARM_Out
+          #mkdir -p ./ARM_Out/
+        
+          #getmd5()
+          #{
+          #md5sum=`md5sum $1`
+          #md5=`echo ${md5sum% *}`
+          #md5=`echo ${md5:0:10}`
+          #}
+        
+          #rom=openwrt/bin/targets/meson/meson8b/openwrt-*.img.gz
+          #getmd5 $rom
+                
+          #cp -a $rom ./ARM_Out/openwrt-$(date +%Y%m%d)_${md5}.img.gz
+          
+          #if [[ $OWRT_TYPE == *"OneCloud-docker"* ]]; then
+            #rom1=openwrt/bin/targets/meson/meson8b/*.tar
+            #getmd5 $rom1
+                
+            #cp -a $rom1 ./ARM_Out/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar        
+          #fi
+          
+          #cp -a openwrt/.config ./ARM_Out/config.txt
+          
       - name: 整理固件
-        id: assemble_artifact
+        id: organize
+        #if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
         run: |
-          rm -rf ./ARM_Out
-          mkdir -p ./ARM_Out/
-        
-          getmd5()
-          {
-          md5sum=`md5sum $1`
-          md5=`echo ${md5sum% *}`
-          md5=`echo ${md5:0:10}`
-          }
-        
-          rom=openwrt/bin/targets/meson/meson8b/openwrt-*.img.gz
-          getmd5 $rom
-                
-          cp -a $rom ./ARM_Out/openwrt-$(date +%Y%m%d)_${md5}.img.gz
-          
-          if [[ $OWRT_TYPE == *"OneCloud-docker"* ]]; then
-            rom1=openwrt/bin/targets/meson/meson8b/*.tar
-            getmd5 $rom1
-                
-            cp -a $rom1 ./ARM_Out/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar        
-          fi
-          
-          cp -a openwrt/.config ./ARM_Out/config.txt
+          cd openwrt/bin/targets/*/*
+          rm -rf packages
+          echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+          echo "::set-output name=status::success"
 
       #- name: 上传固件
         #uses: actions/upload-artifact@main
