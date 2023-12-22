@@ -281,7 +281,7 @@ jobs:
             echo "OWRT_TYPE=[全版]" >> $GITHUB_ENV
           fi
           
-          if [[ $OWRT_TYPE == *"OneCloud-docker"* ]]; then
+          if [[ $OWRT_CFG == *"docker.config"* ]]; then
             echo "OWRT_TYPE=[hub docker迷你]" >> $GITHUB_ENV          
           fi
 
