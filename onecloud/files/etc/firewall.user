@@ -14,7 +14,7 @@
 iptables -t nat -I POSTROUTING -o br-lan -j MASQUERADE
 
 #单臂路由设置
-#iptables -t nat -I POSTROUTING -o pppoe-wan -j MASQUERADE
+iptables -t nat -I POSTROUTING -o pppoe-wan -j MASQUERADE
 
 #一般情况下都要加的设置
 #ip6tables -Fip6tables -Xip6tables -P INPUT ACCEPT
