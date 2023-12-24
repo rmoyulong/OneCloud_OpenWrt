@@ -73,10 +73,10 @@ jobs:
     - name: 打包直刷包
       run: |
         sudo apt install img2simg
-        ver="v0.3.1"
-        curl -L -o ./AmlImg https://github.com/hzyitc/AmlImg/releases/download/$ver/AmlImg_${ver}_linux_amd64
+        ver="v0.3.2"
+        curl -L -o ./AmlImg https://github.com/rmoyulong/AmlImg/releases/download/$ver/AmlImg_${ver}_linux_amd64
         chmod +x ./AmlImg
-        curl -L -o ./uboot.img https://github.com/hzyitc/u-boot-onecloud/releases/download/build-20221028-0940/eMMC.burn.img
+        curl -L -o ./uboot.img https://github.com/rmoyulong/u-boot-onecloud/releases/download/Onecloud_Uboot_23.12.24_18.15.09/eMMC.burn.img
         mkdir -p openwrt/out 
         curl -L -o openwrt/out/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/OpenWrt_lede_23.12.14_11.30.19/openwrt-20231214_a09c540f6a.img.gz
         
