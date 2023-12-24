@@ -78,10 +78,10 @@ jobs:
         chmod +x ./AmlImg
         curl -L -o ./uboot.img https://github.com/rmoyulong/u-boot-onecloud/releases/download/Onecloud_Uboot_23.12.24_18.15.09/eMMC.burn.img
         mkdir -p openwrt/out 
-        curl -L -o openwrt/out/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/OpenWrt_lede_23.12.14_11.30.19/openwrt-20231214_a09c540f6a.img.gz
+        curl -L -o openwrt/out/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/OpenWrt_lede_23.12.14_11.28.52/openwrt-20231214_dcae11a46d.img.gz
         
         echo "OWRT_TYPE=[迷你版]" >> $GITHUB_ENV
-        echo "OWRT_TYPE=[全版]" >> $GITHUB_ENV        
+        #echo "OWRT_TYPE=[全版]" >> $GITHUB_ENV        
         
         ./AmlImg unpack ./uboot.img burn/
         echo "::endgroup::"
