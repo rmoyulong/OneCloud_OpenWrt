@@ -1,0 +1,25 @@
+name: 测试使用私人库
+
+on:
+  workflow_dispatch:
+  
+#权限
+permissions: write-all
+
+jobs:
+  build_hubdocker_onecloud:
+    runs-on: ubuntu-22.04
+    
+    permissions:
+      contents: write
+      actions: write
+
+    steps:
+    - name: 编译推送hub docker迷你版
+      uses: rmoyulong/hubdocker_onecloud.github/workflows/onecloud-docker-mini.yml@master
+      
+    - name: 清理Workflows
+      uses: rmoyulong/delete-workflow-runs@main
+      with:
+        retain_days: 0
+        keep_minimum_runs: 1      
