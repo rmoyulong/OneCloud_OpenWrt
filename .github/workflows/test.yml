@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - name: 编译推送hub docker迷你版
-      uses: rmoyulong/hubdocker_onecloud.github/workflows/onecloud-docker-mini.yml@master
+      uses: rmoyulong/hubdocker_onecloud/.github/workflows/onecloud-docker-mini.yml@master
       
     - name: 清理Workflows
       uses: rmoyulong/delete-workflow-runs@main
