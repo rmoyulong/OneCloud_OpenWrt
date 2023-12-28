@@ -10,6 +10,7 @@ rm -rf feeds/luci/applications/luci-app-mosdns
 rm -rf feeds/luci/applications/luci-app-netdata
 rm -rf feeds/luci/applications/luci-app-serverchan
 rm -rf feeds/luci/applications/luci-app-openclash
+rm -rf feeds/luci/applications/luci-app-homeproxy
 
 #设置armv7 32位的openclash
 mkdir -p files/etc/openclash/core
@@ -57,8 +58,11 @@ svn export https://github.com/Lienol/openwrt-package/trunk/luci-app-filebrowser 
 svn export https://github.com/NueXini/NueXini_Packages/trunk/luci-app-vlmcsd package/luci-app-vlmcsd
 svn export https://github.com/NueXini/NueXini_Packages/trunk/luci-app-qbittorrent package/luci-app-qbittorrent
 svn export https://github.com/kenzok8/small-package/trunk/luci-app-unblockneteasemusic package/luci-app-unblockneteasemusic
+svn export https://github.com/kiddin9/openwrt-packages/trunk/luci-app-zerotier package/luci-app-zerotier
+svn export https://github.com/kiddin9/openwrt-packages/trunk/luci-app-xunlei package/luci-app-xunlei
 
 # 科学上网插件
+git clone --depth=1 https://github.com/immortalwrt/homeproxy package/luci-app-homeproxy
 git clone --depth=1 https://github.com/fw876/helloworld.git package/helloworld
 svn export https://github.com/haiibo/packages/trunk/luci-app-vssr package/luci-app-vssr
 svn export https://github.com/kenzok8/small-package/trunk/luci-app-bypass package/luci-app-bypass
