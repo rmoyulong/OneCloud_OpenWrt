@@ -24,6 +24,7 @@ env:
   CONFIG_FILE: Config/quicker.config
   DIY_P1_SH: sh/quick.sh
   DIY_P2_SH: sh/lean2.sh
+  DIY_P3_SH: sh/remove.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
@@ -108,13 +109,24 @@ jobs:
         
         $GITHUB_WORKSPACE/$DIY_P1_SH
         echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
+ 
+    - name: 更新订阅源
+      run: cd openwrt && ./scripts/feeds update -a        
+  
+    - name: 删除一些订阅源包
+      run: |
+        cd openwrt
+        $GITHUB_WORKSPACE/$DIY_P3_SH
         
-    - name: 更新安装订阅源
+    - name: 二次更新订阅源
+      run: cd openwrt && ./scripts/feeds update -a
+
+    - name: 安装订阅源
+      run: cd openwrt && ./scripts/feeds install -a        
+        
+    - name:  加载自定义配置
       working-directory: ./openwrt
       run: |
-        ./scripts/feeds update -a
-        ./scripts/feeds install -a
-        
          rm -rf ./tmp* ./.config*
         [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && mv $GITHUB_WORKSPACE/$CONFIG_FILE .config
         cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
