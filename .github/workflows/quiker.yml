@@ -111,7 +111,7 @@ jobs:
         echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
  
     - name: 更新订阅源
-      run: cd openwrt && ./scripts/feeds update -a        
+      run: cd openwrt && ./scripts/feeds update -a
   
     - name: 删除一些订阅源包
       run: |
@@ -127,7 +127,7 @@ jobs:
     - name:  加载自定义配置
       working-directory: ./openwrt
       run: |
-         rm -rf ./tmp* ./.config*
+        rm -rf ./tmp* ./.config*
         [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && mv $GITHUB_WORKSPACE/$CONFIG_FILE .config
         cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
         $GITHUB_WORKSPACE/$DIY_P2_SH
