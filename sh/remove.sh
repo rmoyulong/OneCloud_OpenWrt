@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # 移除要替换的包
+rm -rf feeds/packages/net/sing-box
+rm -rf feeds/packages/net/chinadns-ng
 rm -rf feeds/packages/net/mosdns
 rm -rf feeds/packages/net/msd_lite
 rm -rf feeds/packages/net/smartdns
