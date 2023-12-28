@@ -181,6 +181,12 @@ jobs:
           [ -e $GITHUB_WORKSPACE/Config/$OWRT_CFG ] && mv $GITHUB_WORKSPACE/Config/$OWRT_CFG .config
           cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
           $GITHUB_WORKSPACE/sh/$DIY_P2_SH
+          
+          #docker版去掉解除网易音乐限制插件
+          if [[ "${{ inputs.OWRT_TYPE }}" == *"OneCloud-docker"* ]]; then
+            echo -e 'CONFIG_PACKAGE_luci-app-unblockmusic=n\n' >> .config
+            echo -e 'CONFIG_PACKAGE_luci-app-unblockneteasemusic=n\n' >> .config
+          fi
                
       - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
         run: |
