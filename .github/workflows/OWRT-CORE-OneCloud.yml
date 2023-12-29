@@ -291,14 +291,12 @@ jobs:
           echo "release_tag=$release_tag" >> $GITHUB_OUTPUT
           if [[ $OWRT_CFG == *"arm7_mini.config"* ]]; then
             echo "OWRT_TYPE=[迷你版]" >> $GITHUB_ENV
-          elif [[ $OWRT_CFG == *"quicker.config"* ]]; then
-            echo "OWRT_TYPE=[hub docker正常]" >> $GITHUB_ENV
+          elif [[ $OWRT_CFG == *"docker.config"* ]]; then
+            echo "OWRT_TYPE=[hub docker迷你]" >> $GITHUB_ENV
+          elif [[ $OWRT_CFG == *"arm7.config"* ]]; then
+            echo "OWRT_TYPE=[全版]" >> $GITHUB_ENV            
           else
-            echo "OWRT_TYPE=[全版]" >> $GITHUB_ENV
-          fi
-          
-          if [[ $OWRT_CFG == *"docker.config"* ]]; then
-            echo "OWRT_TYPE=[hub docker迷你]" >> $GITHUB_ENV          
+            echo "OWRT_TYPE=[hub docker正常]" >> $GITHUB_ENV
           fi
 
       #- name: 生成标签上传
