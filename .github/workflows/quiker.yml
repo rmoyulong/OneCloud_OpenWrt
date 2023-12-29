@@ -110,15 +110,15 @@ jobs:
         $GITHUB_WORKSPACE/$DIY_P1_SH
         echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
  
-    - name: 更新订阅源
-      run: cd openwrt && ./scripts/feeds update -a
+    #- name: 初始更新订阅源
+      #run: cd openwrt && ./scripts/feeds update -a
   
-    - name: 删除一些订阅源包
-      run: |
-        cd openwrt
-        $GITHUB_WORKSPACE/$DIY_P3_SH
+    #- name: 删除一些订阅源包
+      #run: |
+        #cd openwrt
+        #$GITHUB_WORKSPACE/$DIY_P3_SH
         
-    - name: 二次更新订阅源
+    - name: 更新订阅源
       run: cd openwrt && ./scripts/feeds update -a
 
     - name: 安装订阅源
