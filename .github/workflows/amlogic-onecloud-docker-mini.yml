@@ -32,7 +32,7 @@ jobs:
       #源码版本
       OWRT_BRANCH: master
       #自定义config
-      OWRT_CFG: docker.config
+      OWRT_CFG: tiny.config
       #设备类型
       OWRT_TYPE: OneCloud-docker-mini
       OWRT_LINUX: 6.1.68
