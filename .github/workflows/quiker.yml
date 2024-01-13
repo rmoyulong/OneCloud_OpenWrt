@@ -23,7 +23,7 @@ env:
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: Config/quicker.config
   #DIY_P1_SH: sh/quick.sh
-  DIY_P1_SH: sh/Plugins.sh
+  DIY_P1_SH: sh/tiny.sh
   DIY_P2_SH: sh/lean2.sh
   DIY_P3_SH: sh/remove.sh
   UPLOAD_BIN_DIR: false
@@ -38,7 +38,7 @@ env:
 
 jobs:
   build_burn_onecloud_quick:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
     - name: 检查项目
@@ -62,26 +62,24 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-          docker rmi `docker images -q`
-          [[ -n "${AGENT_TOOLSDIRECTORY}" ]] && sudo rm -rf "${AGENT_TOOLSDIRECTORY}"
-          sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /etc/mysql /etc/php /usr/local/lib/android /opt/ghc
-          sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* adoptopenjdk* mysql* php* mongodb* dotnet* moby* snapd* || true
+        if [[ $REPO_URL == *"lede"* ]]; then
+          sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
           sudo -E apt-get -qq update
-          sudo -E apt-get -qq install ack antlr3 aria2 asciidoc autoconf automake autopoint binutils bison build-essential \
-          bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \
-          git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev \
-          libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz \
-          mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pip libpython3-dev qemu-utils \
-          rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev dos2unix
-          sudo -E apt-get -qq install time
-          sudo -E apt-get -qq install gn
+          sudo -E apt-get -qq install $(curl -fsSL https://is.gd/depends_ubuntu_2204)
+          sudo -E apt-get -qq install libfuse-dev dos2unix
           sudo -E apt-get -qq autoremove --purge
           sudo -E apt-get -qq clean
-          sudo timedatectl set-timezone "$TZ"
-          sudo mkdir -p /workdir
-          sudo chown $USER:$GROUPS /workdir
-          echo "status=success" >> ${GITHUB_OUTPUT}
-          df -Th
+          
+        elif [[ $REPO_URL == *"immortalwrt"* ]]; then
+          sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          sudo bash -c 'bash <(curl -s https://build-scripts.immortalwrt.eu.org/init_build_environment.sh)'
+          sudo -E apt-get -qq install dos2unix
+          
+        fi  
+        
+        sudo timedatectl set-timezone "$TZ"
+        sudo mkdir -p /workdir
+        sudo chown $USER:$GROUPS /workdir
         
     - name: 克隆源仓库
       working-directory: /workdir
@@ -103,9 +101,6 @@ jobs:
         
         cd openwrt
         if [[ $REPO_URL == *"immortalwrt"* ]]; then
-          #svn export https://github.com/shiyu1314/openwrt-onecloud/trunk/target/linux/meson target/linux/meson
-          #svn export https://github.com/coolsnowwolf/lede/tree/master/target/linux/meson target/linux/meson
-          
           mv $GITHUB_WORKSPACE/lede/target/linux/meson target/linux/meson
           chmod -Rf 755 target/linux/meson
         fi
@@ -135,7 +130,7 @@ jobs:
         cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
         $GITHUB_WORKSPACE/$DIY_P2_SH
         #删除冲突的插件 
-        rm -rf feeds/kiddin9/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
+        #rm -rf feeds/kenzok8/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
                
     - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
       run: |
