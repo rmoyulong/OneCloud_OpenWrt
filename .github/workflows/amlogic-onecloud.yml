@@ -37,5 +37,5 @@ jobs:
       OWRT_TYPE: OneCloud-ALL
       OWRT_LINUX: 6.1.62
       OWRT_FILES: onecloud/files
-      DIY_P1_SH: Plugins.sh
+      DIY_P1_SH: tiny.sh
       DIY_P2_SH: lean2.sh
