@@ -20,10 +20,6 @@ echo 'src-git kenzok8 https://github.com/kenzok8/small-package' >> feeds.conf.de
 echo 'src-git mo_app https://github.com/rmoyulong/mo_app' >> feeds.conf.default
 
 # Themes
-git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/luci-theme-edge
-git clone --depth=1 https://github.com/Joecaicai/luci-theme-ifit package/luci-theme-ifit 
-git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
-git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
 git clone --depth=1 https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom package/luci-theme-infinityfreedom
 
 #设置armv7 32位的openclash
