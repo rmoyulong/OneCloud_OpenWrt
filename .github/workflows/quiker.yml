@@ -22,8 +22,8 @@ env:
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: Config/quicker.config
-  #DIY_P1_SH: sh/quick.sh
-  DIY_P1_SH: sh/tiny.sh
+  DIY_P1_SH: sh/quick.sh
+  #DIY_P1_SH: sh/tiny.sh
   DIY_P2_SH: sh/lean2.sh
   DIY_P3_SH: sh/remove.sh
   UPLOAD_BIN_DIR: false
