@@ -11,6 +11,10 @@ rm -rf feeds/luci/applications/luci-app-netdata
 rm -rf feeds/luci/applications/luci-app-serverchan
 rm -rf feeds/luci/applications/luci-app-openclash
 rm -rf feeds/luci/applications/luci-app-homeproxy
+rm -rf feeds/package/luci-app-turboacc
+rm -rf feeds/package/luci-app-ddns
+rm -rf package/luci-app-turboacc
+rm -rf package/luci-app-ddns
 
 #设置armv7 32位的openclash
 mkdir -p files/etc/openclash/core
@@ -72,7 +76,9 @@ git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-qbi
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-homebox
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-ddns
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-ddns
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-usb-printer
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-vsftpd
 
 # 科学上网插件
 git clone --depth=1 https://github.com/immortalwrt/homeproxy package/luci-app-homeproxy
@@ -102,6 +108,8 @@ git_sparse_clone master https://github.com/kiddin9/openwrt-packages UnblockNetea
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages wrtbwmon
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages homebox
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages vsftpd-alt
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages ddns-scripts
+
 
 # Themes
 git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/luci-theme-edge
