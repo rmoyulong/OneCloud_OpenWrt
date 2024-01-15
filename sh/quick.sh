@@ -58,13 +58,21 @@ git_sparse_clone main https://github.com/kenzok8/small-package luci-app-eqos
 git_sparse_clone main https://github.com/kenzok8/small-package luci-app-easymesh
 git_sparse_clone main https://github.com/kenzok8/small-package luci-app-ramfree
 git_sparse_clone main https://github.com/kenzok8/small-package luci-app-kodexplorer
-git_sparse_clone main https://github.com/kenzok8/small-package luci-app-vssr
+git_sparse_clone main https://github.com/kenzok8/small-package luci-app-xlnetacc
+git_sparse_clone main https://github.com/kenzok8/small-package luci-app-pushbot
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-wrtbwmon
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-unblockmusic
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-unblockneteasemusic
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-vlmcsd
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-zerotier
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-xunlei
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-adbyby-plus
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-n2n
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-qbittorrent
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-homebox
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-ddns
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-usb-printer
 
 # 科学上网插件
 git clone --depth=1 https://github.com/immortalwrt/homeproxy package/luci-app-homeproxy
@@ -92,6 +100,7 @@ git_sparse_clone master https://github.com/kiddin9/openwrt-packages sing-box
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages UnblockNeteaseMusic-Go
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages UnblockNeteaseMusic
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages wrtbwmon
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages homebox
 
 # Themes
 git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/luci-theme-edge
