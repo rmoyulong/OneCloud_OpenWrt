@@ -204,7 +204,9 @@ jobs:
           dos2unix openwrt/files/etc/1.sh
           dos2unix openwrt/files/etc/rc.local
           #删除一站式直刷版的配置
-          if [[ $REPO_URL == *"lede"* ]]; then
+          if [[ $OWRT_TYPE == *"OneCloud-Mini"* ]]; then
+            rm -rf openwrt/files/etc/config
+          elif [[ $OWRT_TYPE == *"OneCloud-ALL"* ]]; then
             rm -rf openwrt/files/etc/config
           fi
           cd openwrt && make defconfig
