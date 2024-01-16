@@ -13,8 +13,10 @@ rm -rf feeds/luci/applications/luci-app-openclash
 rm -rf feeds/luci/applications/luci-app-homeproxy
 rm -rf feeds/package/luci-app-turboacc
 rm -rf feeds/package/luci-app-ddns
+rm -rf feeds/package/luci-app-samba4
 rm -rf package/luci-app-turboacc
 rm -rf package/luci-app-ddns
+rm -rf package/luci-app-samba4
 
 #设置armv7 32位的openclash
 mkdir -p files/etc/openclash/core
@@ -76,7 +78,7 @@ git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-qbi
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-homebox
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-ddns
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
-git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-ddns
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-samba4
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-usb-printer
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-vsftpd
 
