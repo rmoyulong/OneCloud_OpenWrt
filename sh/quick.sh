@@ -91,7 +91,8 @@ git_sparse_clone main https://github.com/kenzok8/small-package luci-app-bypass
 
 # 科学上网插件依赖
 git_sparse_clone main https://github.com/kenzok8/small-package v2dat
-git_sparse_clone main https://github.com/kenzok8/small-package shadowsocks-libev
+git_sparse_clone main https://github.com/kenzok8/small-package lua-maxminddb
+git_sparse_clone main https://github.com/kenzok8/small-package qbittorrent-enhanced-edition
 git_sparse_clone main https://github.com/kenzok8/small-package brook
 git_sparse_clone main https://github.com/kenzok8/small-package trojan-go
 git_sparse_clone main https://github.com/kenzok8/small-package trojan-plus
@@ -109,7 +110,7 @@ git_sparse_clone master https://github.com/kiddin9/openwrt-packages wrtbwmon
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages homebox
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages vsftpd-alt
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages ddns-scripts
-
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages shadowsocks-libev
 
 # Themes
 git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/luci-theme-edge
