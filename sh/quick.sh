@@ -52,13 +52,12 @@ function git_sparse_clone() {
 # 添加额外插件
 git clone --depth=1 -b openwrt-18.06 https://github.com/tty228/luci-app-wechatpush package/luci-app-serverchan
 git clone --depth=1 https://github.com/kongfl888/luci-app-adguardhome package/luci-app-adguardhome
-git clone --depth=1 -b openwrt-18.06 https://github.com/tty228/luci-app-wechatpush package/luci-app-serverchan
 git clone --depth=1 https://github.com/ilxp/luci-app-ikoolproxy package/luci-app-ikoolproxy
 git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff package/luci-app-poweroff
 git clone --depth=1 https://github.com/destan19/OpenAppFilter package/OpenAppFilter
 git clone --depth=1 https://github.com/Jason6111/luci-app-netdata package/luci-app-netdata
 
-git_sparse_clone main https://github.com/kenzok8/small-package lluci-app-filebrowser
+git_sparse_clone main https://github.com/kenzok8/small-package luci-app-filebrowser
 git_sparse_clone main https://github.com/kenzok8/small-package luci-app-ssr-mudb-server
 git_sparse_clone main https://github.com/kenzok8/small-package luci-app-eqos
 git_sparse_clone main https://github.com/kenzok8/small-package luci-app-easymesh
@@ -111,13 +110,12 @@ git_sparse_clone master https://github.com/kiddin9/openwrt-packages wrtbwmon
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages homebox
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages vsftpd-alt
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages ddns-scripts
-git_sparse_clone master https://github.com/kiddin9/openwrt-packages shadowsocks-libev
-git_sparse_clone master https://github.com/kiddin9/openwrt-packages qbittorrent-enhanced-edition
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages qBittorrent-Enhanced-Edition
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages autoshare-samba
 
 # Themes
 git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/luci-theme-edge
-git clone --depth=1 https://github.com/Joecaicai/luci-theme-ifit package/luci-theme-ifit 
+git_sparse_clone main https://github.com/kenzok8/small-package luci-theme-ifit 
 git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
 git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
 git clone --depth=1 https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom package/luci-theme-infinityfreedom
@@ -159,9 +157,6 @@ git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-onl
 #sed -i '$i uci set nlbwmon.@nlbwmon[0].refresh_interval=2s' package/lean/default-settings/files/zzz-default-settings
 #sed -i '$i uci commit nlbwmon' package/lean/default-settings/files/zzz-default-settings
 chmod 755 package/luci-app-onliner/root/usr/share/onliner/setnlbw.sh
-
-# 修改本地时间格式
-sed -i 's/os.date()/os.date("%a %Y-%m-%d %H:%M:%S")/g' package/lean/autocore/files/*/index.htm
 
 # 取消主题默认设置
 find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/set luci.main.mediaurlbase/d' {} \;
