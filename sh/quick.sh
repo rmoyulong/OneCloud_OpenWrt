@@ -12,9 +12,7 @@ rm -rf feeds/luci/applications/luci-app-serverchan
 rm -rf feeds/luci/applications/luci-app-openclash
 rm -rf feeds/luci/applications/luci-app-homeproxy
 rm -rf feeds/package/luci-app-turboacc
-rm -rf feeds/package/luci-app-ddns
 rm -rf package/luci-app-turboacc
-rm -rf package/luci-app-ddns
 
 #设置armv7 32位的openclash
 mkdir -p files/etc/openclash/core
@@ -58,7 +56,6 @@ git clone --depth=1 https://github.com/Jason6111/luci-app-netdata package/luci-a
 git_sparse_clone main https://github.com/kenzok8/small-package luci-app-filebrowser
 git_sparse_clone main https://github.com/kenzok8/small-package luci-app-ssr-mudb-server
 git_sparse_clone main https://github.com/kenzok8/small-package luci-app-eqos
-git_sparse_clone main https://github.com/kenzok8/small-package luci-app-easymesh
 git_sparse_clone main https://github.com/kenzok8/small-package luci-app-ramfree
 git_sparse_clone main https://github.com/kenzok8/small-package luci-app-kodexplorer
 git_sparse_clone main https://github.com/kenzok8/small-package luci-app-xlnetacc
@@ -73,10 +70,10 @@ git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-adb
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-n2n
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-qbittorrent
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-homebox
-git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-ddns
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-usb-printer
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-vsftpd
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-easymesh
 
 # 科学上网插件
 git clone --depth=1 https://github.com/immortalwrt/homeproxy package/luci-app-homeproxy
@@ -112,6 +109,11 @@ git_sparse_clone master https://github.com/kiddin9/openwrt-packages qBittorrent-
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages qBittorrent
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages qt6base
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages qt6tools
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages n2n
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages adbyby
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages dns-forwarder
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages upx-static
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages upx
 
 # Themes
 git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/luci-theme-edge
