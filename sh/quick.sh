@@ -162,6 +162,7 @@ git_sparse_clone master https://github.com/kiddin9/openwrt-packages ddnsto
 #git_sparse_clone main https://github.com/linkease/istore-ui app-store-ui
 #git_sparse_clone main https://github.com/linkease/istore luci
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-store
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-lib-taskd
 
 # 在线用户
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-onliner
