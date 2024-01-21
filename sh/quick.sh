@@ -156,7 +156,8 @@ git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-ddn
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages ddnsto
 
 # Alist
-#git clone --depth=1 https://github.com/sbwml/luci-app-alist package/luci-app-alist
+git_sparse_clone main https://github.com/kenzok8/small-package luci-app-alist
+git_sparse_clone main https://github.com/kenzok8/small-package alist
 
 # iStore
 #git_sparse_clone main https://github.com/linkease/istore-ui app-store-ui
