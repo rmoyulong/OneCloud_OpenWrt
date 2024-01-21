@@ -124,6 +124,8 @@ git_sparse_clone master https://github.com/kiddin9/openwrt-packages n2n
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages adbyby
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages dns-forwarder
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages upx
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages ucl
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-base
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages aria2
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages ariang
 
