@@ -163,7 +163,7 @@ git_sparse_clone master https://github.com/kiddin9/openwrt-packages taskd
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-onliner
 #sed -i '$i uci set nlbwmon.@nlbwmon[0].refresh_interval=2s' package/lean/default-settings/files/zzz-default-settings
 #sed -i '$i uci commit nlbwmon' package/lean/default-settings/files/zzz-default-settings
-chmod 755 package/luci-app-onliner/root/usr/share/onliner/setnlbw.sh
+sudo chmod -Rf 755 package/luci-app-onliner
 
 # 取消主题默认设置
 find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/set luci.main.mediaurlbase/d' {} \;
