@@ -118,11 +118,13 @@ jobs:
         #cd openwrt
         #$GITHUB_WORKSPACE/$DIY_P3_SH
         
-    - name: 更新订阅源
-      run: cd openwrt && ./scripts/feeds update -a
-
     - name: 安装订阅源
-      run: cd openwrt && ./scripts/feeds install -a        
+      run: |
+        cd openwrt
+        #支持firewall4的turboacc
+        ${GITHUB_WORKSPACE}/sh/add_turboacc.sh
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a       
         
     - name:  加载自定义配置
       working-directory: ./openwrt
