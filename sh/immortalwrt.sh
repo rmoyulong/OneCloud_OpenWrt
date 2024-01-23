@@ -32,9 +32,9 @@ echo 'src-git small https://github.com/kenzok8/small' >> feeds.conf.default
 #echo 'src-git homeproxy https://github.com/immortalwrt/homeproxy' >> feeds.conf.default
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages aria2
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages ariang
-git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-vlmcsd
-git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-kodexplorer
-git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-usb-printer
+#it_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-vlmcsd
+#git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-kodexplorer
+#git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-usb-printer
 git_sparse_clone luci https://github.com/chenmozhijin/turboacc luci-app-turboacc
 
 git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff package/luci-app-poweroff
