@@ -236,7 +236,7 @@ jobs:
         cd openwrt/bin/targets/*/*
         
         rm -rf packages
-        #gzip immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
+        gzip immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
