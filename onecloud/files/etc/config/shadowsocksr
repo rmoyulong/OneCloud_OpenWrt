@@ -18,6 +18,7 @@ config global
 	option chnroute_url 'https://ispip.clang.cn/all_cn.txt'
 	option nfip_url 'https://fastly.jsdelivr.net/gh/QiuSimons/Netflix_IP/NF_only.txt'
 	option adblock_url 'https://anti-ad.net/anti-ad-for-dnsmasq.conf'
+	option chinadns_forward '123.125.81.6:53'
 
 config server_subscribe
 	option proxy '0'

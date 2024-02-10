@@ -6,10 +6,14 @@ config samba
 	option name 'OneCloud'
 	option homes '1'
 	option macos '1'
+	option allow_legacy_protocols '1'
 
 config sambashare
 	option name 'tools'
 	option path '/mnt/sda1/share'
 	option guest_ok 'yes'
 	option guest_only 'yes'
+	option read_only 'no'
+	option create_mask '0666'
+	option dir_mask '0777'
 

@@ -25,7 +25,6 @@ config openclash 'config'
 	option operation_mode 'fake-ip'
 	option enable_rule_proxy '0'
 	option filter_aaaa_dns '0'
-	option interface_name ''
 	option log_size '1024'
 	option tolerance '0'
 	option store_fakeip '1'
@@ -39,7 +38,7 @@ config openclash 'config'
 	option delay_start '0'
 	option router_self_proxy '1'
 	option release_branch 'master'
-	option enable_meta_core '0'
+	option enable_meta_core '1'
 	option dashboard_type 'Official'
 	option yacd_type 'Official'
 	option append_default_dns '1'
@@ -49,7 +48,7 @@ config openclash 'config'
 	option cndomain_custom_url 'https://testingcf.jsdelivr.net/gh/felixonmars/dnsmasq-china-list@master/accelerated-domains.china.conf'
 	option core_version 'linux-armv6'
 	option default_resolvfile '/tmp/resolv.conf.d/resolv.conf.auto'
-	option en_mode 'fake-ip-tun'
+	option en_mode 'fake-ip-mix'
 	option stack_type 'system'
 	option china_ip_route '1'
 	option intranet_allowed '0'
@@ -86,23 +85,25 @@ config openclash 'config'
 	option enable_meta_sniffer '1'
 	option enable_meta_sniffer_pure_ip '1'
 	option enable_meta_sniffer_custom '0'
-	option custom_china_domain_dns_server '114.114.114.114'
+	option custom_china_domain_dns_server '123.125.81.6'
 	option fakeip_range '0'
 	option custom_fakeip_filter '0'
 	option keep_alive_interval '0'
-	option config_path ''
 	option enable '0'
+	option interface_name '0'
+	option enable_tcp_concurrent '1'
+	option enable_unified_delay '1'
 
 config dns_servers
 	option group 'nameserver'
 	option type 'udp'
-	option ip '114.114.114.114'
-	option enabled '0'
-
-config dns_servers
-	option group 'nameserver'
-	option type 'udp'
+	option ip '123.125.81.6'
 	option enabled '1'
+
+config dns_servers
+	option group 'nameserver'
+	option type 'udp'
+	option enabled '0'
 	option ip '202.106.195.68'
 
 config dns_servers
@@ -127,20 +128,20 @@ config dns_servers
 	option type 'https'
 	option ip 'dns.alidns.com/dns-query'
 	option group 'nameserver'
-	option enabled '0'
+	option enabled '1'
 
 config dns_servers
 	option type 'https'
 	option group 'fallback'
 	option ip 'dns.cloudflare.com/dns-query'
-	option enabled '1'
+	option enabled '0'
 
 config dns_servers
 	option group 'fallback'
 	option ip 'dns.google'
 	option port '853'
 	option type 'tls'
-	option enabled '0'
+	option enabled '1'
 
 config dns_servers
 	option group 'fallback'
@@ -187,7 +188,7 @@ config dns_servers
 	option group 'fallback'
 	option type 'https'
 	option ip 'public.dns.iij.jp/dns-query'
-	option enabled '0'
+	option enabled '1'
 
 config dns_servers
 	option group 'fallback'
