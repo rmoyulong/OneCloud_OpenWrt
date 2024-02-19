@@ -6,15 +6,11 @@
 name: 一站式快建精简onecloud直刷包
 
 on:
-  repository_dispatch:
+  #对应的是 UTC 时间，需要转换，0 代表北京时间8点，每个月5日/19日12点编译一次
+  #关闭则手动编译
   workflow_dispatch:
-    inputs:
-      ssh:
-        description: 'SSH connection to Actions'
-        required: false
-        default: 'false'
-  #schedule:
-    #- cron: '05 2 * * 4'
+  schedule:
+    - cron: 0 4 5,19 * *
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
