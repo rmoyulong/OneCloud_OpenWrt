@@ -16,6 +16,7 @@ rm -rf feeds/luci/applications/luci-app-netdata
 rm -rf feeds/luci/applications/luci-app-serverchan
 #rm -rf feeds/luci/applications/luci-app-homeproxy
 rm -rf feeds/luci/applications/luci-app-openclash
+rm -rf feeds/packages/utils/tini
 
 # Git稀疏克隆，只克隆指定目录到本地
 function git_sparse_clone() {
