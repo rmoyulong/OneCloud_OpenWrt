@@ -27,6 +27,10 @@ function git_sparse_clone() {
   cd .. && rm -rf $repodir
 }
 
+git_sparse_clone tini https://github.com/hauke/packages utils/tini/patches
+cp -rf package/patches feeds/packages/utils/tini
+ls feeds/packages/utils/tini/patches
+
 echo 'src-git kenzo https://github.com/kenzok8/openwrt-packages' >> feeds.conf.default
 echo 'src-git small https://github.com/kenzok8/small' >> feeds.conf.default
 #echo 'src-git homeproxy https://github.com/immortalwrt/homeproxy' >> feeds.conf.default
