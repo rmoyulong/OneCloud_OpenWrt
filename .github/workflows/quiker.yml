@@ -114,7 +114,8 @@ jobs:
           chmod -Rf 755 target/linux/meson
         fi
         
-        $GITHUB_WORKSPACE/$DIY_P1_SH
+        #$GITHUB_WORKSPACE/$DIY_P1_SH
+        echo 'src-git kiddin9 https://github.com/kiddin9/openwrt-packages' >> feeds.conf.default
         echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
  
     #- name: 初始更新订阅源
@@ -142,7 +143,6 @@ jobs:
         $GITHUB_WORKSPACE/$DIY_P2_SH
         #删除冲突的插件 
         #rm -rf feeds/kenzok8/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
-        rm -rf feeds/packages/utils/tini
                
     - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
       run: |
