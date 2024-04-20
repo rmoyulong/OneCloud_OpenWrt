@@ -181,6 +181,30 @@ config rule
 	option src '*'
 	option src_port '1092'
 
+config include 'unblockmusic'
+	option type 'script'
+	option path '/var/etc/unblockmusic.include'
+	option reload '1'
+
+config rule 'kms'
+	option name 'kms'
+	option target 'ACCEPT'
+	option src 'wan'
+	option proto 'tcp'
+	option dest_port '1688'
+
+config rule
+	option name 'homeproxy'
+	option src '*'
+	option src_port '5330'
+	option dest_port '5330'
+	option target 'ACCEPT'
+
+config include 'bypass'
+	option type 'script'
+	option path '/var/etc/bypass.include'
+	option reload '1'
+
 config include 'homeproxy_pre'
 	option type 'nftables'
 	option path '/var/run/homeproxy/fw4_pre.nft'
@@ -219,23 +243,4 @@ config include 'shadowsocksr'
 	option type 'script'
 	option path '/var/etc/shadowsocksr.include'
 	option reload '1'
-
-config include 'unblockmusic'
-	option type 'script'
-	option path '/var/etc/unblockmusic.include'
-	option reload '1'
-
-config rule 'kms'
-	option name 'kms'
-	option target 'ACCEPT'
-	option src 'wan'
-	option proto 'tcp'
-	option dest_port '1688'
-
-config rule
-	option name 'homeproxy'
-	option src '*'
-	option src_port '5330'
-	option dest_port '5330'
-	option target 'ACCEPT'
 
