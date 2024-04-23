@@ -19,12 +19,15 @@ config smartdns
 	option bind_device '1'
 	option cache_persist '1'
 	option cache_size '1000'
-	option enabled '0'
+	option enabled '1'
 	option rr_ttl '300'
 	option rr_ttl_min '60'
 	option rr_ttl_max '300'
+	option tls_server '0'
+	option doh_server '0'
+	option log_output_mode 'file'
 	option old_port '6035'
-	option old_enabled '0'
+	option old_enabled '1'
 	option old_auto_set_dnsmasq '0'
 
 config server
@@ -118,4 +121,11 @@ config server
 	option ip '2001:4860:4860::8888'
 	option type 'udp'
 	option server_group 'www'
+
+config client-rule
+	option enabled '0'
+	option dualstack_ip_selection '1'
+	option force_https_soa '1'
+
+config ip-rule
 

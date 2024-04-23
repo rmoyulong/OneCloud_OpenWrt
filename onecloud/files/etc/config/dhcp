@@ -21,6 +21,7 @@ config dnsmasq
 	option filter_a '0'
 	option localuse '1'
 	option noresolv '1'
+	list server '127.0.0.1#6035'
 	list server '127.0.0.1#5335'
 	option cachesize '0'
 
