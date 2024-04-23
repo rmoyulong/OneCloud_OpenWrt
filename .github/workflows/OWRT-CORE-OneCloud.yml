@@ -219,11 +219,9 @@ jobs:
           chmod +x openwrt/files/etc/openclash/core/clash*
           dos2unix openwrt/files/etc/1.sh
           dos2unix openwrt/files/etc/rc.local
-          #删除一站式直刷版的配置
-          if [[ $OWRT_TYPE == *"OneCloud-Mini"* ]]; then
-            rm -rf openwrt/files/etc/config
-          elif [[ $OWRT_TYPE == *"OneCloud-ALL"* ]]; then
-            rm -rf openwrt/files/etc/config
+          #web控制台去掉433监听补丁
+          if [[ "${{ inputs.OWRT_TYPE }}" == *"OneCloud-docker"* ]]; then
+            mv $GITHUB_WORKSPACE/onecloud/uhttpd openwrt/files/etc/config/uhttpd
           fi
           cd openwrt && make defconfig
         
