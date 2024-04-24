@@ -75,11 +75,12 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-          sudo -E apt -yqq update
-          sudo -E apt -yqq install $(cat $GITHUB_WORKSPACE/Ubuntu-2204.txt | sed -n "3{s/\r$//;p;q}")
-          sudo -E apt -y autoremove --purge
+          sudo rm /etc/apt/sources.list.d/microsoft-prod.list
+          sudo apt-get update
+          sudo -E apt-get -yqq install $(cat $GITHUB_WORKSPACE/Ubuntu-2204.txt | sed -n "3{s/\r$//;p;q}")
+          sudo -E apt-get -y autoremove --purge
           sudo -E systemctl daemon-reload
-          sudo -E apt clean && sudo -E apt autoclean
+          sudo -E apt-get clean && sudo -E apt-get autoclean
           sudo -E timedatectl set-timezone "Asia/Shanghai"
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
