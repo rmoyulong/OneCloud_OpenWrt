@@ -37,6 +37,7 @@ git_sparse_clone master https://github.com/kiddin9/openwrt-packages ariang
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-usb-printer
 #git_sparse_clone luci https://github.com/chenmozhijin/turboacc luci-app-turboacc
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-ssr-plus
 
 git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff package/luci-app-poweroff
 git clone --depth=1 https://github.com/Jason6111/luci-app-netdata package/luci-app-netdata
