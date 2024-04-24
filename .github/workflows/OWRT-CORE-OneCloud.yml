@@ -219,6 +219,7 @@ jobs:
           chmod +x openwrt/files/etc/openclash/core/clash*
           dos2unix openwrt/files/etc/1.sh
           dos2unix openwrt/files/etc/rc.local
+          rm -rf feeds/small/luci-app-ssr-plus
           #web控制台去掉433监听补丁
           if [[ "${{ inputs.OWRT_TYPE }}" == *"OneCloud-docker"* ]]; then
             mv $GITHUB_WORKSPACE/onecloud/uhttpd openwrt/files/etc/config/uhttpd
