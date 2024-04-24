@@ -75,6 +75,7 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
+          sudo rm /etc/apt/sources.list.d/microsoft-prod.list
           sudo -E apt-get -qq update
           sudo -E apt-get -qq install ack antlr3 aria2 asciidoc autoconf automake autopoint binutils bison build-essential \
           bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \
