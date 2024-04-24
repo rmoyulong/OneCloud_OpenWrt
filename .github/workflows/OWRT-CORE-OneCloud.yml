@@ -106,9 +106,8 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           sudo rm /etc/apt/sources.list.d/microsoft-prod.list
-          sudo apt-get update -y
-          sudo apt-get install -y $(cat $GITHUB_WORKSPACE/Ubuntu-2204.txt | sed -n "3{s/\r$//;p;q}")
-          sudo apt-get -y autoremove --purge
+          sudo apt-get update
+          sudo apt-get install $(cat $GITHUB_WORKSPACE/Ubuntu-2204.txt | sed -n "3{s/\r$//;p;q}")
           sudo -E systemctl daemon-reload
           sudo apt-get clean && sudo apt-get autoclean
           sudo -E timedatectl set-timezone "Asia/Shanghai"
