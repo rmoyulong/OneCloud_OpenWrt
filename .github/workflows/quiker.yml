@@ -125,7 +125,7 @@ jobs:
       with:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
-        mixkey: ${{ REPO_URL }}/tree/${{ REPO_BRANCH }}?device=${{ CONFIG_FILE }} 
+        mixkey: $REPO_URL/tree/$REPO_BRANCH?device=$CONFIG_FILE 
         
     - name: 安装订阅源
       run: |
