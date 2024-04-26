@@ -90,7 +90,27 @@ jobs:
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
           echo "status=success" >> ${GITHUB_OUTPUT}
-          df -Th 
+          df -Th
+
+    - name: 初始化变量
+      run: |
+          export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+          export OWRT_SOURCE=$(echo $REPO_URL | cut -d '/' -f 5-)
+          #export OWRT_TYPE="cortex-a53"
+
+          echo "OWRT_URL=$REPO_URL" >> $GITHUB_ENV
+          echo "OWRT_BRANCH=$REPO_BRANCH" >> $GITHUB_ENV
+          echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
+          echo "OWRT_SOURCE=$OWRT_SOURCE" >> $GITHUB_ENV
+          echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
+          echo "OWRT_NAME=$OWRT_NAME" >> $GITHUB_ENV
+          echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
+          echo "DIY_P1_SH=$DIY_P1_SH" >> $GITHUB_ENV
+          echo "DIY_P2_SH=$DIY_P2_SH" >> $GITHUB_ENV
+          echo "DIY_P3_SH=$DIY_P3_SH" >> $GITHUB_ENV
+          echo "DIY_P4_SH=$DIY_P4_SH" >> $GITHUB_ENV          
+          echo "OWRT_CFG=$CONFIG_FILE" >> $GITHUB_ENV
+        
         
     - name: 克隆源仓库
       working-directory: /workdir
@@ -125,7 +145,7 @@ jobs:
       with:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
-        mixkey: $REPO_URL/tree/$REPO_BRANCH?device=$CONFIG_FILE 
+        mixkey: ${{ env.OWRT_URL }}/tree/${{ env.OWRT_BRANCH }}?device=${{ env.OWRT_CFG }} 
         
     - name: 安装订阅源
       run: |
