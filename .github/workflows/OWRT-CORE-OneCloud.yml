@@ -138,6 +138,7 @@ jobs:
           echo "OWRT_FILES=$OWRT_FILES" >> $GITHUB_ENV
           echo "DIY_P1_SH=$DIY_P1_SH" >> $GITHUB_ENV
           echo "DIY_P2_SH=$DIY_P2_SH" >> $GITHUB_ENV
+          echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
 
       - name: 检查脚本
         run: |
@@ -189,7 +190,7 @@ jobs:
         with:
           ccache: 'true'
           prefix: ${{ github.workspace }}/openwrt
-          mixkey: ${{ env.OWRT_URL }}/tree/${{ env.OWRT_BRANCH }}?device=${{ inputs.OWRT_CFG }} 
+          mixkey: ${{ env.OWRT_URL }}/tree/${{ env.OWRT_BRANCH }}?device=${{ env.OWRT_CFG }} 
 
       - name: 更新安装订阅源
         working-directory: ./openwrt
