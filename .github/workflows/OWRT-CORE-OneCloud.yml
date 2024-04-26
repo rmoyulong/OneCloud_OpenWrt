@@ -184,12 +184,12 @@ jobs:
           echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
           $GITHUB_WORKSPACE/sh/$DIY_P1_SH
 
-      #- name: 启动缓存[第二次起生效]
-        #uses: rmoyulong/cachewrtbuild@main
-        #with:
-          #ccache: 'true'
-          #prefix: ${{ github.workspace }}/openwrt
-          #mixkey: ${{ env.OWRT_URL }}/tree/${{ env.OWRT_BRANCH }}?device=${{ env.DEVICE_NAME }}-${{ env.OWRT_TYPE }} 
+      - name: 启动缓存[第二次起生效]
+        uses: rmoyulong/cachewrtbuild@main
+        with:
+          ccache: 'true'
+          prefix: ${{ github.workspace }}/openwrt
+          mixkey: ${{ env.OWRT_URL }}/tree/${{ env.OWRT_BRANCH }}?device=${{ inputs.OWRT_CFG }} 
 
       - name: 更新安装订阅源
         working-directory: ./openwrt
