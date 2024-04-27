@@ -209,8 +209,3 @@ config dns_servers
 	option ip 'dot.tiar.app'
 	option type 'tls'
 	option enabled '0'
-
-config authentication
-	option enabled '0'
-	option username 'Clash'
-	option password 'feqwuhhfFes'
