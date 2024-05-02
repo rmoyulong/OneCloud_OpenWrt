@@ -224,15 +224,16 @@ jobs:
       - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
         run: |
           cp -rf $GITHUB_WORKSPACE/$OWRT_FILES/* openwrt/files
-          #chmod +x openwrt/files/etc/openclash/core/clash*
-          dos2unix openwrt/files/etc/1.sh
-          dos2unix openwrt/files/etc/rc.local
           rm -rf feeds/small/luci-app-ssr-plus
-          #web控制台去掉433监听补丁
+          #web控制台去掉443监听补丁
           if [[ "${{ inputs.OWRT_TYPE }}" == *"OneCloud-docker"* ]]; then
             mv $GITHUB_WORKSPACE/onecloud/uhttpd openwrt/files/etc/config/uhttpd
           fi
-          cd openwrt && make defconfig
+          
+          cd openwrt
+          dos2unix ./files/etc/1.sh
+          dos2unix ./files/etc/rc.local
+          make defconfig
         
       - name: 下载编译环境
         working-directory: ./openwrt
