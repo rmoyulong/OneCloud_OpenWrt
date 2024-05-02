@@ -16,7 +16,6 @@ rm -rf feeds/luci/applications/luci-app-netdata
 rm -rf feeds/luci/applications/luci-app-serverchan
 #rm -rf feeds/luci/applications/luci-app-homeproxy
 rm -rf feeds/luci/applications/luci-app-openclash
-rm -rf feeds/packages/net/shadowsocks-libev
 
 # Git稀疏克隆，只克隆指定目录到本地
 function git_sparse_clone() {
@@ -39,7 +38,7 @@ echo 'src-git small https://github.com/kenzok8/small' >> feeds.conf.default
 #git_sparse_clone luci https://github.com/chenmozhijin/turboacc luci-app-turboacc
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-ssr-plus
-#git_sparse_clone master https://github.com/kiddin9/shadowsocks-libev shadowsocks-libev
+#git_sparse_clone master https://github.com/kiddin9/openwrt-packages shadowsocksr-libev
 
 git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff package/luci-app-poweroff
 git clone --depth=1 https://github.com/Jason6111/luci-app-netdata package/luci-app-netdata
