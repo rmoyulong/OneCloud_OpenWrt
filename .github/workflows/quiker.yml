@@ -174,11 +174,12 @@ jobs:
     - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
       run: |
         cp -rf $GITHUB_WORKSPACE/$OWRT_FILES/* openwrt/files
-        #chmod +x openwrt/files/etc/openclash/core/clash*
         rm -rf feeds/small/luci-app-ssr-plus
-        dos2unix openwrt/files/etc/1.sh
-        dos2unix openwrt/files/etc/rc.local
-        cd openwrt && make defconfig
+        
+        cd openwrt
+        dos2unix ./files/etc/1.sh
+        dos2unix ./files/etc/rc.local
+        make defconfig
         
     - name: 下载编译环境
       working-directory: ./openwrt
