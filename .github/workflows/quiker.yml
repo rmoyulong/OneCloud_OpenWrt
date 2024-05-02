@@ -30,7 +30,7 @@ env:
   UPLOAD_RELEASE: true
   OWRT_IP: 192.168.1.110
   OWRT_NAME: OneCloud
-  OWRT_FILES: onecloud/files  
+  OWRT_FILES: onecloud/files
   TZ: Asia/Shanghai
 
 jobs:
@@ -161,7 +161,7 @@ jobs:
         rm -rf ./tmp* ./.config*
         [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && mv $GITHUB_WORKSPACE/$CONFIG_FILE .config
         cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
-        $GITHUB_WORKSPACE/$DIY_P4_SH
+        #$GITHUB_WORKSPACE/$DIY_P4_SH
         $GITHUB_WORKSPACE/$DIY_P2_SH
         #删除冲突的插件 
         #rm -rf feeds/kenzok8/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
