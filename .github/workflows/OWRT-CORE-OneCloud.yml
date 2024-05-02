@@ -214,6 +214,12 @@ jobs:
             echo -e 'CONFIG_PACKAGE_luci-app-unblockmusic=n\n' >> .config
             echo -e 'CONFIG_PACKAGE_luci-app-unblockneteasemusic=n\n' >> .config
           fi
+          
+          #删除错误的源
+          if [[ "${{ inputs.DIY_P1_SH }}" == *"immortalwrt.sh"* ]]; then
+            rm -rf feeds/packages/net/shadowsocks-libev
+            rm -rf package/feeds/packages/shadowsocks-libev
+          fi          
                
       - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
         run: |
