@@ -173,11 +173,6 @@ jobs:
         
         cp -rf $GITHUB_WORKSPACE/$OWRT_FILES/* openwrt/files
         
-        #删除错误的库源
-        #rm -rf feeds/small/luci-app-ssr-plus
-        #rm -rf feeds/small/shadowsocksr-libev
-        rm -rf package/feeds/packages/shadowsocks-libev
-        
         cd openwrt && make defconfig        
         
     - name: 下载编译环境
