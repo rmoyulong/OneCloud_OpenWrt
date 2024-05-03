@@ -18,7 +18,8 @@ rm -rf feeds/luci/applications/luci-app-serverchan
 rm -rf feeds/luci/applications/luci-app-openclash
 rm -rf feeds/luci/applications/luci-app-passwall
 rm -rf feeds/luci/applications/luci-app-passwall2
-#rm -rf feeds/packages/net/shadowsocks-libev
+rm -rf feeds/luci/applications/luci-app-turboacc
+rm -rf feeds/packages/net/shadowsocks-libev
 
 # Git稀疏克隆，只克隆指定目录到本地
 function git_sparse_clone() {
@@ -33,14 +34,14 @@ function git_sparse_clone() {
 echo 'src-git kenzo https://github.com/kenzok8/openwrt-packages' >> feeds.conf.default
 #echo 'src-git small https://github.com/kenzok8/small' >> feeds.conf.default
 #echo 'src-git helloworld https://github.com/stupidloud/helloworld' >> feeds.conf.default
-echo 'src-git passwall_all https://github.com/rmoyulong/openwrt_helloworld' >> feeds.conf.default
+echo 'src-git my_luci https://github.com/rmoyulong/my_luci' >> feeds.conf.default
 #echo 'src-git homeproxy https://github.com/immortalwrt/homeproxy' >> feeds.conf.default
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages aria2
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages ariang
 #it_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-vlmcsd
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-kodexplorer
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-usb-printer
-git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
+#git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-ssr-plus
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages shadowsocksr-libev
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-bypass
