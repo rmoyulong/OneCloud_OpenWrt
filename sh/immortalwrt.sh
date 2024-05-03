@@ -38,7 +38,7 @@ echo 'src-git helloworld https://github.com/stupidloud/helloworld' >> feeds.conf
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-usb-printer
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-ssr-plus
-git_sparse_clone master https://github.com/kiddin9/openwrt-packages shadowsocksr-libev
+#git_sparse_clone master https://github.com/kiddin9/openwrt-packages shadowsocksr-libev
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-bypass
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-passwall
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-passwall2
