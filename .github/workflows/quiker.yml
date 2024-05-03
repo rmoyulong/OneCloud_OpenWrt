@@ -168,7 +168,7 @@ jobs:
         
         #删除错误的库源
         rm -rf package/feeds/packages/shadowsocks-libev
-        #rm -rf feeds/small/shadowsocksr-libev     
+        rm -rf feeds/small/shadowsocksr-libev     
                
     - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
       run: |
