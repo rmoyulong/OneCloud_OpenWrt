@@ -22,7 +22,6 @@ env:
   DIY_P1_SH: sh/immortalwrt.sh
   DIY_P2_SH: sh/lean2.sh
   DIY_P3_SH: sh/remove.sh
-  DIY_P4_SH: sh/tini.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
@@ -107,8 +106,7 @@ jobs:
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
           echo "DIY_P1_SH=$DIY_P1_SH" >> $GITHUB_ENV
           echo "DIY_P2_SH=$DIY_P2_SH" >> $GITHUB_ENV
-          echo "DIY_P3_SH=$DIY_P3_SH" >> $GITHUB_ENV
-          echo "DIY_P4_SH=$DIY_P4_SH" >> $GITHUB_ENV          
+          echo "DIY_P3_SH=$DIY_P3_SH" >> $GITHUB_ENV         
           echo "OWRT_CFG=$CONFIG_FILE" >> $GITHUB_ENV
         
         
@@ -150,8 +148,7 @@ jobs:
     - name: 安装订阅源
       run: |
         cd openwrt
-        #支持firewall4的turboacc
-        #${GITHUB_WORKSPACE}/sh/add_turboacc.sh
+        
         ./scripts/feeds update -a
         ./scripts/feeds install -a       
         
@@ -161,10 +158,11 @@ jobs:
         rm -rf ./tmp* ./.config*
         [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && mv $GITHUB_WORKSPACE/$CONFIG_FILE .config
         cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
-        #$GITHUB_WORKSPACE/$DIY_P4_SH
+        
         $GITHUB_WORKSPACE/$DIY_P2_SH
         #删除冲突的插件 
         #rm -rf feeds/kenzok8/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
+        $GITHUB_WORKSPACE/sh/remove.sh
                
     - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
       run: |
