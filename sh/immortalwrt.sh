@@ -2,8 +2,8 @@
 
 # 移除要替换的包
 rm -rf feeds/packages/net/alist
-#rm -rf feeds/packages/net/aria2
-#rm -rf feeds/packages/net/ariang
+rm -rf feeds/packages/net/aria2
+rm -rf feeds/packages/net/ariang
 rm -rf feeds/packages/net/mosdns
 rm -rf feeds/packages/net/msd_lite
 rm -rf feeds/packages/net/smartdns
@@ -36,12 +36,12 @@ echo 'src-git kenzo https://github.com/kenzok8/openwrt-packages' >> feeds.conf.d
 #echo 'src-git helloworld https://github.com/stupidloud/helloworld' >> feeds.conf.default
 echo 'src-git my_luci https://github.com/rmoyulong/my_luci' >> feeds.conf.default
 #echo 'src-git homeproxy https://github.com/immortalwrt/homeproxy' >> feeds.conf.default
-#git_sparse_clone master https://github.com/kiddin9/openwrt-packages aria2
-#git_sparse_clone master https://github.com/kiddin9/openwrt-packages ariang
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages aria2
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages ariang
 #it_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-vlmcsd
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-kodexplorer
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-usb-printer
-#git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
+git_sparse_clone master https://github.com/rmoyulong/my_luci luci-app-turboacc
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-ssr-plus
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages shadowsocksr-libev
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-bypass
