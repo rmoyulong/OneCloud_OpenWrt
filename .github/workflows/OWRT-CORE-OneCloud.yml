@@ -202,14 +202,16 @@ jobs:
           [ -e $GITHUB_WORKSPACE/Config/$OWRT_CFG ] && mv $GITHUB_WORKSPACE/Config/$OWRT_CFG .config
           cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
           $GITHUB_WORKSPACE/sh/$DIY_P2_SH
-          #删除冲突的插件 
-          #rm -rf feeds/kenzok8/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
           
           #docker版去掉解除网易音乐限制插件
           if [[ "${{ inputs.OWRT_TYPE }}" == *"OneCloud-docker"* ]]; then
             echo -e 'CONFIG_PACKAGE_luci-app-unblockmusic=n\n' >> .config
             echo -e 'CONFIG_PACKAGE_luci-app-unblockneteasemusic=n\n' >> .config
           fi
+          
+          #删除冲突的插件 
+          #rm -rf feeds/kenzok8/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
+          $GITHUB_WORKSPACE/sh/remove.sh
                
       - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
         run: |
