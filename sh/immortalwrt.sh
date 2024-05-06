@@ -37,8 +37,8 @@ echo 'src-git small https://github.com/kenzok8/small' >> feeds.conf.default
 #echo 'src-git helloworld https://github.com/fw876/helloworld' >> feeds.conf.default
 #echo 'src-git my_luci https://github.com/rmoyulong/my_luci' >> feeds.conf.default
 #echo 'src-git homeproxy https://github.com/immortalwrt/homeproxy' >> feeds.conf.default
-git_sparse_clone main https://github.com/kenzok8/small-package aria2
-git_sparse_clone main https://github.com/kenzok8/small-package ariang
+#git_sparse_clone main https://github.com/kenzok8/small-package aria2
+#git_sparse_clone main https://github.com/kenzok8/small-package ariang
 #it_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-vlmcsd
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-kodexplorer
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-usb-printer
