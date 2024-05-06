@@ -3,11 +3,10 @@ config defaults
 	option input 'ACCEPT'
 	option output 'ACCEPT'
 	option forward 'ACCEPT'
+	option synflood_protect '1'
 	option flow_offloading '1'
 	option flow_offloading_hw '1'
-	option synflood_protect '1'
 	option fullcone '1'
-	option fullcone6 '1'
 
 config zone
 	option name 'lan'
@@ -145,11 +144,6 @@ config include 'miniupnpd'
 	option family 'any'
 	option reload '1'
 
-config include 'mia'
-	option type 'script'
-	option path '/etc/mia.include'
-	option reload '1'
-
 config zone 'docker'
 	option input 'ACCEPT'
 	option output 'ACCEPT'
@@ -206,6 +200,16 @@ config include 'bypass'
 	option path '/var/etc/bypass.include'
 	option reload '1'
 
+config include 'passwall2'
+	option type 'script'
+	option path '/var/etc/passwall2.include'
+	option reload '1'
+
+config include 'passwall2_server'
+	option type 'script'
+	option path '/var/etc/passwall2_server.include'
+	option reload '1'
+
 config include 'homeproxy_pre'
 	option type 'nftables'
 	option path '/var/run/homeproxy/fw4_pre.nft'
@@ -215,10 +219,6 @@ config include 'homeproxy_post'
 	option type 'nftables'
 	option path '/var/run/homeproxy/fw4_post.nft'
 	option position 'table-post'
-
-config include 'openclash'
-	option type 'script'
-	option path '/var/etc/openclash.include'
 
 config include 'passwall'
 	option type 'script'
@@ -230,18 +230,17 @@ config include 'passwall_server'
 	option path '/var/etc/passwall_server.include'
 	option reload '1'
 
-config include 'passwall2'
-	option type 'script'
-	option path '/var/etc/passwall2.include'
-	option reload '1'
-
-config include 'passwall2_server'
-	option type 'script'
-	option path '/var/etc/passwall2_server.include'
-	option reload '1'
-
 config include 'shadowsocksr'
 	option type 'script'
 	option path '/var/etc/shadowsocksr.include'
 	option reload '1'
+
+config include 'mia'
+	option type 'script'
+	option path '/etc/mia.include'
+	option reload '1'
+
+config include 'openclash'
+	option type 'script'
+	option path '/var/etc/openclash.include'
 
