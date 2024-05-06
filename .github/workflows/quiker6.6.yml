@@ -1,0 +1,320 @@
+#========================================================================================================================
+# https://github.com/ophub/amlogic-s9xxx-openwrt
+# Description: Use Releases file to packaging
+# Cron: min (0 - 59) / hour (0 - 23) / day of month (1 - 31) / month (1 - 12) / day of week (0 - 6)(Sunday - Saturday)
+#========================================================================================================================
+name: 一站式快建精简onecloud直刷包[6.6]
+
+on:
+  #对应的是 UTC 时间，需要转换，0 代表北京时间8点，每个月5日/19日12点编译一次
+  #关闭则手动编译
+  workflow_dispatch:
+  schedule:
+    - cron: 0 4 4,18 * *
+
+env:
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  REPO_URL: https://github.com/immortalwrt/immortalwrt
+  REPO_BRANCH: master
+  FEEDS_CONF: feeds.conf.default
+  CONFIG_FILE: Config/quicker.config
+  #DIY_P1_SH: sh/quick.sh
+  DIY_P1_SH: sh/immortalwrt.sh
+  DIY_P2_SH: sh/lean2.sh
+  DIY_P3_SH: sh/remove.sh
+  UPLOAD_BIN_DIR: false
+  UPLOAD_FIRMWARE: true
+  UPLOAD_COWTRANSFER: false
+  UPLOAD_WETRANSFER: false
+  UPLOAD_RELEASE: true
+  OWRT_IP: 192.168.1.110
+  OWRT_NAME: OneCloud
+  OWRT_FILES: onecloud/files
+  TZ: Asia/Shanghai
+
+jobs:
+  build_burn_onecloud_quick:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: 清理服务器空间(Ubuntu)
+      uses: rmoyulong/free-disk-space@main
+      with:
+        # this might remove tools that are actually needed,
+        # if set to "true" but frees about 6 GB
+        tool-cache: true
+
+        # all of these default to true, but feel free to set to
+        # "false" if necessary for your workflow
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        swap-storage: true
+        
+    - name: 检查项目
+      uses: actions/checkout@main
+ 
+    - name: 检查分配的服务器性能
+      run: |
+        echo "警告⚠"
+        echo "分配的服务器性能有限，若选择的插件过多，务必注意CPU性能！"
+        echo -e "已知CPU型号（降序）：7763，8370C，8272CL，8171M，E5-2673 \n"
+        echo "--------------------------CPU信息--------------------------"
+        echo "CPU物理数量：$(cat /proc/cpuinfo | grep "physical id" | sort | uniq | wc -l)"
+        echo -e "CPU核心信息：$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c) \n"
+        echo "--------------------------内存信息--------------------------"
+        echo "已安装内存详细信息："
+        echo -e "$(sudo lshw -short -C memory | grep GiB) \n"
+        echo "--------------------------硬盘信息--------------------------"
+        echo "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT 
+
+    - name: 初始化编译环境
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+          #sudo rm /etc/apt/sources.list.d/microsoft-prod.list
+          sudo -E apt-get -qq update
+          sudo -E apt-get -qq install ack antlr3 aria2 asciidoc autoconf automake autopoint binutils bison build-essential \
+          bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \
+          git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev \
+          libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz \
+          mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pip libpython3-dev qemu-utils \
+          rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev dos2unix
+          sudo -E apt-get -qq install time gn clang
+          sudo -E apt-get -qq autoremove --purge
+          sudo -E apt-get -qq clean
+          sudo timedatectl set-timezone "$TZ"
+          sudo mkdir -p /workdir
+          sudo chown $USER:$GROUPS /workdir
+          echo "status=success" >> ${GITHUB_OUTPUT}
+          df -Th
+
+    - name: 初始化变量
+      run: |
+          export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+          export OWRT_SOURCE=$(echo $REPO_URL | cut -d '/' -f 5-)
+          #export OWRT_TYPE="cortex-a53"
+
+          echo "OWRT_URL=$REPO_URL" >> $GITHUB_ENV
+          echo "OWRT_BRANCH=$REPO_BRANCH" >> $GITHUB_ENV
+          echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
+          echo "OWRT_SOURCE=$OWRT_SOURCE" >> $GITHUB_ENV
+          echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
+          echo "OWRT_NAME=$OWRT_NAME" >> $GITHUB_ENV
+          echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
+          echo "DIY_P1_SH=$DIY_P1_SH" >> $GITHUB_ENV
+          echo "DIY_P2_SH=$DIY_P2_SH" >> $GITHUB_ENV
+          echo "DIY_P3_SH=$DIY_P3_SH" >> $GITHUB_ENV         
+          echo "OWRT_CFG=$CONFIG_FILE" >> $GITHUB_ENV
+        
+        
+    - name: 克隆源仓库
+      working-directory: /workdir
+      run: |
+        df -hT $PWD
+        git clone $REPO_URL -b $REPO_BRANCH openwrt
+        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+        
+    - name: 检查脚本
+      run: |
+        cd ./sh
+
+        dos2unix ./*.sh
+        chmod +x ./*.sh          
+        
+    - name: 设置订阅源
+      run: |
+        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
+        
+        cd openwrt
+        if [[ $REPO_URL == *"immortalwrt"* ]]; then
+          mv $GITHUB_WORKSPACE/lede6.6/target/linux/meson target/linux/meson
+          chmod -Rf 755 target/linux/meson
+        fi
+        
+        $GITHUB_WORKSPACE/$DIY_P1_SH
+        #echo 'src-git kiddin9 https://github.com/kiddin9/openwrt-packages' >> feeds.conf.default
+        echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
+ 
+    - name: 启动缓存[第二次起生效]
+      uses: rmoyulong/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        prefix: ${{ github.workspace }}/openwrt
+        mixkey: ${{ env.OWRT_URL }}/tree/${{ env.OWRT_BRANCH }}?device=${{ env.OWRT_CFG }} 
+        
+    - name: 安装订阅源
+      run: |
+        cd openwrt
+        
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a       
+        
+    - name:  加载自定义配置
+      working-directory: ./openwrt
+      run: |
+        rm -rf ./tmp* ./.config*
+        [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && mv $GITHUB_WORKSPACE/$CONFIG_FILE .config
+        cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
+        
+        $GITHUB_WORKSPACE/$DIY_P2_SH
+        #删除冲突的插件 
+        #rm -rf feeds/kenzok8/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
+        #$GITHUB_WORKSPACE/sh/remove.sh
+               
+    - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
+      run: |
+        dos2unix $GITHUB_WORKSPACE/$OWRT_FILES/etc/*.sh
+        dos2unix $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
+        
+        cp -rf $GITHUB_WORKSPACE/$OWRT_FILES/* openwrt/files
+        
+        cd openwrt && make defconfig        
+        
+    - name: 下载编译环境
+      working-directory: ./openwrt
+      run: |
+        make download -j$(nproc)
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+
+    - name: 编译固件
+      working-directory: ./openwrt
+      run: |
+        echo -e "$(nproc) thread compile"
+        make -j$(nproc) || make -j1 || make -j1 V=s
+        echo "status=success" >> $GITHUB_OUTPUT
+        echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV 
+        
+    - name: 制作直刷包
+      run: |
+          sudo apt install img2simg
+          ver="v0.3.2"
+          curl -L -o ./AmlImg https://github.com/rmoyulong/AmlImg/releases/download/$ver/AmlImg_${ver}_linux_amd64
+          chmod +x ./AmlImg
+          curl -L -o ./uboot.img https://github.com/rmoyulong/u-boot-onecloud/releases/download/Onecloud_Uboot_23.12.24_18.15.09/eMMC.burn.img
+          ./AmlImg unpack ./uboot.img burn/
+          echo "::endgroup::"
+          
+          gunzip  openwrt/bin/targets/*/*/*.gz
+          diskimg=$(ls openwrt/bin/targets/*/*/*.img)
+          loop=$(sudo losetup --find --show --partscan $diskimg)
+          img_ext="openwrt.img"
+          img_mnt="xd"
+          rootfs_mnt="img"
+          boot_img=$1${img_ext}
+          boot_img_mnt=$1${img_mnt}
+          rootfs_img_mnt=$1${rootfs_mnt}
+          echo ${boot_img}
+          echo ${boot_img_mnt}
+          echo ${rootfs_img_mnt}
+          sudo rm -rf ${boot_img}
+          sudo rm -rf ${boot_img_mnt}
+          sudo rm -rf ${rootfs_img_mnt}
+          sudo dd if=/dev/zero of=${boot_img} bs=1M count=1200
+          sudo mkfs.ext4 ${boot_img}
+          sudo mkdir ${boot_img_mnt}
+          sudo mkdir ${rootfs_img_mnt}
+          sudo mount ${boot_img} ${boot_img_mnt}
+          sudo mount ${loop}p2 ${rootfs_img_mnt}
+          cd ${rootfs_img_mnt}
+          sudo cp -r * ../${boot_img_mnt}
+          cd ..
+          sudo sync
+          sudo umount ${boot_img_mnt}
+          sudo umount ${rootfs_img_mnt}
+          sudo img2simg ${loop}p1 burn/boot.simg
+          sudo img2simg openwrt.img burn/rootfs.simg
+          sudo rm -rf *.img
+          sudo losetup -d $loop
+          cat <<EOF >>burn/commands.txt
+          PARTITION:boot:sparse:boot.simg
+          PARTITION:rootfs:sparse:rootfs.simg
+          EOF
+          prefix=$(ls openwrt/bin/targets/*/*/*.img | sed 's/\.img$//')
+          burnimg=${prefix}.burn.img
+          ./AmlImg pack $burnimg burn/
+          for f in openwrt/bin/targets/*/*/*.burn.img; do
+            sha256sum "$f" >"${f}.sha"
+            xz --threads=0 --compress "$f"
+          done
+          sudo rm -rf openwrt/bin/targets/*/*/*.img
+          
+    - name: 检查服务器空间
+      if: (!cancelled())
+      run: df -hT
+
+    - name: 整理固件
+      id: organize
+      #if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      run: |
+        cd openwrt/bin/targets/*/*
+        
+        rm -rf packages
+        gzip immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        echo "::set-output name=status::success"
+
+    - name: 上传firmware到cowtransfer
+      id: cowtransfer
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
+        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
+        echo "::set-output name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
+        
+    - name: 上传firmware到WeTransfer
+      id: wetransfer
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
+        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
+        echo "::set-output name=url::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
+        
+    - name: 生成标签
+      id: tag
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      run: |
+        echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
+        touch release.txt
+        [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
+        [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
+        echo "::set-output name=status::success"
+        
+        #信息
+        export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+        export OWRT_SOURCE=$(echo $REPO_URL | cut -d '/' -f 5-)
+        echo "OWRT_SOURCE=$OWRT_SOURCE" >> $GITHUB_ENV
+        echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
+
+    - name: 上传直刷固件
+      uses: rmoyulong/action-gh-release@master
+      if: steps.tag.outputs.status == 'success' && !cancelled()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
+        files: ${{ env.FIRMWARE }}/*
+        body: |
+          自用玩客云一站式直刷固件[6.6]！使用双USB公头线刷机！
+          =============基本信息============
+
+          源码：${{env.OWRT_SOURCE}}
+          密码：password
+          地址：${{env.OWRT_IP}}
+
+    - name: 清理Releases
+      uses: rmoyulong/delete-older-releases@master
+      with:
+        keep_latest: 10
+        delete_tags: true
+
+    - name: 清理Workflows
+      uses: rmoyulong/delete-workflow-runs@main
+      with:
+        retain_days: 0
+        keep_minimum_runs: 1
