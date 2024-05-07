@@ -243,10 +243,18 @@ jobs:
       id: organize
       #if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        cd openwrt/bin/targets/*/*
+        cd openwrt
+        mkdir outfile
+        cp -rf bin/targets/*/*/*.tar ./outfile
+        cp -rf .config ./outfile/config.txt
+        rm -rf bin/targets/*/*/packages
         
-        rm -rf packages
-        gzip immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar
+        cd outfile
+        
+        if [[ $REPO_URL == *"immortalwrt"* ]]; then
+          gzip *.tar
+        fi
+        
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
