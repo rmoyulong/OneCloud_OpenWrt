@@ -238,21 +238,16 @@ jobs:
     - name: 整理固件
       id: organize
       run: |
-        cd openwrt
-        mkdir outfile
-        cp -rf bin/targets/*/*/*.tar ./outfile
-        cp -rf bin/targets/*/*/*.xz ./outfile
-        cp -rf .config ./outfile/config.txt
-        rm -rf bin/targets/*/*/packages
-        
-        cd outfile
-        
+        cp -rf openwrt/.config openwrt/bin/targets/*/*/config.txt
+        cd openwrt/bin/targets/*/*
+        rm -rf ./packages
+          
         if [[ $REPO_URL == *"immortalwrt"* ]]; then
           gzip *.tar
         fi
-        
+          
+        #获得当前目录的路径信息
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
-        echo "::set-output name=status::success"
         
         #信息
         export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
