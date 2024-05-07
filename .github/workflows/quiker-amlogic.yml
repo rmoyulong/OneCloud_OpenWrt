@@ -241,11 +241,15 @@ jobs:
         cd openwrt
         mkdir outfile
         cp -rf bin/targets/*/*/*.tar ./outfile
-        cp -rf *.config ./outfile
+        cp -rf .config ./outfile/config.txt
         rm -rf bin/targets/*/*/packages
         
         cd outfile
-        gzip *.tar
+        
+        if [[ $REPO_URL == *"immortalwrt"* ]]; then
+          gzip *.tar
+        fi
+          
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
         
