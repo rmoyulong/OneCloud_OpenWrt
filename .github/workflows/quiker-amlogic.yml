@@ -248,7 +248,7 @@ jobs:
         cd openwrt
         mkdir outfile
         cp -rf bin/targets/*/*/*.tar ./outfile
-        cp -rf *.config ./outfile
+        cp -rf .config ./outfile
         rm -rf bin/targets/*/*/packages
         
         cd outfile
