@@ -45,7 +45,7 @@ define Device/Default
 endef
 
 define Device/thunder-onecloud
-  DEVICE_DTS := meson8b-onecloud
+  DEVICE_DTS := amlogic/meson8b-onecloud
   DEVICE_TITLE := Thunder OneCloud
   KERNEL_LOADADDR := 0x00208000
   IMAGE/emmc.img := boot-script onecloud | emmc-common $$(DEVICE_NAME)
