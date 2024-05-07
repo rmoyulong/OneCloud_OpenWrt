@@ -272,8 +272,9 @@ jobs:
       - name: 整理固件
         id: organize
         run: |
-          cp -rf openwrt/.config openwrt/bin/targets/*/*/config.txt
-          cd openwrt/bin/targets/*/*
+          cd openwrt
+          cp -rf .config ./bin/targets/meson/meson8b/config.txt
+          cd bin/targets/meson/meson8b
           rm -rf ./packages
           
           if [[ $REPO_URL == *"immortalwrt"* ]]; then
