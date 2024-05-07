@@ -246,6 +246,7 @@ jobs:
         cd openwrt
         mkdir outfile
         cp -rf bin/targets/*/*/*.tar ./outfile
+        cp -rf bin/targets/*/*/*.xz ./outfile
         cp -rf .config ./outfile/config.txt
         rm -rf bin/targets/*/*/packages
         
@@ -266,7 +267,6 @@ jobs:
 
     - name: 上传直刷固件
       uses: rmoyulong/action-gh-release@master
-      if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
