@@ -12,6 +12,7 @@ password<br>
 1.使用双USB公头线刷机: 双公头的USB线连接电脑和玩客云，使用USB_Burning_Tool刷机。<br>
 2.使用rufus写盘启动：将IMG用rufus等写盘工具烧录到U盘上，插入玩客云USB口启动。玩客云必须使用使用USB_Burning_Tool刷过eMMC.burn.img<br>
 eMMC.burn.img下载地址： https://github.com/rmoyulong/u-boot-onecloud/releases/download/Onecloud_Uboot_23.12.24_22.17.50/eMMC.burn.img<br>
+<br>
 USB_Burning_Tool下载地址： https://xd1314.lanzoul.com/iXHbz17bqjhc<br>
 
 hub docker版是为hub.docker.com特意编译的版本。本质是个可以使用docker装入armbian的文件。<br>
