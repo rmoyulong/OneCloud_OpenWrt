@@ -6,11 +6,11 @@
 name: 一站式精简onecloud直刷包[amlogic6.1]
 
 on:
-  #对应的是 UTC 时间，需要转换，0 代表北京时间8点，每个月5日/19日12点编译一次
+  #对应的是 UTC 时间，需要转换，0 代表北京时间8点，每个月3日/16日12点编译一次
   #关闭则手动编译
   workflow_dispatch:
   schedule:
-    - cron: 0 4 5,19 * *
+    - cron: 0 4 3,16 * *
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
