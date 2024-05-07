@@ -10,7 +10,7 @@ BOARDNAME:=Amlogic Meson family
 FEATURES:=boot-part ext4 fpu legacy-sdcard squashfs usbgadget
 SUBTARGETS:=meson8b
 
-KERNEL_PATCHVER:=6.6
+KERNEL_PATCHVER:=6.1
 
 define Target/Description
 	Build firmware image for Amlogic Meson SoC devices.
