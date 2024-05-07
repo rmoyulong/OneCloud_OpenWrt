@@ -275,6 +275,7 @@ jobs:
           cd openwrt
           mkdir outfile
           cp -rf bin/targets/*/*/*.tar ./outfile
+          cp -rf bin/targets/*/*/*.xz ./outfile
           cp -rf .config ./outfile/config.txt
           rm -rf bin/targets/*/*/packages
           
@@ -311,14 +312,6 @@ jobs:
           else
             echo "OWRT_TYPE=[hub docker正常]" >> $GITHUB_ENV
           fi
-
-      #- name: 生成标签上传
-        #uses: ncipollo/release-action@v1
-        #with:
-          #artifacts: ARM_Out/*.img.gz
-          #name: ${{ steps.generate_name.outputs.release_name }}
-          #tag: ${{ steps.generate_name.outputs.release_tag }}
-          #token: ${{ secrets.GITHUB_TOKEN }}
           
       - name: 上传IMAGES
         uses: rmoyulong/action-gh-release@master
