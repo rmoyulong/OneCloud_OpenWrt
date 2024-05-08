@@ -21,11 +21,15 @@ include $(INCLUDE_DIR)/target.mk
 
 DEFAULT_PACKAGES += \
 	e2fsprogs \
+	kmod-usb-hid \
+	resize2fs \
 	mkf2fs \
 	automount \
-	resize2fs \
+	parted \
 	partx-utils \
-	losetup htop autocore-arm
+	losetup \
+	htop \
+	autocore-arm
 
 KERNELNAME:=Image dtbs
 
