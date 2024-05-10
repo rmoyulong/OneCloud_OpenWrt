@@ -22,7 +22,6 @@ DEFAULT_PACKAGES += \
 	kmod-usb-hid \
 	losetup \
 	mkf2fs \
-	automount \
 	parted \
 	partx-utils \
 	resize2fs
