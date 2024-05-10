@@ -105,7 +105,7 @@ aria2_validate() {
 		'bt_seed_unverified:or("true","false")' \
 		'bt_stop_timeout:uinteger' \
 		'bt_tracker:list(string)' \
-		'ca_certificate:file' \
+		'ca_certificate:string:/etc/ssl/certs/ca-certificates.crt' \
 		'certificate:file' \
 		'check_certificate:or("true","false"):true' \
 		'check_integrity:or("true","false")' \
@@ -162,24 +162,31 @@ aria2_start() {
 
 	[ "$enabled" = "1" ] || { _info "Instance \"$section\" disabled."; return 1; }
 	[ -n "$dir" ] || { _err "Please set download dir."; return 1; }
-	[ -d "$dir" ] || _make_dir "$dir" || {
-			_err "Can't create download dir: $dir"
-			return 1
-		}
+	[ -d "$dir" ] || { _err "Please create download dir first."; return 1; }
 
 	config_file="$config_dir/$NAME.conf.$section"
 	config_file_tmp="$config_dir/$NAME.conf.tmp"
 	session_file="$config_dir/$NAME.session.$section"
 
-	_make_dir "$config_dir" || {
-		_err "Can't create config dir: $config_dir"
+	# check directory existence before creating it
+	if [ ! -e "$config_dir" ]; then
+		_make_dir "$config_dir" || {
+			_err "Can't create config dir: $config_dir"
+			return 1
+		}
+	fi
+
+	_create_file "$config_file" "$config_file_tmp" || {
+		_err "Can't create files: $config_file, $config_file_tmp"
 		return 1
 	}
 
-	_create_file "$session_file" "$config_file" "$config_file_tmp" || {
-		_err "Can't create files: $session_file, $config_file, $config_file_tmp"
-		return 1
-	}
+	# check session file existence before creating it
+	if [ ! -e "$session_file" ]; then
+	 	_create_file "$session_file"|| { _err "Can't create files: $session_file"; return 1; }
+	elif [ ! -r "$session_file" ] || [ ! -w "$session_file" ]; then
+		_change_file_mode 600 "$session_file"
+	fi
 
 	# create tmp file
 	cat >"$config_file_tmp" <<-EOF
@@ -313,10 +320,7 @@ aria2_start() {
 	config_list_foreach "$section" "header" append_header
 	config_list_foreach "$section" "extra_settings" append_setting
 
-	cd /usr/share/aria2 && sh ./tracker.sh >/dev/null 2>&1 &
-	cat /usr/share/aria2/aria2.conf > "$config_file"
-	echo '' >> "$config_file"
-	sed '/^$/d' "$config_file_tmp" >> "$config_file"
+	sed '/^$/d' "$config_file_tmp" >"$config_file"
 	rm -f "$config_file_tmp"
 
 	_reset_dir_mode "$config_dir"
@@ -347,7 +351,6 @@ aria2_start() {
 		procd_set_param user "$user"
 
 	procd_add_jail "$NAME.$section" log
-	procd_add_jail_mount "/usr/lib" #fix "errorCode=1 OSSL_PROVIDER_load 'legacy' failed"
 	procd_add_jail_mount "$ca_certificate" "$certificate" "$rpc_certificate" "$rpc_private_key"
 	procd_add_jail_mount_rw "$dir" "$config_dir" "$log"
 	procd_close_instance

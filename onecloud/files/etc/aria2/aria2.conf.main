@@ -1,0 +1,18 @@
+# Auto generated file, changes to this file will be lost.
+dir=/mnt/sda1/aria2/download
+enable-rpc=true
+rpc-allow-origin-all=true
+rpc-listen-all=true
+quiet=true
+continue=true
+input-file=/mnt/sda1/aria2/aria2.session.main
+save-session=/mnt/sda1/aria2/aria2.session.main
+check-certificate=true
+ca-certificate=/etc/ssl/certs/ca-certificates.crt
+enable-dht=true
+dht-file-path=/mnt/sda1/aria2/dht.dat.main
+bt-enable-lpd=true
+file-allocation=none
+follow-torrent=true
+rpc-listen-port=6800
+save-session-interval=30
