@@ -1,4 +1,7 @@
 #!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Copyright (C) 2017 OpenWrt.org
 
 set -x
 [ $# -eq 5 ] || {
@@ -13,7 +16,7 @@ BOOTFSSIZE="$4"
 ROOTFSSIZE="$5"
 
 head=4
-sect=63
+sect=2048
 
 set $(ptgen -o $OUTPUT -h $head -s $sect -l 4096 -t c -p ${BOOTFSSIZE}M -t 83 -p ${ROOTFSSIZE}M)
 
