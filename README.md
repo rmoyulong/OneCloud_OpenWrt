@@ -23,5 +23,5 @@ docker pull mojialin/openwrt_onecloud:latest<br>
 docker run -itd --name=onecloud --restart=unless-stopped --network=macnet --privileged=true mojialin/openwrt_onecloud:latest /sbin/init<br>
 
 ---------------------------------------<br>
-bug:
+bug:<br>
 首次安装固件后，aria2需要设置下载目录属性，需要再次启动玩客云才可以使用。
