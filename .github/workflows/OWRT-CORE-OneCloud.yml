@@ -214,7 +214,7 @@ jobs:
           [ -e $GITHUB_WORKSPACE/$OWRT_FILES ] && mv $GITHUB_WORKSPACE/$OWRT_FILES openwrt/files
           #web控制台去掉443监听补丁
           if [[ "${{ inputs.OWRT_TYPE }}" == *"OneCloud-docker"* ]]; then
-            mv $GITHUB_WORKSPACE/onecloud/uhttpd openwrt/files/etc/config/uhttpd
+            mv $GITHUB_WORKSPACE/ax6/uhttpd openwrt/files/etc/config
           fi
           
           cd openwrt && make defconfig
