@@ -21,3 +21,7 @@ ip link set eth0 promisc on<br>
 docker network create -d macvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o parent=eth0 macnet<br>
 docker pull mojialin/openwrt_onecloud:latest<br>
 docker run -itd --name=onecloud --restart=unless-stopped --network=macnet --privileged=true mojialin/openwrt_onecloud:latest /sbin/init<br>
+
+---------------------------------------<br>
+bug:
+首次安装固件后，aria2需要设置下载目录属性，需要再次启动玩客云才可以使用。
