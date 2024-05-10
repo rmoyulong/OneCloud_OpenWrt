@@ -1,9 +1,5 @@
 #!/bin/bash
 
-mkdir -p /mnt/sda1/aria2
-mkdir -p /mnt/sda1/aria2/download
-mkdir -p /mnt/sda1/share
-
 chmod -R 777 /etc/aria2
 chmod -R 777 /mnt/sda1/aria2
 chmod -R 777 /mnt/sda1/aria2/download

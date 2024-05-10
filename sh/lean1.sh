@@ -12,6 +12,12 @@ rm -rf feeds/luci/applications/luci-app-serverchan
 rm -rf feeds/luci/applications/luci-app-openclash
 rm -rf feeds/luci/applications/luci-app-homeproxy
 
+#aria2
+chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/etc/aria2
+chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/aria2
+chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/aria2/download
+chmod -R 755 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/share
+
 #设置armv7 32位的openclash
 mkdir -p files/etc/openclash/core
 mkdir -p files/etc/profile.d
