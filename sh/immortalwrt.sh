@@ -49,6 +49,7 @@ git_sparse_clone main https://github.com/kenzok8/small-package ariang
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-kodexplorer
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-usb-printer
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
+git_sparse_clone master https://github.com/kiddin9/openwrt-packagesluci-app-zerotier
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-ssr-plus
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages shadowsocksr-libev
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-bypass
