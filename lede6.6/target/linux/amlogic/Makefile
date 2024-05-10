@@ -2,7 +2,6 @@
 
 include $(TOPDIR)/rules.mk
 
-ARCH:=arm
 BOARD:=amlogic
 BOARDNAME:=Amlogic
 BOARDNAME:=Amlogic Meson family
