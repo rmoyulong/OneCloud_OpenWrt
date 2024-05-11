@@ -1,6 +1,10 @@
-// SPDX-License-Identifier: GPL-2.0 OR MIT
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * Author: hzy <hzyitc@outlook.com>
+ */
 
 /dts-v1/;
+
 #include "meson8b.dtsi"
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/input/input.h>
@@ -13,6 +17,11 @@
 		serial0 = &uart_AO;
 		mmc0 = &sd_card_slot;
 		mmc1 = &sdhc;
+		
+		led-boot = &led_status_red;
+		led-failsafe = &led_status_red;
+		led-running = &led_status_blue;
+		led-upgrade = &led_status_green;		
 	};
 
 	chosen {
@@ -29,7 +38,7 @@
 		reset-gpios = <&gpio BOOT_9 GPIO_ACTIVE_LOW>;
 	};
 
-	gpio-keys {
+	button {
 		// compatible = "gpio-keys-polled";
 		// poll-interval = <100>;
 
@@ -180,6 +189,7 @@
 	status = "okay";
 	vref-supply = <&vcc_1v8>;
 };
+
 
 &gpio {
 	gpio-line-names =
