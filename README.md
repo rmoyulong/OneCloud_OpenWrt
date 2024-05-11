@@ -31,7 +31,7 @@ https://github.com/hzyitc/armbian-onecloud/releases/download/ci-20240311-162146-
 ssh armbian输入以下命令 <br>
 1.ip link set eth0 promisc on <br>
 2.docker network create -d macvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o parent=eth0 macnet <br>
-3.docker import /home/op.tar.gz onecloud_openwrt <br>
+3.docker import op.tar.gz onecloud_openwrt <br>
 4.docker run -itd --name=onecloud --restart=unless-stopped --network=macnet --privileged=true onecloud_openwrt /sbin/init <br>
 ---------------------------------------------------------------------------<br>
 
