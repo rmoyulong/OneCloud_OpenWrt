@@ -168,13 +168,11 @@ jobs:
           
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
           [ -e $GITHUB_WORKSPACE/Config/$OWRT_CFG ] && echo "DEVICE_NAME=$(grep '^CONFIG_TARGET_.*_.*_DEVICE_.*=y' $GITHUB_WORKSPACE/Config/$OWRT_CFG | sed -r 's/.*DEVICE_(.*)=y/\1/')" >> $GITHUB_ENV
-          
-          [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
-          
+         
           cd openwrt
           if [[ $REPO_URL == *"immortalwrt"* ]]; then
-            mv $GITHUB_WORKSPACE/lede/target/linux/meson target/linux/meson
-            chmod -Rf 755 target/linux/meson
+            mv $GITHUB_WORKSPACE/lede/target/linux/amlogic target/linux/amlogic
+            chmod -Rf 755 target/linux/amlogic
           fi
           
           $GITHUB_WORKSPACE/sh/$DIY_P1_SH
