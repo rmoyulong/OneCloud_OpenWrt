@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 chmod -R 777 /etc/aria2
 chmod -R 777 /mnt/sda1/aria2

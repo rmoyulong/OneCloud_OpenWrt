@@ -210,6 +210,8 @@ jobs:
         run: |
           dos2unix $GITHUB_WORKSPACE/$OWRT_FILES/etc/*.sh
           dos2unix $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
+          chmod -Rf 755 WORKSPACE/$OWRT_FILES/etc/*.sh
+          chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
           
           cp -rf $GITHUB_WORKSPACE/$OWRT_FILES/* openwrt/files
           
