@@ -15,17 +15,27 @@ eMMC.burn.img下载地址： https://github.com/rmoyulong/u-boot-onecloud/releas
 <br>
 USB_Burning_Tool下载地址： https://xd1314.lanzoul.com/iXHbz17bqjhc<br>
 
-hub docker版是为hub.docker.com特意编译的版本。本质是个可以使用docker装入armbian的文件。<br>
+hub docker版是为hub.docker.com特意编译的版本。本质是个armbian用docker方式装入的op的文件。<br>
 食用方法：<br>
 ip link set eth0 promisc on<br>
 docker network create -d macvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o parent=eth0 macnet<br>
 docker pull mojialin/openwrt_onecloud:latest<br>
 docker run -itd --name=onecloud --restart=unless-stopped --network=macnet --privileged=true mojialin/openwrt_onecloud:latest /sbin/init<br>
+--------------------------------------------------------------------------<br>
+玩客云使用docker版，举个列子（地址可能会变，酌情自己改正）：<br>
+https://github.com/hzyitc/armbian-onecloud/releases/download/ci-20240311-162146-UTC/Armbian-unofficial_24.5.0-trunk_Onecloud_bookworm_edge_6.7.9_minimal.burn.img.xz <br>
 
----------------------------------------<br>
-2024-05-10：aria2 bug修正:<br>
-aria2可以开机自动运行<br>
+用双公头刷完armbian后，下载https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/OpenWrt__24.05.11_23.37.20/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar.gz <br>
+
+把immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar.gz改名op.tar.gz <br>
+ssh armbian输入以下命令 <br>
+1.ip link set eth0 promisc on <br>
+2.docker network create -d macvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o parent=eth0 macnet <br>
+3.docker import /home/op.tar.gz onecloud_openwrt <br>
+4.docker run -itd --name=onecloud --restart=unless-stopped --network=macnet --privileged=true onecloud_openwrt /sbin/init <br>
+---------------------------------------------------------------------------<br>
+
 启动命令在/etc/rc.local中修改<br>
 下载目录更改需要修改/etc/aria2/aria2.conf.main<br>
 并赋予下载目录777权限<br>
--------------------------------------------
+---------------------------------------------------------------------------
