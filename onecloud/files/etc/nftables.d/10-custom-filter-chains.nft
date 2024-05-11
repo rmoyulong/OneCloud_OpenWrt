@@ -36,9 +36,3 @@
 #     type filter hook output priority 1; policy accept;
 #     ct state new log prefix "Firewall4 accepted egress: "
 # }
-
-chain dns-redirect {
-    type nat hook prerouting priority -105;
-    udp dport 53 counter redirect to :53
-    tcp dport 53 counter redirect to :53
-}
