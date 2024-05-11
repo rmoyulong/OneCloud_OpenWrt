@@ -211,7 +211,7 @@ jobs:
           dos2unix $GITHUB_WORKSPACE/$OWRT_FILES/etc/*.sh
           dos2unix $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
           
-          [ -e $GITHUB_WORKSPACE/$OWRT_FILES ] && mv $GITHUB_WORKSPACE/$OWRT_FILES openwrt/files
+          cp -rf $GITHUB_WORKSPACE/$OWRT_FILES/* openwrt/files
           
           #web控制台去掉443监听补丁
           if [[ "${{ inputs.OWRT_TYPE }}" == *"OneCloud-docker"* ]]; then
