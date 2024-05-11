@@ -274,13 +274,10 @@ jobs:
         id: organize
         run: |
           cd openwrt
-          mkdir outfile
-          cp -rf bin/targets/*/*/*.tar ./outfile
-          cp -rf bin/targets/*/*/*.xz ./outfile
-          cp -rf .config ./outfile/config.txt
-          rm -rf bin/targets/*/*/packages
+          cp -rf .config ./bin/targets/meson/meson8b/config.txt
+          cd bin/targets/meson/meson8b
+          rm -rf ./packages          
           
-          cd outfile
           if [[ $REPO_URL == *"immortalwrt"* ]]; then
             gzip *.tar
           fi
