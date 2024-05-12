@@ -168,6 +168,9 @@ jobs:
         cp -rf $GITHUB_WORKSPACE/$OWRT_FILES/* openwrt/files
         echo $GITHUB_WORKSPACE/$OWRT_FILES
         
+        #turboacc
+        curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
+          
         cd openwrt && make defconfig        
         
     - name: 下载编译环境

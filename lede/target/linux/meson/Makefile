@@ -14,21 +14,19 @@ KERNEL_PATCHVER:=6.1
 
 define Target/Description
 	Build firmware image for Amlogic Meson SoC devices.
-	Currently produces Amlogic Burn Image.
+	Currently produces SD Card/USB disk image.
 endef
 
 include $(INCLUDE_DIR)/target.mk
 
 DEFAULT_PACKAGES += \
 	e2fsprogs \
-	kmod-usb-hid \
-	losetup \
 	mkf2fs \
 	automount \
-	parted \
+	resize2fs \
 	partx-utils \
-	resize2fs
-	
+	losetup
+
 KERNELNAME:=Image dtbs
 
 $(eval $(call BuildTarget))
