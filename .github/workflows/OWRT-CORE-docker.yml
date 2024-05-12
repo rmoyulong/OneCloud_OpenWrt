@@ -64,7 +64,7 @@ env:
   #USE_CACHEWRTBUILD: true
   
 jobs:
-  owrt_core_OneCloud:
+  owrt_core_OneCloud_docker:
     runs-on: ubuntu-latest
     
     steps:
