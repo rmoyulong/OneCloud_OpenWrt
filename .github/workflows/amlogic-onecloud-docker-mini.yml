@@ -15,7 +15,7 @@ permissions: write-all
 jobs:
   owrt_config:
     #调用公用编译核心OWRT-CORE.yml
-    uses: ./.github/workflows/OWRT-CORE-OneCloud.yml
+    uses: ./.github/workflows/OWRT-CORE-docker.yml
     with:
       #编译平台，X64包含X86,arm
       OWRT_TARGET: meson8b
