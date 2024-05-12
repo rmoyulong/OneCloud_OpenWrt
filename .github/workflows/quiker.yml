@@ -168,10 +168,15 @@ jobs:
         cp -rf $GITHUB_WORKSPACE/$OWRT_FILES/* openwrt/files
         echo $GITHUB_WORKSPACE/$OWRT_FILES
         
-        #turboacc
-        curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
+    - name: 设置firewall4的turboacc
+      run: |
+          cd openwrt 
           
-        cd openwrt && make defconfig        
+          #turboacc
+          git clone https://github.com/chenmozhijin/turboacc package/luci-app-turboacc
+          curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
+          
+          make defconfig       
         
     - name: 下载编译环境
       working-directory: ./openwrt
