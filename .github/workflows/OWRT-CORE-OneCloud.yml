@@ -219,16 +219,18 @@ jobs:
           if [[ "${{ inputs.OWRT_TYPE }}" == *"OneCloud-docker"* ]]; then
             mv $GITHUB_WORKSPACE/ax6/uhttpd openwrt/files/etc/config
           fi
+          
+          cd openwrt && make defconfig
  
       #- name: 设置firewall4的turboacc
         #run: |
-          cd openwrt 
+          #cd openwrt 
           
           #turboacc
           #git clone https://github.com/chenmozhijin/turboacc package/luci-app-turboacc
           #curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
           
-          make defconfig
+          #make defconfig
         
       - name: 下载编译环境
         working-directory: ./openwrt
