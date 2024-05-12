@@ -220,13 +220,13 @@ jobs:
             mv $GITHUB_WORKSPACE/ax6/uhttpd openwrt/files/etc/config
           fi
  
-      - name: 设置firewall4的turboacc
-        run: |
+      #- name: 设置firewall4的turboacc
+        #run: |
           cd openwrt 
           
           #turboacc
-          git clone https://github.com/chenmozhijin/turboacc package/luci-app-turboacc
-          curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
+          #git clone https://github.com/chenmozhijin/turboacc package/luci-app-turboacc
+          #curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
           
           make defconfig
         
