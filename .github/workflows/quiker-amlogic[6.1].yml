@@ -17,7 +17,7 @@ env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: Config/quicker.config
+  CONFIG_FILE: Config/quicker-amlogic.config
   #DIY_P1_SH: sh/quick.sh
   DIY_P1_SH: sh/immortalwrt.sh
   DIY_P2_SH: sh/lean2.sh
@@ -280,7 +280,7 @@ jobs:
         tag_name: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
         files: ${{ env.FIRMWARE }}/*
         body: |
-          自用玩客云一站式直刷固件[meson6.1]！使用双USB公头线刷机！
+          自用玩客云一站式直刷固件[amlogic6.1]！使用双USB公头线刷机！
           =============基本信息============
 
           源码：${{env.OWRT_SOURCE}}
