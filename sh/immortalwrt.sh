@@ -88,8 +88,6 @@ CLASH_META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/m
 GEOIP_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
 GEOSITE_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
 GEO_MMDB_URL="https://github.com/alecthw/mmdb_china_ip_list/raw/release/lite/Country.mmdb"
-#kr_URL="https://raw.githubusercontent.com/shiyu1314/openwrt-onecloud/main/sh/1.sh"
-#xx_URL="https://raw.githubusercontent.com/shiyu1314/openwrt-onecloud/main/sh/30-sysinfo.sh"
 
 wget -qO- $CLASH_DEV_URL | tar xOvz > files/etc/openclash/core/clash
 wget -qO- $CLASH_TUN_URL | gunzip -c > files/etc/openclash/core/clash_tun
