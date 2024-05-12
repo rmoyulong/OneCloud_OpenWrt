@@ -2,6 +2,9 @@
 
 # 移除要替换的包
 rm -rf ./feeds
+rm -rf ./small
+rm -rf ./kenzo
+rm -rf ./package
 
 #aria2
 chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/etc/aria2
