@@ -58,6 +58,8 @@ git_sparse_clone master https://github.com/rmoyulong/AX6-Actions_Lede zerotier
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-zerotier
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-ssr-plus
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages shadow-tls
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages lua-neturl
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages redsocks2
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-kodexplorer
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-usb-printer
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
