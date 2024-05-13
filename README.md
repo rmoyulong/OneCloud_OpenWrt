@@ -26,7 +26,7 @@ docker run -itd --name=onecloud --restart=unless-stopped --network=macnet --priv
 玩客云使用docker版，举个列子（地址可能会变，酌情自己改正）：<br>
 https://github.com/hzyitc/armbian-onecloud/releases/download/ci-20240311-162146-UTC/Armbian-unofficial_24.5.0-trunk_Onecloud_bookworm_edge_6.7.9_minimal.burn.img.xz <br>
 
-用双公头刷完armbian后，下载 https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/OpenWrt__24.05.11_23.37.20/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar.gz <br>
+用双公头刷完armbian后，下载 https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Latest/immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar.gz <br>
 
 把immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar.gz改名op.tar.gz <br>
 ssh armbian输入以下命令 <br>
