@@ -222,6 +222,10 @@ config include 'homeproxy_post'
 	option path '/var/run/homeproxy/fw4_post.nft'
 	option position 'table-post'
 
+config include 'openclash'
+	option type 'script'
+	option path '/var/etc/openclash.include'
+
 config include 'passwall'
 	option type 'script'
 	option path '/var/etc/passwall.include'
@@ -241,8 +245,4 @@ config include 'mia'
 	option type 'script'
 	option path '/etc/mia.include'
 	option reload '1'
-
-config include 'openclash'
-	option type 'script'
-	option path '/var/etc/openclash.include'
 
