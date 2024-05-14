@@ -62,7 +62,7 @@ git_sparse_clone master https://github.com/kiddin9/openwrt-packages lua-neturl
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages redsocks2
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-kodexplorer
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-usb-printer
-git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
+#git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages shadowsocksr-libev
 #echo 'src-git my_luci https://github.com/rmoyulong/my_luci' >> feeds.conf.default
 
