@@ -4,6 +4,8 @@ config defaults
 	option output 'ACCEPT'
 	option forward 'ACCEPT'
 	option synflood_protect '1'
+	option flow_offloading '1'
+	option flow_offloading_hw '1'
 
 config zone
 	option name 'lan'
