@@ -39,3 +39,4 @@ jobs:
       OWRT_FILES: onecloud/files
       DIY_P1_SH: immortalwrt.sh
       DIY_P2_SH: lean2.sh
+      OWRT_DOCKER: false
