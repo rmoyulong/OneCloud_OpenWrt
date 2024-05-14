@@ -17,11 +17,6 @@
 		serial0 = &uart_AO;
 		mmc0 = &sd_card_slot;
 		mmc1 = &sdhc;
-		
-		led-boot = &led_status_red;
-		led-failsafe = &led_status_red;
-		led-running = &led_status_blue;
-		led-upgrade = &led_status_green;		
 	};
 
 	chosen {
@@ -60,19 +55,28 @@
 	leds {
 		compatible = "gpio-leds";
 
-		led_status_red: status-red {
-			label = "red:status";
+		red {
+			label = "onecloud:red:alive";
 			gpios = <&gpio_ao GPIOAO_2 GPIO_ACTIVE_HIGH>;
+
+			default-state = "on";
+			linux,default-trigger = "default-on";
 		};
 
-		led_status_green: status-green {
-			label = "green:status";
+		green {
+			label = "onecloud:green:alive";
 			gpios = <&gpio_ao GPIOAO_3 GPIO_ACTIVE_HIGH>;
+
+			default-state = "off";
+			linux,default-trigger = "mmc1";
 		};
 
-		led_status_blue: status-blue {
-			label = "blue:status";
+		blue {
+			label = "onecloud:blue:alive";
 			gpios = <&gpio_ao GPIOAO_4 GPIO_ACTIVE_HIGH>;
+
+			default-state = "off";
+			linux,default-trigger = "usb-host";
 		};
 	};
 
@@ -141,14 +145,14 @@
 
 		regulator-name = "VCC_CORE";
 
-		//   ---------------------------------------------------
+		//   +---------------------------------------------------+
 		//   |           The actual mapping in phyical           |
-		//   ----------------------------------------------
+		//   +------+--------+--------+--------+--------+--------+
 		//   |      |  100%  |   60%  |   30%  |   10%  |   0%   |
-		//   ----------------------------------------------
+		//   +------+--------+--------+--------+--------+--------+
 		//   | V1.0 |  677mV |  857mV |  992mV | 1082mV | 1127mV |
 		//   | V1.3 | 1116mV | 1121mV | 1125mV | 1128mV | 1129mV |
-		//   ----------------------------------------------
+		//   +------+--------+--------+--------+--------+--------+
 		//
 		// According to meson8b.dtsi, the CPU should be able to
 		// run at 504MHz with 870mV. But this regulator supplies
@@ -190,6 +194,10 @@
 	vref-supply = <&vcc_1v8>;
 };
 
+&mali {
+	// commented to allow cpufreq tweaking
+	// mali-supply = <&vcc_core>;
+};
 
 &gpio {
 	gpio-line-names =

@@ -20,9 +20,9 @@ include $(INCLUDE_DIR)/target.mk
 DEFAULT_PACKAGES += \
 	e2fsprogs \
 	kmod-usb-hid \
+	automount \
 	losetup \
 	mkf2fs \
-	automount \
 	parted \
 	partx-utils \
 	resize2fs
