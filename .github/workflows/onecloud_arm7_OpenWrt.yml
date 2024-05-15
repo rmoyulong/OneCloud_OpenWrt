@@ -55,7 +55,7 @@ jobs:
         
     - name: 清理服务器空间(Ubuntu)
       uses: rmoyulong/free-disk-space@main
-      if: ${OWRT_freedisk} == 'true'
+      if: ${{inputs.freedisk}} == 'true'
       with:
         # this might remove tools that are actually needed,
         # if set to "true" but frees about 6 GB
