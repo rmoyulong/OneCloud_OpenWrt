@@ -13,7 +13,7 @@ on:
           - 1
           - 2
       freedisk:
-        description: "选择清理服务器[0-不用 1-清理]"
+        description: "选择清理服务器[false-不用 true-清理]"
         required: true
         default: 'false'
         type: choice
@@ -55,7 +55,7 @@ jobs:
         
     - name: 清理服务器空间(Ubuntu)
       uses: rmoyulong/free-disk-space@main
-      if: ${OWRT_freedisk} == 'false'
+      if: ${OWRT_freedisk} == 'true'
       with:
         # this might remove tools that are actually needed,
         # if set to "true" but frees about 6 GB
