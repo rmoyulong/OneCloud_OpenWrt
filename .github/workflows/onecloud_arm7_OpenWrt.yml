@@ -56,8 +56,7 @@ jobs:
       run: |
         echo "OWRT_burn_version=$OWRT_burn_version" >> $GITHUB_ENV
         echo "OWRT_freedisk=$OWRT_freedisk" >> $GITHUB_ENV
-
-      
+        
     - name: 清理服务器空间(Ubuntu)
       uses: rmoyulong/free-disk-space@main
       if: env.OWRT_freedisk  == "1"
