@@ -12,7 +12,7 @@ mkdir -p burnout
 
 if [[ $idtype == "0" ]]; then
   curl -L -o burnout/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Mini/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz
-if [[ $idtype == "1" ]]; then  
+elif [[ $idtype == "1" ]]; then  
   curl -L -o burnout/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Latest/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz
 else
   curl -L -o burnout/onecloud.img.gz $1
