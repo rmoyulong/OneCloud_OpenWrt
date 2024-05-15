@@ -45,6 +45,22 @@ jobs:
     - name: 检查分支
       uses: actions/checkout@v3
       
+    - name: 清理服务器空间(Ubuntu)
+      uses: rmoyulong/free-disk-space@main
+      with:
+        # this might remove tools that are actually needed,
+        # if set to "true" but frees about 6 GB
+        tool-cache: true
+
+        # all of these default to true, but feel free to set to
+        # "false" if necessary for your workflow
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        docker-images: true
+        swap-storage: true
+      
     - name: 检查分配的服务器性能
       run: |
         echo "警告⚠"
@@ -99,7 +115,7 @@ jobs:
     - name: 整理文件
       id: organize
       run: |
-        cd openwrt/burnout
+        cd openwrt/upload
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
         echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
