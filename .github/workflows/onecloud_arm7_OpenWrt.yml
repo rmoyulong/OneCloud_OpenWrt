@@ -50,12 +50,10 @@ jobs:
       actions: write
 
     steps:
-    - name: 检查分支
-      uses: actions/checkout@v3
       
     - name: 清理服务器空间(Ubuntu)
       uses: rmoyulong/free-disk-space@main
-      if: "${{ inputs.freedisk }}"  == "1"
+      if: ${{ inputs.freedisk }}  == 1
       with:
         # this might remove tools that are actually needed,
         # if set to "true" but frees about 6 GB
@@ -69,6 +67,9 @@ jobs:
         large-packages: true
         docker-images: true
         swap-storage: true
+
+    - name: 项目检查
+      uses: actions/checkout@main        
       
     - name: 检查分配的服务器性能
       run: |
