@@ -3,8 +3,15 @@ name: 将指定的IMAGES转换成直刷包
 on:
   workflow_dispatch:
     inputs:
-      manual:
-        description: '手动触发一次编译'
+      burn_version:
+        description: "选择版本[0-迷你版 1-全版 2-其他]"
+        required: true
+        default: 1
+        type: choice
+        options:
+          - 0
+          - 1
+          - 2       
 
 #权限
 permissions: write-all 
@@ -82,12 +89,17 @@ jobs:
         
     - name: 打包直刷包
       run: |
-        $GITHUB_WORKSPACE/sh/convert.sh 1
+        if [[ "${{ inputs.burn_version }}" == 2 ]]; then
+          imgpath="https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Latest/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz"
+          $GITHUB_WORKSPACE/sh/convert.sh $imgpath
+        else
+          $GITHUB_WORKSPACE/sh/convert.sh ${{ inputs.burn_version }}
+        fi
 
     - name: 整理文件
       id: organize
       run: |
-        cd openwrt/out
+        cd burnout
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
         echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
@@ -96,7 +108,15 @@ jobs:
         export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
         export OWRT_SOURCE=$(echo $REPO_URL | cut -d '/' -f 5-)
         echo "OWRT_SOURCE=$OWRT_SOURCE" >> $GITHUB_ENV
-        echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV        
+        echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
+        
+        if [[ "${{ inputs.burn_version }}" == 0 ]]; then
+          echo "OWRT_TYPE=[hub docker迷你]" >> $GITHUB_ENV
+        elif [[ "${{ inputs.burn_version }}" == 1 ]]; then
+          echo "OWRT_TYPE=[hub docker正常]" >> $GITHUB_ENV
+        else
+          echo "OWRT_TYPE=[自定义]" >> $GITHUB_ENV
+        fi
   
     - name: 上传直刷固件
       uses: rmoyulong/action-gh-release@master
@@ -104,7 +124,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
-        files: openwrt/out/*
+        files: ${{ env.FIRMWARE }}/*
         body: |
           自用玩客云${{ env.OWRT_TYPE }}直刷固件！使用双USB公头线刷机！
           =============基本信息============
