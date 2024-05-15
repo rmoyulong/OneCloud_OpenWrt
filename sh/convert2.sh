@@ -1,30 +1,12 @@
-if [ ! -z "$1" ];then
-	idtype=$1
-fi
-
 sudo apt install img2simg
 ver="v0.3.2"
 curl -L -o ./AmlImg https://github.com/rmoyulong/AmlImg/releases/download/$ver/AmlImg_${ver}_linux_amd64
 chmod +x ./AmlImg
 curl -L -o ./uboot.img https://github.com/rmoyulong/u-boot-onecloud/releases/download/Onecloud_Uboot_23.12.24_18.15.09/eMMC.burn.img
-rm -rf openwrt/upload
-mkdir -p openwrt/upload 
-
-if [[ "${idtype}" == "0" ]]; then
-  curl -L -o openwrt/upload/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Mini/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz
-  echo "选中的参数：0"
-elif [[ "${idtype}" == "1" ]]; then  
-  curl -L -o openwrt/upload/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Latest/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz
-  echo "选中的参数：1"
-else
-  curl -L -o openwrt/upload/onecloud.img.gz ${idtype}
-  echo "选中的参数：2"
-fi
-
 ./AmlImg unpack ./uboot.img burn/
 
-gunzip  openwrt/upload/*.gz
-diskimg=$(ls openwrt/upload/*.img)
+gunzip openwrt/bin/targets/*/*/*.gz
+diskimg=$(ls openwrt/bin/targets/*/*/*.img)
 loop=$(sudo losetup --find --show --partscan $diskimg)
 img_ext="openwrt.img"
 img_mnt="xd"
@@ -58,13 +40,13 @@ cat <<EOF >>burn/commands.txt
 PARTITION:boot:sparse:boot.simg
 PARTITION:rootfs:sparse:rootfs.simg
 EOF
-prefix=$(ls openwrt/upload/*.img | sed 's/\.img$//')
+prefix=$(ls openwrt/bin/targets/*/*/*.img | sed 's/\.img$//')
 burnimg=${prefix}.burn.img
 ./AmlImg pack $burnimg burn/
-for f in openwrt/upload/*.burn.img; do
+for f in openwrt/bin/targets/*/*/*.burn.img; do
   sha256sum "$f" >"${f}.sha"
   xz -9 --threads=0 --compress "$f"
 done
-mv ${burnimg}.xz openwrt/upload/openwrt-onecloud_$(date +"%Y-%m-%d_%H_%M")-burn.img.xz
-sudo rm -rf openwrt/upload/*.img
-sudo rm -rf openwrt/upload/*.gz
+mv ${burnimg}.xz openwrt/bin/targets/*/*/openwrt-onecloud_$(date +"%Y-%m-%d_%H_%M")-burn.img.xz
+sudo rm -rf openwrt/bin/targets/*/*/*.img
+sudo rm -rf openwrt/bin/targets/*/*/*.gz
