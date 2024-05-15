@@ -52,14 +52,10 @@ jobs:
       actions: write
 
     steps:
-    - name: 初始化变量
-      run: |
-        echo "OWRT_burn_version=$OWRT_burn_version" >> $GITHUB_ENV
-        echo "OWRT_freedisk=$OWRT_freedisk" >> $GITHUB_ENV
         
     - name: 清理服务器空间(Ubuntu)
       uses: rmoyulong/free-disk-space@main
-      if: env.OWRT_freedisk  == "1"
+      if: ${{inputs.freedisk}}  == 1
       with:
         # this might remove tools that are actually needed,
         # if set to "true" but frees about 6 GB
@@ -103,8 +99,13 @@ jobs:
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
           echo "status=success" >> ${GITHUB_OUTPUT}
-          df -Th  
+          df -Th
 
+    - name: 初始化变量
+      run: |
+        echo "OWRT_burn_version=$OWRT_burn_version" >> $GITHUB_ENV
+        echo "OWRT_freedisk=$OWRT_freedisk" >> $GITHUB_ENV
+        
     - name: 克隆源代码
       working-directory: /workdir
       run: |
