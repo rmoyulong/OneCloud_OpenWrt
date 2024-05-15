@@ -89,7 +89,7 @@ jobs:
         
     - name: 打包直刷包
       run: |
-        if [[ "${{ inputs.burn_version }}" == 2 ]]; then
+        if [[ ${{ inputs.burn_version }} == 2 ]]; then
           imgpath="https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Latest/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz"
           $GITHUB_WORKSPACE/sh/convert.sh $imgpath
         else
@@ -110,9 +110,9 @@ jobs:
         echo "OWRT_SOURCE=$OWRT_SOURCE" >> $GITHUB_ENV
         echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
         
-        if [[ "${{ inputs.burn_version }}" == 0 ]]; then
+        if [[ ${{ inputs.burn_version }} == 0 ]]; then
           echo "OWRT_TYPE=[hub docker迷你]" >> $GITHUB_ENV
-        elif [[ "${{ inputs.burn_version }}" == 1 ]]; then
+        elif [[ ${{ inputs.burn_version }} == 1 ]]; then
           echo "OWRT_TYPE=[hub docker正常]" >> $GITHUB_ENV
         else
           echo "OWRT_TYPE=[自定义]" >> $GITHUB_ENV
