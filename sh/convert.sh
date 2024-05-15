@@ -1,4 +1,3 @@
-idtype="0"
 if [ ! -z "$1" ];then
 	idtype=$1
 fi
@@ -11,15 +10,15 @@ curl -L -o ./uboot.img https://github.com/rmoyulong/u-boot-onecloud/releases/dow
 rm -rf openwrt/upload
 mkdir -p openwrt/upload 
 
-if [[ "$idtype" == "0" ]]; then
+if [[ "${idtype}" == "0" ]]; then
   curl -L -o openwrt/upload/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Mini/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz
-elif [[ "$idtype" == "1" ]]; then  
+elif [[ "${idtype}" == "1" ]]; then  
   curl -L -o openwrt/upload/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Latest/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz
 else
-  curl -L -o openwrt/upload/onecloud.img.gz $1
+  curl -L -o openwrt/upload/onecloud.img.gz ${idtype}
 fi
 
-echo $idtype
+echo "选中的参数：${idtype}"
 
 ./AmlImg unpack ./uboot.img burn/
 
