@@ -12,25 +12,26 @@ mkdir -p openwrt/upload
 
 if [[ "${idtype}" == "0" ]]; then
   curl -L -o openwrt/upload/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Mini/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz
+  echo "选中的参数：0"
 elif [[ "${idtype}" == "1" ]]; then  
   curl -L -o openwrt/upload/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Latest/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz
+  echo "选中的参数：1"
 else
   curl -L -o openwrt/upload/onecloud.img.gz ${idtype}
+  echo "选中的参数：2"
 fi
-
-echo "选中的参数：${idtype}"
 
 ./AmlImg unpack ./uboot.img burn/
 
-gunzip  openwrt/upload/onecloud.img.gz
-diskimg=$(ls  openwrt/upload/*.img)
+gunzip openwrt/upload/onecloud.img.gz
+diskimg=onecloud.img
 loop=$(sudo losetup --find --show --partscan $diskimg)
 img_ext="openwrt.img"
 img_mnt="xd"
 rootfs_mnt="img"
-boot_img=$1${img_ext}
-boot_img_mnt=$1${img_mnt}
-rootfs_img_mnt=$1${rootfs_mnt}
+boot_img=${img_ext}
+boot_img_mnt=${img_mnt}
+rootfs_img_mnt=${rootfs_mnt}
 echo ${boot_img}
 echo ${boot_img_mnt}
 echo ${rootfs_img_mnt}
