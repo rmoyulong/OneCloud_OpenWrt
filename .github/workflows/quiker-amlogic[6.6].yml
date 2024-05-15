@@ -210,9 +210,9 @@ jobs:
           img_ext="openwrt.img"
           img_mnt="xd"
           rootfs_mnt="img"
-          boot_img=$1${img_ext}
-          boot_img_mnt=$1${img_mnt}
-          rootfs_img_mnt=$1${rootfs_mnt}
+          boot_img=${img_ext}
+          boot_img_mnt=${img_mnt}
+          rootfs_img_mnt=${rootfs_mnt}
           echo ${boot_img}
           echo ${boot_img_mnt}
           echo ${rootfs_img_mnt}
