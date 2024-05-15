@@ -13,9 +13,12 @@ mkdir -p openwrt/out
 if [[ $idtype == 0 ]]; then
   echo "OWRT_TYPE=[迷你版]" >> $GITHUB_ENV
   curl -L -o openwrt/out/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Mini/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz
-else
+if [[ $idtype == 1 ]]; then  
   echo "OWRT_TYPE=[全版]" >> $GITHUB_ENV
-		  curl -L -o openwrt/out/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Latest/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz
+  curl -L -o openwrt/out/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Latest/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz
+else
+  echo "OWRT_TYPE=[自定义版]" >> $GITHUB_ENV
+  curl -L -o openwrt/out/onecloud.img.gz $1
 fi
 
 ./AmlImg unpack ./uboot.img burn/
