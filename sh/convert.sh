@@ -8,20 +8,20 @@ ver="v0.3.2"
 curl -L -o ./AmlImg https://github.com/rmoyulong/AmlImg/releases/download/$ver/AmlImg_${ver}_linux_amd64
 chmod +x ./AmlImg
 curl -L -o ./uboot.img https://github.com/rmoyulong/u-boot-onecloud/releases/download/Onecloud_Uboot_23.12.24_18.15.09/eMMC.burn.img
-mkdir -p burnout 
+mkdir -p openwrt/burnout 
 
 if [[ $idtype == "0" ]]; then
-  curl -L -o burnout/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Mini/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz
+  curl -L -o openwrt/burnout/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Mini/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz
 elif [[ $idtype == "1" ]]; then  
-  curl -L -o burnout/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Latest/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz
+  curl -L -o openwrt/burnout/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Latest/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz
 else
-  curl -L -o burnout/onecloud.img.gz $1
+  curl -L -o openwrt/burnout/onecloud.img.gz $1
 fi
 
 ./AmlImg unpack ./uboot.img burn/
-echo "::endgroup::"
-gunzip  burnout/*.gz
-diskimg=$(ls  burnout/*.img)
+
+gunzip  openwrt/burnout/onecloud.img.gz
+diskimg=$(ls  openwrt/burnout/*.img)
 loop=$(sudo losetup --find --show --partscan $diskimg)
 img_ext="openwrt.img"
 img_mnt="xd"
@@ -55,13 +55,13 @@ cat <<EOF >>burn/commands.txt
 PARTITION:boot:sparse:boot.simg
 PARTITION:rootfs:sparse:rootfs.simg
 EOF
-prefix=$(ls burnout/*.img | sed 's/\.img$//')
+prefix=$(ls openwrt/burnout/*.img | sed 's/\.img$//')
 burnimg=${prefix}.burn.img
 ./AmlImg pack $burnimg burn/
-for f in burnout/*.burn.img; do
+for f in openwrt/burnout/*.burn.img; do
   sha256sum "$f" >"${f}.sha"
   xz -9 --threads=0 --compress "$f"
 done
-mv ${burnimg}.xz burnout/openwrt-onecloud_$(date +"%Y-%m-%d_%H_%M")-burn.img.xz
-sudo rm -rf burnout/*.img
-sudo rm -rf burnout/*.gz
+mv ${burnimg}.xz openwrt/burnout/openwrt-onecloud_$(date +"%Y-%m-%d_%H_%M")-burn.img.xz
+sudo rm -rf openwrt/burnout/*.img
+sudo rm -rf openwrt/burnout/*.gz
