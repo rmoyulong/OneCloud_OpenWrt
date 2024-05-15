@@ -11,7 +11,15 @@ on:
         options:
           - 0
           - 1
-          - 2       
+          - 2
+      freedisk:
+        description: "选择清理服务器[0-不用 1-清理]"
+        required: true
+        default: 0
+        type: choice
+        options:
+          - 0
+          - 1       
 
 #权限
 permissions: write-all 
@@ -47,6 +55,7 @@ jobs:
       
     - name: 清理服务器空间(Ubuntu)
       uses: rmoyulong/free-disk-space@main
+      if: ${{ inputs.freedisk }} == 1
       with:
         # this might remove tools that are actually needed,
         # if set to "true" but frees about 6 GB
