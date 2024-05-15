@@ -72,6 +72,13 @@ jobs:
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+
+    - name: 检查脚本
+      run: |
+        cd ./sh
+        
+        dos2unix ./*.sh
+        chmod +x ./*.sh        
         
     - name: 打包直刷包
       run: |
