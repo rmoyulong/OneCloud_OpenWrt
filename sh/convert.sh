@@ -22,9 +22,10 @@ else
 fi
 
 ./AmlImg unpack ./uboot.img burn/
+echo "::endgroup::"
 
-gunzip openwrt/upload/onecloud.img.gz
-diskimg=onecloud.img
+gunzip  openwrt/upload/*.gz
+diskimg=$(ls openwrt/upload/*.img)
 loop=$(sudo losetup --find --show --partscan $diskimg)
 img_ext="openwrt.img"
 img_mnt="xd"
