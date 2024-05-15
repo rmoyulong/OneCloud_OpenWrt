@@ -19,7 +19,7 @@ on:
         type: choice
         options:
           - 0
-          - 1       
+          - 1
 
 #权限
 permissions: write-all 
