@@ -59,8 +59,8 @@ prefix=$(ls burnout/*.img | sed 's/\.img$//')
 burnimg=${prefix}.burn.img
 ./AmlImg pack $burnimg burn/
 for f in burnout/*.burn.img; do
-sha256sum "$f" >"${f}.sha"
-xz -9 --threads=0 --compress "$f"
+  sha256sum "$f" >"${f}.sha"
+  xz -9 --threads=0 --compress "$f"
 done
 mv ${burnimg}.xz burnout/openwrt-onecloud_$(date +"%Y-%m-%d_%H_%M")-burn.img.xz
 sudo rm -rf burnout/*.img
