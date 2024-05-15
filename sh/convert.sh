@@ -1,4 +1,4 @@
-idtype=0
+idtype="0"
 if [ ! -z "$1" ];then
 	idtype=$1
 fi
@@ -10,9 +10,9 @@ chmod +x ./AmlImg
 curl -L -o ./uboot.img https://github.com/rmoyulong/u-boot-onecloud/releases/download/Onecloud_Uboot_23.12.24_18.15.09/eMMC.burn.img
 mkdir -p burnout 
 
-if [[ $idtype == 0 ]]; then
+if [[ $idtype == "0" ]]; then
   curl -L -o burnout/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Mini/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz
-if [[ $idtype == 1 ]]; then  
+if [[ $idtype == "1" ]]; then  
   curl -L -o burnout/onecloud.img.gz https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Latest/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz
 else
   curl -L -o burnout/onecloud.img.gz $1
