@@ -38,6 +38,8 @@ env:
   OWRT_NAME: OneCloud
   OWRT_FILES: onecloud/files
   OWRT_TYPE: 转化版
+  freedisk: ${{inputs.freedisk}}
+  burn_version: ${{inputs.burn_version}}
   #USE_CACHEWRTBUILD: true
   TZ: Asia/Shanghai
 
@@ -50,10 +52,19 @@ jobs:
       actions: write
 
     steps:
+    - name: 初始化变量
+      run: |
+        export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+        export OWRT_SOURCE=$(echo $OWRT_URL | cut -d '/' -f 5-)
+        #export OWRT_TYPE="cortex-a53"
+
+        echo "freedisk=$freedisk" >> $GITHUB_ENV
+        echo "burn_version=$burn_version" >> $GITHUB_ENV
+
       
     - name: 清理服务器空间(Ubuntu)
       uses: rmoyulong/free-disk-space@main
-      if: ${{ inputs.freedisk }}  == "1"
+      if: env.freedisk  == "1"
       with:
         # this might remove tools that are actually needed,
         # if set to "true" but frees about 6 GB
@@ -115,11 +126,11 @@ jobs:
         
     - name: 打包直刷包
       run: |
-        if [[ "${{ inputs.burn_version }}"  == "2" ]]; then
+        if [[ "${{ env.burn_version }}"  == "2" ]]; then
           imgpath="https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Latest/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz"
           $GITHUB_WORKSPACE/sh/convert.sh $imgpath
         else
-          $GITHUB_WORKSPACE/sh/convert.sh "${{ inputs.burn_version }}"
+          $GITHUB_WORKSPACE/sh/convert.sh ${{ env.burn_version }}
         fi
 
     - name: 整理文件
