@@ -55,7 +55,7 @@ jobs:
       
     - name: 清理服务器空间(Ubuntu)
       uses: rmoyulong/free-disk-space@main
-      if: ${{ inputs.freedisk }} == 1
+      if: ${{ env.inputs.freedisk }} == 1
       with:
         # this might remove tools that are actually needed,
         # if set to "true" but frees about 6 GB
@@ -114,11 +114,11 @@ jobs:
         
     - name: 打包直刷包
       run: |
-        if [[ ${{ inputs.burn_version }} == 2 ]]; then
+        if [[ ${{ env.inputs.burn_version }} == 2 ]]; then
           imgpath="https://github.com/rmoyulong/OneCloud_OpenWrt/releases/download/Docker_Latest/immortalwrt-meson-meson8b-thunder-onecloud-ext4-emmc.img.gz"
           $GITHUB_WORKSPACE/sh/convert.sh $imgpath
         else
-          $GITHUB_WORKSPACE/sh/convert.sh ${{ inputs.burn_version }}
+          $GITHUB_WORKSPACE/sh/convert.sh ${{ env.inputs.burn_version }}
         fi
 
     - name: 整理文件
