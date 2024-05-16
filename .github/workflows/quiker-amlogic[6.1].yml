@@ -167,6 +167,8 @@ jobs:
         chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
         
         cp -rf $GITHUB_WORKSPACE/$OWRT_FILES/* openwrt/files
+        #去掉多余的dhcp文件，让首次启动有dhcp服务
+        rm -rf openwrt/files/etc/config/dhcp
         echo $GITHUB_WORKSPACE/$OWRT_FILES
         
         cd openwrt && make defconfig
