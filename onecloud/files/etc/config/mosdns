@@ -1,7 +1,7 @@
 
 config mosdns 'config'
 	option enabled '1'
-	option configfile '/etc/mosdns/config.yaml'
+	option configfile '/var/etc/mosdns.json'
 	option listen_port '5335'
 	option log_level 'error'
 	option logfile '/var/log/mosdns.log'
@@ -37,4 +37,6 @@ config mosdns 'config'
 	list remote_dns 'tls://8.8.4.4'
 	list remote_dns 'tls://9.9.9.9'
 	list remote_dns 'tls://1.0.0.1'
+	option log_file '/var/log/mosdns.log'
+	option lazy_cache_ttl '86400'
 

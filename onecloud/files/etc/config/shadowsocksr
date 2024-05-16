@@ -6,7 +6,7 @@ config global
 	option threads '0'
 	option run_mode 'router'
 	option dports '2'
-	option pdnsd_enable '1'
+	option pdnsd_enable '0'
 	option monitor_enable '1'
 	option enable_switch '1'
 	option switch_time '667'
@@ -17,8 +17,6 @@ config global
 	option chnroute_url 'https://ispip.clang.cn/all_cn.txt'
 	option netflix_enable '0'
 	option adblock '0'
-	option tunnel_forward '8.8.8.8:53'
-	option chinadns_forward '123.125.81.6:53'
 
 config server_subscribe
 	option proxy '0'
