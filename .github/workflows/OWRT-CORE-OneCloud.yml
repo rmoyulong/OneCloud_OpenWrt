@@ -177,7 +177,7 @@ jobs:
         run: |
           cd openwrt
           
-          if [ !v-z $GITHUB_WORKSPACE/ax6/$FEEDS_CONF ]; then
+          if [ ! -z $GITHUB_WORKSPACE/ax6/$FEEDS_CONF ]; then
             echo "定义的源文件不存在！"
           else
             cp -rf $GITHUB_WORKSPACE/ax6/$FEEDS_CONF ./feeds.conf.default
