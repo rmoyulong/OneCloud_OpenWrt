@@ -239,6 +239,7 @@ jobs:
           源码：${{env.OWRT_SOURCE}}
           密码：password
           地址：${{env.OWRT_IP}}
+          代号：mihomo
 
     - name: 清理Releases
       uses: rmoyulong/delete-older-releases@master
