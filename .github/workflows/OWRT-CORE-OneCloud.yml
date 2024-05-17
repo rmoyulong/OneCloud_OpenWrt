@@ -175,7 +175,7 @@ jobs:
 
       - name: 设置订阅源
         run: |
-          [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
+          [ -z $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
           
           cd openwrt
           if [[ $REPO_URL == *"immortalwrt"* ]]; then
