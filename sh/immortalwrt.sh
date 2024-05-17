@@ -22,12 +22,6 @@ rm -rf feeds/luci/applications/luci-app-passwall2
 rm -rf feeds/luci/applications/luci-app-turboacc
 #rm -rf feeds/packages/net/shadowsocks-libev
 
-#aria2
-chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/etc/aria2
-chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/aria2
-chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/aria2/download
-chmod -R 755 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/share
-
 # Git稀疏克隆，只克隆指定目录到本地
 function git_sparse_clone() {
   branch="$1" repourl="$2" && shift 2
