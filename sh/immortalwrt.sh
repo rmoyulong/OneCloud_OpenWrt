@@ -94,5 +94,3 @@ wget -qO- $CLASH_META_URL | tar xOvz > files/etc/openclash/core/clash_meta
 wget -qO- $GEOIP_URL > files/etc/openclash/GeoIP.dat
 wget -qO- $GEOSITE_URL > files/etc/openclash/GeoSite.dat
 wget -qO- $GEO_MMDB_URL > files/etc/openclash/Country.mmdb
-
-chmod +x files/etc/openclash/core/clash*
