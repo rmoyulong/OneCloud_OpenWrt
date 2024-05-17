@@ -64,6 +64,7 @@ env:
   DIY_P1_SH: ${{inputs.DIY_P1_SH}}
   DIY_P2_SH: ${{inputs.DIY_P2_SH}}
   OWRT_DOCKER: ${{inputs.OWRT_DOCKER}}
+  FEEDS_CONF: feeds.conf.default
   TZ: Asia/Shanghai
   #USE_CACHEWRTBUILD: true
   
