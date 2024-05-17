@@ -100,7 +100,7 @@ jobs:
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
           echo "DIY_P1_SH=$DIY_P1_SH" >> $GITHUB_ENV
           echo "DIY_P2_SH=$DIY_P2_SH" >> $GITHUB_ENV
-          echo "DIY_P3_SH=$DIY_P3_SH" >> $GITHUB_ENV         
+          echo "DIY_P3_SH=$DIY_P3_SH" >> $GITHUB_ENV
           echo "OWRT_CFG=$CONFIG_FILE" >> $GITHUB_ENV
           echo "OWRT_FILES=$OWRT_FILES" >> $GITHUB_ENV
         
@@ -166,6 +166,12 @@ jobs:
         dos2unix $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
         chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/*.sh
         chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
+        
+        #aria2
+        chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/etc/aria2
+        chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/aria2
+        chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/aria2/download
+        chmod -R 755 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/share
         
         cd openwrt 
         mv $GITHUB_WORKSPACE/$OWRT_FILES files
