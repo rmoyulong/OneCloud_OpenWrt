@@ -166,12 +166,13 @@ jobs:
         chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/*.sh
         chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
         
-        mv $GITHUB_WORKSPACE/$OWRT_FILES openwrt/files
+        cd openwrt 
+        mv $GITHUB_WORKSPACE/$OWRT_FILES files
         #去掉多余的dhcp文件，让首次启动有dhcp服务
-        rm -rf openwrt/files/etc/config/dhcp
+        rm -rf ./files/etc/config/dhcp
         echo $GITHUB_WORKSPACE/$OWRT_FILES
         
-        cd openwrt && make defconfig
+        make defconfig
         
     #- name: 设置firewall4的turboacc
       #run: |
