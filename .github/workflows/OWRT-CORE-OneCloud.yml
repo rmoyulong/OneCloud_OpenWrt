@@ -219,7 +219,7 @@ jobs:
           chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/*.sh
           chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
           
-          cp -rf $GITHUB_WORKSPACE/$OWRT_FILES/* openwrt/files
+          mv $GITHUB_WORKSPACE/$OWRT_FILES openwrt/files
           
           #web控制台去掉443监听补丁
           if [[ "${{ inputs.OWRT_TYPE }}" == *"OneCloud-docker"* ]]; then
