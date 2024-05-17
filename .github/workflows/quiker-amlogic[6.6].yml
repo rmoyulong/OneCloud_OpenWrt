@@ -166,6 +166,12 @@ jobs:
         chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/*.sh
         chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
         
+        #aria2
+        chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/etc/aria2
+        chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/aria2
+        chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/aria2/download
+        chmod -R 755 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/share
+        
         cd openwrt 
         mv $GITHUB_WORKSPACE/$OWRT_FILES files
         #去掉多余的dhcp文件，让首次启动有dhcp服务
@@ -240,7 +246,6 @@ jobs:
           源码：${{env.OWRT_SOURCE}}
           密码：password
           地址：${{env.OWRT_IP}}
-          代号: mihomo
 
     - name: 清理Releases
       uses: rmoyulong/delete-older-releases@master
