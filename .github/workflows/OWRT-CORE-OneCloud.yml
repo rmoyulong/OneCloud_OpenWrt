@@ -139,6 +139,7 @@ jobs:
           echo "DIY_P2_SH=$DIY_P2_SH" >> $GITHUB_ENV
           echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
           echo "OWRT_DOCKER=$OWRT_DOCKER" >> $GITHUB_ENV
+          echo "FEEDS_CONF=$FEEDS_CONF" >> $GITHUB_ENV
 
       - name: 克隆源码库
         working-directory: /workdir
@@ -162,14 +163,13 @@ jobs:
           fi
           
           df -hT $PWD
-          git clone -q --single-branch --depth=1 --branch=${REPO_BRANCH} ${REPO_URL} openwrt
-          
+          git clone -q --single-branch --depth=1 --branch=${REPO_BRANCH} ${REPO_URL} openwrt          
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
           
       - name: 检查脚本
         run: |
           cd ./sh
-
+          
           dos2unix ./*.sh
           chmod +x ./*.sh
 
