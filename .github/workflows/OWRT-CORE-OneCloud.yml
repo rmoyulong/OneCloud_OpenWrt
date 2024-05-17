@@ -232,6 +232,12 @@ jobs:
           chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/*.sh
           chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
           
+          #aria2
+          chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/etc/aria2
+          chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/aria2
+          chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/aria2/download
+          chmod -R 755 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/share
+          
           cd openwrt
           mv $GITHUB_WORKSPACE/$OWRT_FILES files
           
