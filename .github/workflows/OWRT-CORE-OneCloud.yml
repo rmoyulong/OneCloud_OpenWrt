@@ -177,7 +177,12 @@ jobs:
         run: |
           cd openwrt
           
-          [ -z $GITHUB_WORKSPACE/ax6/$FEEDS_CONF ] && mv $GITHUB_WORKSPACE/ax6/$FEEDS_CONF ./feeds.conf.default
+          if [ !v-z $GITHUB_WORKSPACE/ax6/$FEEDS_CONF ]; then
+            echo "定义的源文件不存在！"
+          else
+            cp -rf $GITHUB_WORKSPACE/ax6/$FEEDS_CONF ./feeds.conf.default
+          fi
+          
           if [[ $REPO_URL == *"immortalwrt"* ]]; then
             rm -rf target/linux/amlogic
             mv $GITHUB_WORKSPACE/lede6.6/target/linux/meson target/linux/meson
