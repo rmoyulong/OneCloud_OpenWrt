@@ -177,7 +177,7 @@ jobs:
         run: |
           cd openwrt
           
-          if [ ! -z $GITHUB_WORKSPACE/ax6/$FEEDS_CONF ]; then
+          if [ ! -f $GITHUB_WORKSPACE/ax6/$FEEDS_CONF ]; then
             echo "feeds.conf.default文件不存在！"
           else
             cp -rf $GITHUB_WORKSPACE/ax6/$FEEDS_CONF ./feeds.conf.default
@@ -186,10 +186,14 @@ jobs:
           if [[ "${{ inputs.OWRT_URL }}" == *"immortalwrt"* ]]; then
             mv $GITHUB_WORKSPACE/lede6.6/target/linux/meson target/linux/meson
             chmod -Rf 755 target/linux/meson
+            echo "拷贝定义的源文件！"
+            ls -l target/linux/meson
           fi
           
-          if [ ! -z target/linux/meson/Makefile ]; then
-            echo "定义的源文件不存在！"
+          if [ ! -f target/linux/meson/Makefile ]; then
+            echo "Makefile文件不存在！"
+          else
+            echo "Makefile文件存在！"
           fi
           
           $GITHUB_WORKSPACE/sh/$DIY_P1_SH
@@ -354,8 +358,7 @@ jobs:
             玩客云${{ env.OWRT_TYPE }}[meson6.6]固件！首次使用rufus写盘启动！
             源码：${{env.OWRT_SOURCE}}
             密码：password
-            地址：${{env.OWRT_IP}}
-            代号：mihomo
+            地址：${{env.OWRT_IP}}          
 
       - name: 上传IMAGES[Hub Docker版]
         uses: rmoyulong/action-gh-release@master
@@ -369,8 +372,7 @@ jobs:
             玩客云${{ env.OWRT_TYPE }}[meson6.6]固件！首次使用rufus写盘启动！
             源码：${{env.OWRT_SOURCE}}
             密码：password
-            地址：${{env.OWRT_IP}}
-            代号：mihomo
+            地址：${{env.OWRT_IP}} 
             
       - name: 清理Releases
         uses: rmoyulong/delete-older-releases@master
