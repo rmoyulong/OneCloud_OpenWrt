@@ -125,7 +125,6 @@ jobs:
         
         cd openwrt
         if [[ $REPO_URL == *"immortalwrt"* ]]; then
-          rm -rf target/linux/amlogic
           mv $GITHUB_WORKSPACE/lede6.6/target/linux/meson target/linux/meson
           chmod -Rf 755 target/linux/meson
         fi
