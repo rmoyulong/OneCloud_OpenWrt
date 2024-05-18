@@ -150,7 +150,7 @@ jobs:
     - name:  加载自定义配置
       working-directory: ./openwrt
       run: |          
-          cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
+          curl -L -o package/base-files/files/etc/banner https://raw.githubusercontent.com/rmoyulong/AX6-Actions_Lede/master/ax6/cats_banner
           $GITHUB_WORKSPACE/$DIY_P2_SH
          
           #删除冲突的插件 
