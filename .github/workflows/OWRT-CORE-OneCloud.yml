@@ -242,6 +242,15 @@ jobs:
           [ -e $GITHUB_WORKSPACE/Config/$OWRT_CFG ] && mv $GITHUB_WORKSPACE/Config/$OWRT_CFG .config
           mv $GITHUB_WORKSPACE/$OWRT_FILES files
           
+          ls -l files
+          if [ ! -f files/etc/rc.local ]; then
+            echo "frc.local文件不存在！"
+          else
+            cat files/etc/rc.local
+          fi
+          
+          cat .config
+          
           #web控制台去掉443监听补丁
           if [[ "${{ inputs.OWRT_TYPE }}" == *"OneCloud-docker"* ]]; then
             cp -rf $GITHUB_WORKSPACE/ax6/uhttpd ./files/etc/config
