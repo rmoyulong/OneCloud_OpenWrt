@@ -250,6 +250,8 @@ jobs:
             cat files/etc/rc.local
           fi
           
+          cat .config
+          
           #web控制台去掉443监听补丁
           if [[ "${{ inputs.OWRT_TYPE }}" == *"OneCloud-docker"* ]]; then
             cp -rf $GITHUB_WORKSPACE/ax6/uhttpd ./files/etc/config
