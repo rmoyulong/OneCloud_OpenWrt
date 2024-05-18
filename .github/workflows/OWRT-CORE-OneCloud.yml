@@ -177,7 +177,7 @@ jobs:
         run: |
           cd openwrt
           
-          if [ ! -z $GITHUB_WORKSPACE/ax6/$FEEDS_CONF ]; then
+          if [ ! -f $GITHUB_WORKSPACE/ax6/$FEEDS_CONF ]; then
             echo "feeds.conf.default文件不存在！"
           else
             cp -rf $GITHUB_WORKSPACE/ax6/$FEEDS_CONF ./feeds.conf.default
@@ -190,8 +190,10 @@ jobs:
             ls -l target/linux/meson
           fi
           
-          if [ ! -z target/linux/meson/Makefile ]; then
-            echo "定义的源文件不存在！"
+          if [ ! -f target/linux/meson/Makefile ]; then
+            echo "Makefile文件不存在！"
+          else
+            echo "Makefile文件存在！"
           fi
           
           $GITHUB_WORKSPACE/sh/$DIY_P1_SH
