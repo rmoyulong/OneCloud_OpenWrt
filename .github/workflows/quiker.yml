@@ -173,7 +173,15 @@ jobs:
           
           rm -rf ./tmp* ./.config*
           [ -e $GITHUB_WORKSPACE/$OWRT_CFG ] && mv $GITHUB_WORKSPACE/$OWRT_CFG .config
-          mv $GITHUB_WORKSPACE/$OWRT_FILES files
+          #mkdir -p files ######arm7 openclash已经建立了files目录
+          cp -rf $GITHUB_WORKSPACE/$OWRT_FILES/* ./files
+          
+          ls -l files
+          if [ ! -f files/etc/rc.local ]; then
+            echo "rc.local文件不存在！"
+          else
+            cat files/etc/rc.local
+          fi 
           
           #web控制台去掉443监听补丁
           if [[ "${{ inputs.OWRT_TYPE }}" == *"OneCloud-docker"* ]]; then
