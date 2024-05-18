@@ -186,6 +186,8 @@ jobs:
           if [[ "${{ inputs.OWRT_URL }}" == *"immortalwrt"* ]]; then
             mv $GITHUB_WORKSPACE/lede6.6/target/linux/meson target/linux/meson
             chmod -Rf 755 target/linux/meson
+            echo "拷贝定义的源文件！"
+            ls -l target/linux/meson
           fi
           
           if [ ! -z target/linux/meson/Makefile ]; then
