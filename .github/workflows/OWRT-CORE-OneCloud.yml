@@ -219,10 +219,11 @@ jobs:
         run: |         
           rm -rf ./tmp* ./.config*
           
-          if [ ! -z $GITHUB_WORKSPACE/Config/$OWRT_CFG ]; then
+          if [ ! -f $GITHUB_WORKSPACE/Config/$OWRT_CFG ]; then
             echo "config文件不存在！"
           else
             cp -rf $GITHUB_WORKSPACE/Config/$OWRT_CFG .config
+            echo $GITHUB_WORKSPACE/Config/$OWRT_CFG
           fi
           
           cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
