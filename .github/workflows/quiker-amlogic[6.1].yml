@@ -149,36 +149,41 @@ jobs:
         
     - name:  加载自定义配置
       working-directory: ./openwrt
-      run: |
-        rm -rf ./tmp* ./.config*
-        [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && mv $GITHUB_WORKSPACE/$CONFIG_FILE .config
-        cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
-        
-        $GITHUB_WORKSPACE/$DIY_P2_SH
-        #删除冲突的插件 
-        #rm -rf feeds/kenzok8/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
-        $GITHUB_WORKSPACE/sh/remove.sh
+      run: |          
+          cp -rf $GITHUB_WORKSPACE/ax6/banner package/base-files/files/etc/banner
+          $GITHUB_WORKSPACE/sh/$DIY_P2_SH
+         
+          #删除冲突的插件 
+          #rm -rf feeds/kenzok8/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
+          $GITHUB_WORKSPACE/sh/remove.sh
                
     - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
-      run: |
-        dos2unix $GITHUB_WORKSPACE/$OWRT_FILES/etc/*.sh
-        dos2unix $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
-        chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/*.sh
-        chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
-        
-        #aria2
-        chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/etc/aria2
-        chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/aria2
-        chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/aria2/download
-        chmod -R 755 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/share
-        
-        cd openwrt 
-        mv $GITHUB_WORKSPACE/$OWRT_FILES files
-        #去掉多余的dhcp文件，让首次启动有dhcp服务
-        rm -rf ./files/etc/config/dhcp
-        echo $GITHUB_WORKSPACE/$OWRT_FILES
-        
-        make defconfig
+      working-directory: ./openwrt
+      run: | 
+          dos2unix $GITHUB_WORKSPACE/$OWRT_FILES/etc/*.sh
+          dos2unix $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
+          chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/*.sh
+          chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
+          
+          #aria2
+          chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/etc/aria2
+          chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/aria2
+          chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/aria2/download
+          chmod -R 755 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/share
+          
+          rm -rf ./tmp* ./.config*
+          [ -e $GITHUB_WORKSPACE/$OWRT_CFG ] && mv $GITHUB_WORKSPACE/$OWRT_CFG .config
+          mv $GITHUB_WORKSPACE/$OWRT_FILES files
+          
+          #web控制台去掉443监听补丁
+          if [[ "${{ inputs.OWRT_TYPE }}" == *"OneCloud-docker"* ]]; then
+            cp -rf $GITHUB_WORKSPACE/ax6/uhttpd ./files/etc/config
+          else
+            #去掉多余的dhcp文件，让首次启动有dhcp服务
+            rm -rf ./files/etc/config/dhcp
+          fi
+          
+          make defconfig
         
     - name: 下载编译环境
       working-directory: ./openwrt
