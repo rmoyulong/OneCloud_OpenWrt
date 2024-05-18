@@ -183,7 +183,6 @@ jobs:
             cp -rf $GITHUB_WORKSPACE/ax6/$FEEDS_CONF ./feeds.conf.default
           fi
           
-          cd openwrt
           if [[ "${{ inputs.OWRT_URL }}" == *"immortalwrt"* ]]; then
             mv $GITHUB_WORKSPACE/lede6.6/target/linux/meson target/linux/meson
             chmod -Rf 755 target/linux/meson
