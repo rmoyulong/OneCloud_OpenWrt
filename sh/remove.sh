@@ -1,7 +1,7 @@
-rm -rf feeds/packages/net/ztdns
-rm -rf feeds/packages/net/libnatpmp
-rm -rf feeds/packages/net/zerotier
-rm -rf feeds/luci/applications/luci-app-zerotier
+#rm -rf feeds/packages/net/ztdns
+#rm -rf feeds/packages/net/libnatpmp
+#rm -rf feeds/packages/net/zerotier
+#rm -rf feeds/luci/applications/luci-app-zerotier
 rm -rf feeds/luci/applications/luci-app-turboacc
 rm -rf feeds/luci/applications/luci-app-kodexplorer
 rm -rf feeds/packages/net/homeproxy
