@@ -1,11 +1,10 @@
 
 config global
-	option port '8020'
-	option upload_max_filesize '300M'
-	list open_basedir '/'
-	option https '0'
-	option project_directory '/mnt/sda1/kodexplorer'
-	option ipv6 '0'
-	option memory_limit '120M'
+	option port '9020'
+	option storage_device_path '/mnt/sda1'
+	option project_directory '/mnt/sda1/www/kodbox_9020/'
 	option enable '1'
+	option memory_limit '280M'
+	option post_max_size '200M'
+	option upload_max_filesize '200M'
 
