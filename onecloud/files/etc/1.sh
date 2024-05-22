@@ -10,6 +10,8 @@ echo "# Put your custom commands here that should be executed once
 
 #mount -o remount rw /
 aria2c --conf-path=/etc/aria2/aria2.conf.main
+/etc/init.d/kodexplorer start
+/etc/init.d/zerotier start
 exit 0">/etc/rc.local
 rm -rf /etc/1.sh
 sh /etc/rc.local
