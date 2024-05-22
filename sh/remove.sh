@@ -6,6 +6,7 @@
 #lede/luci没有feeds/luci/applications/luci-app-kodexplorer
 #rm -rf feeds/luci/applications/luci-app-zerotier
 rm -rf feeds/luci/applications/luci-app-turboacc
+#immortarwrt 自带luci-app-kodexplorer
 #rm -rf feeds/luci/applications/luci-app-kodexplorer
 rm -rf feeds/packages/net/mosdns
 rm -rf feeds/small/mosdns
@@ -16,5 +17,3 @@ rm -rf feeds/packages/net/homeproxy
 rm -rf feeds/luci/applications/luci-app-homeproxy
 rm -rf feeds/kenzo/homeproxy
 rm -rf feeds/kenzo/luci-app-homeproxy
-#用immortalwrt 自带的 luci-app-kodexplorer
-rm -rf feeds/kenzo/luci-app-kodexplorer

@@ -52,6 +52,7 @@ git_sparse_clone master https://github.com/rmoyulong/AX6-Actions_Lede aria2
 git_sparse_clone main https://github.com/kenzok8/small-package ariang
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-zerotier
 #git_sparse_clone main https://github.com/kenzok8/small-package luci-app-kodexplorer
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages mosdns
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-mosdns
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-ssr-plus
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages v2dat
