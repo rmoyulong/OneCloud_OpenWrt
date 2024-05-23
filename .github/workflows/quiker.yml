@@ -164,6 +164,7 @@ jobs:
           dos2unix $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
           chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/*.sh
           chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
+          chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/init.d/*
           
           #aria2
           chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/etc/aria2

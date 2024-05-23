@@ -15,5 +15,3 @@ rm -rf feeds/small/shadowsocksr-libev
 rm -rf feeds/small/luci-app-ssr-plus
 rm -rf feeds/packages/net/homeproxy
 rm -rf feeds/luci/applications/luci-app-homeproxy
-rm -rf feeds/kenzo/homeproxy
-rm -rf feeds/kenzo/luci-app-homeproxy
