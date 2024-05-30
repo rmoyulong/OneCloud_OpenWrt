@@ -3,11 +3,6 @@
 
 mount -o remount rw /
 resize2fs /dev/mmcblk1p2
-mkdir -p /tmp/run/homeproxy
-chmod -R 777 /tmp/run/homeproxy
-chmod -R 777 /etc/init.d/kodexplorer
-chmod -R 777 /etc/init.d/zerotier
 sh  /etc/1.sh
-
 exit 0
 
