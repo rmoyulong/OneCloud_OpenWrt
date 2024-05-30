@@ -4,6 +4,9 @@ config defaults
 	option output 'ACCEPT'
 	option forward 'ACCEPT'
 	option synflood_protect '1'
+	option auto_includes '1'
+	option flow_offloading '1'
+	option flow_offloading_hw '1'
 
 config zone
 	option name 'lan'
@@ -205,11 +208,6 @@ config include 'passwall2'
 config include 'passwall2_server'
 	option type 'script'
 	option path '/var/etc/passwall2_server.include'
-	option reload '1'
-
-config include 'zerotier'
-	option type 'script'
-	option path '/etc/zerotier.start'
 	option reload '1'
 
 config include 'homeproxy_pre'
