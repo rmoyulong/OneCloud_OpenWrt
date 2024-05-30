@@ -192,7 +192,8 @@ jobs:
             rm -rf ./files/etc/config/dhcp
           fi
           
-          make defconfig
+          #openclash 32
+          $GITHUB_WORKSPACE/sh/openclash32.sh
         
     #- name: 设置firewall4的turboacc
       #run: |
@@ -204,7 +205,8 @@ jobs:
         
     - name: 下载编译环境
       working-directory: ./openwrt
-      run: |
+      run: |      
+        make defconfig
         make download -j$(nproc)
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
