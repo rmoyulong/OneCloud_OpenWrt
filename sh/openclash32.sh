@@ -1,5 +1,11 @@
 #设置armv7 32位的openclash
 
+#删除以前设置的所有openclash
+rm -rf ./package/OpenClash
+rm -rf ./package/luci-app-openclash
+rm -rf feeds/kenzo/luci-app-openclash
+rm -rf feeds/luci/applications/luci-app-openclash
+
 #如果 core 文件夹不存在，创建文件夹
 if [ ! -d "./files/etc/openclash/core" ]; then
   mkdir -p files/etc/openclash/core
