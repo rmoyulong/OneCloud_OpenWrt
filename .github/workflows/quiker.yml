@@ -174,7 +174,11 @@ jobs:
           
           rm -rf ./tmp* ./.config*
           [ -e $GITHUB_WORKSPACE/$OWRT_CFG ] && mv $GITHUB_WORKSPACE/$OWRT_CFG .config
-          #mkdir -p files ######arm7 openclash已经建立了files目录
+          
+          #如果files文件夹不存在，创建文件夹
+          if [ ! -d "./files" ]; then
+            mkdir ./files
+          fi          
           cp -rf $GITHUB_WORKSPACE/$OWRT_FILES/* ./files
           
           ls -l files
