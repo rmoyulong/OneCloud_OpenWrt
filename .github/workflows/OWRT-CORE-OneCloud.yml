@@ -254,7 +254,12 @@ jobs:
           
           rm -rf ./tmp* ./.config*
           [ -e $GITHUB_WORKSPACE/Config/$OWRT_CFG ] && mv $GITHUB_WORKSPACE/Config/$OWRT_CFG .config
-          #mkdir -p files ######arm7 openclash已经建立了files目录
+          
+          #如果files文件夹不存在，创建文件夹
+          if [ ! -d "./files" ]; then
+            mkdir ./files
+          fi
+          
           cp -rf $GITHUB_WORKSPACE/$OWRT_FILES/* ./files
           
           ls -l files
@@ -264,7 +269,7 @@ jobs:
             cat files/etc/rc.local
           fi
           
-          cat .config
+          #cat .config
           
           #web控制台去掉443监听补丁
           if [[ "${{ inputs.OWRT_TYPE }}" == *"OneCloud-docker"* ]]; then
@@ -274,11 +279,13 @@ jobs:
             rm -rf ./files/etc/config/dhcp
           fi
           
-          make defconfig
+          #openclash 32
+          $GITHUB_WORKSPACE/sh/openclash32.sh
         
       - name: 下载编译环境
         working-directory: ./openwrt
         run: |
+          make defconfig
           make download -j$(nproc)
           find dl -size -1024c -exec ls -l {} \;
           find dl -size -1024c -exec rm -f {} \;
