@@ -11,6 +11,9 @@ if [ ! -d "./files/etc/openclash/core" ]; then
   mkdir -p files/etc/openclash/core
 fi
 
+#Open Clash
+git clone --depth=1 --single-branch --branch "dev" https://github.com/vernesong/OpenClash.git package/OpenClash
+
 CLASH_DEV_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/master/dev/clash-linux-armv7.tar.gz"
 CLASH_TUN_URL=$(curl -fsSL https://api.github.com/repos/vernesong/OpenClash/contents/master/premium\?ref\=core | grep download_url | grep armv7 | awk -F '"' '{print $4}')
 CLASH_META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-armv7.tar.gz"
