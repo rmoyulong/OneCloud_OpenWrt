@@ -362,14 +362,14 @@ jobs:
           echo "release_name=$release_name" >> $GITHUB_OUTPUT
           echo "release_tag=$release_tag" >> $GITHUB_OUTPUT
           if [[ $OWRT_CFG == *"arm7_mini.config"* ]]; then
-            echo "OWRT_TYPE=[迷你版]" >> $GITHUB_ENV
+            echo "OWRT_TYPE=[正常版]" >> $GITHUB_ENV
           elif [[ $OWRT_CFG == *"tiny.config"* ]]; then
             echo "OWRT_TYPE=[hub docker迷你]" >> $GITHUB_ENV
             echo "OWRT_TAGS=Mini" >> $GITHUB_ENV
           elif [[ $OWRT_CFG == *"arm7.config"* ]]; then
             echo "OWRT_TYPE=[全版]" >> $GITHUB_ENV            
           else
-            echo "OWRT_TYPE=[hub docker正常]" >> $GITHUB_ENV
+            echo "OWRT_TYPE=[hub docker最新]" >> $GITHUB_ENV
             echo "OWRT_TAGS=Latest" >> $GITHUB_ENV
           fi
           
