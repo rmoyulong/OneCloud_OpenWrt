@@ -1,6 +1,6 @@
 
 #CI项目名
-name: 构建玩客云docker-正常版IMAGES
+name: 构建玩客云docker-最新版IMAGES
 
 on:
   #自动编译：每天早上4点
