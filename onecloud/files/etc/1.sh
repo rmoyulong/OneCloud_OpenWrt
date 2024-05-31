@@ -8,9 +8,9 @@ echo "# Put your custom commands here that should be executed once
 
 #mount -o remount rw /
 #/usr/sbin/balethirq.pl
+alias reboot='reboot -f'
 sh /etc/diymo.sh
-#aria2c --conf-path=/etc/aria2/aria2.conf.main >/dev/null 2>&1
-sh /etc/aria2.sh
+aria2c --conf-path=/etc/aria2/aria2.conf.main >/dev/null 2>&1
 exit 0">/etc/rc.local
 
 rm -rf /etc/1.sh
