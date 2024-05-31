@@ -62,10 +62,9 @@ git_sparse_clone master https://github.com/kiddin9/openwrt-packages redsocks2
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages lua-maxminddb
 rm -rf  package/openwrt-passwall/shadowsocks-rust
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages shadowsocks-rust
+git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-usb-printer
-#git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages shadowsocksr-libev
-#echo 'src-git my_luci https://github.com/rmoyulong/my_luci' >> feeds.conf.default
 
 git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff package/luci-app-poweroff
 git clone --depth=1 https://github.com/Jason6111/luci-app-netdata package/luci-app-netdata
