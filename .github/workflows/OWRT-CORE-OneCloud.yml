@@ -273,6 +273,9 @@ jobs:
           #web控制台去掉443监听补丁
           if [[ "${{ inputs.OWRT_TYPE }}" == *"OneCloud-docker"* ]]; then
             cp -rf $GITHUB_WORKSPACE/ax6/uhttpd ./files/etc/config
+            cp -rf $GITHUB_WORKSPACE/ax6/1.sh ./files/etc/
+            cp -rf $GITHUB_WORKSPACE/ax6/diymo.sh ./files/etc/
+            cp -rf $GITHUB_WORKSPACE/ax6/rc.local ./files/etc/
           else
             #去掉多余的dhcp文件，让首次启动有dhcp服务
             rm -rf ./files/etc/config/dhcp
