@@ -3,12 +3,11 @@ config defaults
 	option input 'ACCEPT'
 	option output 'ACCEPT'
 	option forward 'ACCEPT'
-	option synflood_protect '1'
-	option auto_includes '1'
 	option flow_offloading '1'
-	option flow_offloading_hw '1'
+	option synflood_protect '1'
 	option fullcone '1'
 	option fullcone6 '1'
+	option flow_offloading_hw '1'
 
 config zone
 	option name 'lan'
@@ -202,14 +201,9 @@ config include 'bypass'
 	option path '/var/etc/bypass.include'
 	option reload '1'
 
-config include 'passwall2'
+config include 'mia'
 	option type 'script'
-	option path '/var/etc/passwall2.include'
-	option reload '1'
-
-config include 'passwall2_server'
-	option type 'script'
-	option path '/var/etc/passwall2_server.include'
+	option path '/etc/mia.include'
 	option reload '1'
 
 config include 'homeproxy_pre'
@@ -236,13 +230,18 @@ config include 'passwall_server'
 	option path '/var/etc/passwall_server.include'
 	option reload '1'
 
+config include 'passwall2'
+	option type 'script'
+	option path '/var/etc/passwall2.include'
+	option reload '1'
+
+config include 'passwall2_server'
+	option type 'script'
+	option path '/var/etc/passwall2_server.include'
+	option reload '1'
+
 config include 'shadowsocksr'
 	option type 'script'
 	option path '/var/etc/shadowsocksr.include'
-	option reload '1'
-
-config include 'mia'
-	option type 'script'
-	option path '/etc/mia.include'
 	option reload '1'
 
