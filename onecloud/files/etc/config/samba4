@@ -12,8 +12,17 @@ config sambashare
 	option name 'tools'
 	option path '/mnt/sda1/share'
 	option guest_ok 'yes'
-	option guest_only 'yes'
 	option read_only 'no'
 	option create_mask '0666'
 	option dir_mask '0777'
+	option timemachine '1'
+
+config sambashare
+	option name 'download'
+	option path '/mnt/sda1/aria2/download'
+	option read_only 'no'
+	option guest_ok 'yes'
+	option create_mask '0666'
+	option dir_mask '0777'
+	option timemachine '1'
 
