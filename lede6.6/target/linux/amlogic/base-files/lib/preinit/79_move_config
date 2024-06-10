@@ -1,4 +1,5 @@
 #!/bin/sh
+# Copyright (C) 2012-2015 OpenWrt.org
 
 move_config() {
 	local partdev
@@ -18,3 +19,4 @@ move_config() {
 }
 
 boot_hook_add preinit_mount_root move_config
+
