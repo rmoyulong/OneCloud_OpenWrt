@@ -46,13 +46,13 @@ ssh armbian输入以下命令 <br>
 一个脚本执行多个任务---可以指定单个变量来创建单维矩阵来分别执行任务。<br>
 
 例如，以下工作流使用值 [10, 12, 14] 定义变量 version。 工作流将运行三个作业，其中针对变量中的每个值提供一个作业。 每个作业都会通过 matrix.version 上下文访问 version 值，并此值作为 node-version 传递给 actions/setup-node 操作。<br>
-
-jobs:
-  example_matrix:
-    strategy:
-      matrix:
-        version: [10, 12, 14]
-    steps:
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.version }}
+<br>
+jobs:<br>
+  example_matrix:<br>
+    strategy:<br>
+      matrix:<br>
+        version: [10, 12, 14]<br>
+    steps:<br>
+      - uses: actions/setup-node@v4<br>
+        with:<br>
+          node-version: ${{ matrix.version }}<br>
