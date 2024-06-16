@@ -36,8 +36,21 @@ ssh armbian输入以下命令 <br>
 3.docker import op.tar.gz onecloud_openwrt <br>
 4.docker run -itd --name=onecloud --restart=unless-stopped --network=macnet --privileged=true onecloud_openwrt /sbin/init <br>
 ---------------------------------------------------------------------------<br>
-
 启动命令在/etc/rc.local中修改<br>
 下载目录更改需要修改/etc/aria2/aria2.conf.main<br>
 并赋予下载目录777权限<br>
 ---------------------------------------------------------------------------
+编译固件的小知识：<br>
+一个脚本执行多个任务---可以指定单个变量来创建单维矩阵来分别执行任务。<br>
+
+例如，以下工作流使用值 [10, 12, 14] 定义变量 version。 工作流将运行三个作业，其中针对变量中的每个值提供一个作业。 每个作业都会通过 matrix.version 上下文访问 version 值，并此值作为 node-version 传递给 actions/setup-node 操作。<br>
+
+jobs:
+  example_matrix:
+    strategy:
+      matrix:
+        version: [10, 12, 14]
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.version }}
