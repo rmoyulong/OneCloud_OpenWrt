@@ -36,9 +36,11 @@ ssh armbian输入以下命令 <br>
 3.docker import op.tar.gz onecloud_openwrt <br>
 4.docker run -itd --name=onecloud --restart=unless-stopped --network=macnet --privileged=true onecloud_openwrt /sbin/init <br>
 ---------------------------------------------------------------------------<br>
+
 启动命令在/etc/rc.local中修改<br>
 下载目录更改需要修改/etc/aria2/aria2.conf.main<br>
 并赋予下载目录777权限<br>
+
 ---------------------------------------------------------------------------
 编译固件的小知识：<br>
 一个脚本执行多个任务---可以指定单个变量来创建单维矩阵来分别执行任务。<br>
