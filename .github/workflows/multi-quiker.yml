@@ -42,6 +42,7 @@ env:
 
 jobs:
   build_burn_onecloud_quick:
+    name: 编译固件
     runs-on: ubuntu-latest
     strategy:
       matrix:
