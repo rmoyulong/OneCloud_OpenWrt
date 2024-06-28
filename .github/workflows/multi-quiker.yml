@@ -115,11 +115,14 @@ jobs:
           echo ${{ env.OWRT_brun_type }}
           
           if [[ "${{ env.OWRT_brun_type }}" == *"meson6.6"* ]]; then
-            echo "OWRT_CFG='Config/quicker.config'" >> $GITHUB_ENV
+            OWRT_CFG="Config/quicker.config"
+            echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
           elif [[ "${{ env.OWRT_brun_type }}" == *"amlogic6.1"* ]]; then
-            echo "OWRT_CFG='Config/quicker-amlogic.config'" >> $GITHUB_ENV
+            OWRT_CFG="Config/quicker-amlogic.config"
+            echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
           elif [[ "${{ env.OWRT_brun_type }}" == *"amlogic6.6"* ]]; then
-            echo "OWRT_CFG='Config/quicker-amlogic.config'" >> $GITHUB_ENV
+            OWRT_CFG="Config/quicker-amlogic.config"
+            echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
           else
              echo "没有选择编译任何类型"
              exit 1
@@ -149,14 +152,16 @@ jobs:
         if [[ "${{ env.OWRT_brun_type }}" == *"meson6.6"* ]]; then
           mv $GITHUB_WORKSPACE/lede6.6/target/linux/meson target/linux/meson
           chmod -Rf 755 target/linux/meson
+          ls -l target/linux/meson
         elif [[ "${{ env.OWRT_brun_type }}" == *"amlogic6.1"* ]]; then
           mv $GITHUB_WORKSPACE/lede/target/linux/amlogic target/linux/amlogic
           chmod -Rf 755 target/linux/amlogic
+          ls -l target/linux/amlogic
         elif [[ "${{ env.OWRT_brun_type }}" == *"amlogic6.6"* ]]; then
           mv $GITHUB_WORKSPACE/lede6.6/target/linux/amlogic target/linux/amlogic
           chmod -Rf 755 target/linux/amlogic
+          ls -l target/linux/amlogic
         fi
-          
         
         $GITHUB_WORKSPACE/$DIY_P1_SH
         #echo 'src-git kiddin9 https://github.com/kiddin9/openwrt-packages' >> feeds.conf.default
@@ -202,7 +207,7 @@ jobs:
           chmod -R 755 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/share
           
           rm -rf ./tmp* ./.config*
-          [ -e $GITHUB_WORKSPACE/$OWRT_CFG ] && mv $GITHUB_WORKSPACE/$OWRT_CFG .config
+          [ -e $GITHUB_WORKSPACE/${{ env.OWRT_CFG }}  ] && mv $GITHUB_WORKSPACE/${{ env.OWRT_CFG }}  .config
           
           #如果files文件夹不存在，创建文件夹
           if [ ! -d "./files" ]; then
