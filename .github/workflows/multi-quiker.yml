@@ -38,6 +38,7 @@ env:
   OWRT_IP: 192.168.1.110
   OWRT_NAME: OneCloud
   OWRT_FILES: onecloud/files
+  OWRT_brun_type: ${{ github.event.inputs.brun_type }}
   TZ: Asia/Shanghai
 
 jobs:
@@ -110,14 +111,14 @@ jobs:
           echo "DIY_P3_SH=$DIY_P3_SH" >> $GITHUB_ENV          
           echo "OWRT_FILES=$OWRT_FILES" >> $GITHUB_ENV
           
-          echo "ver=${{ github.event.inputs.brun_type }}" >> $GITHUB_ENV
-          echo ${{ env.ver }}
+          echo "OWRT_brun_type=$OWRT_brun_type" >> $GITHUB_ENV
+          echo ${{ env.OWRT_brun_type }}
           
-          if [[ "${{ env.ver }}" == *"meson6.6"* ]]; then
+          if [[ "${{ env.OWRT_brun_type }}" == *"meson6.6"* ]]; then
             echo "OWRT_CFG='Config/quicker.config'" >> $GITHUB_ENV
-          elif [[ "${{ env.ver }}" == *"amlogic6.1"* ]]; then
+          elif [[ "${{ env.OWRT_brun_type }}" == *"amlogic6.1"* ]]; then
             echo "OWRT_CFG='Config/quicker-amlogic.config'" >> $GITHUB_ENV
-          elif [[ "${{ env.ver }}" == *"amlogic6.6"* ]]; then
+          elif [[ "${{ env.OWRT_brun_type }}" == *"amlogic6.6"* ]]; then
             echo "OWRT_CFG='Config/quicker-amlogic.config'" >> $GITHUB_ENV
           else
              echo "没有选择编译任何类型"
@@ -145,13 +146,13 @@ jobs:
         
         cd openwrt
         
-        if [[ "${{ env.ver }}" == *"meson6.6"* ]]; then
+        if [[ "${{ env.OWRT_brun_type }}" == *"meson6.6"* ]]; then
           mv $GITHUB_WORKSPACE/lede6.6/target/linux/meson target/linux/meson
           chmod -Rf 755 target/linux/meson
-        elif [[ "${{ env.ver }}" == *"amlogic6.1"* ]]; then
+        elif [[ "${{ env.OWRT_brun_type }}" == *"amlogic6.1"* ]]; then
           mv $GITHUB_WORKSPACE/lede/target/linux/amlogic target/linux/amlogic
           chmod -Rf 755 target/linux/amlogic
-        elif [[ "${{ env.ver }}" == *"amlogic6.6"* ]]; then
+        elif [[ "${{ env.OWRT_brun_type }}" == *"amlogic6.6"* ]]; then
           mv $GITHUB_WORKSPACE/lede6.6/target/linux/amlogic target/linux/amlogic
           chmod -Rf 755 target/linux/amlogic
         fi
@@ -280,7 +281,7 @@ jobs:
         tag_name: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
         files: ${{ env.FIRMWARE }}/*
         body: |
-          自用玩客云一站式直刷固件[${{ env.ver }}]！使用双USB公头线刷机！
+          自用玩客云一站式直刷固件[${{ env.OWRT_brun_type }}]！使用双USB公头线刷机！
           =============基本信息============
 
           源码：${{env.OWRT_SOURCE}}
