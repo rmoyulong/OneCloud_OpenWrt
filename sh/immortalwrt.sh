@@ -35,8 +35,9 @@ function git_sparse_clone() {
 echo 'src-git kenzo https://github.com/kenzok8/openwrt-packages' >> feeds.conf.default
 #echo 'src-git small https://github.com/kenzok8/small' >> feeds.conf.default
 ######################################################################################
-git clone --depth=1 https://github.com/immortalwrt/homeproxy package/homeproxy
-git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-homeproxy
+#支持clash方式 有clash ui
+git clone --depth=1 https://github.com/bulianglin/homeproxy package/homeproxy
+#git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-homeproxy
 ######################################################################################
 #git clone --depth=1 -b main https://github.com/fw876/helloworld package/luci-app-ssr-plus
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
