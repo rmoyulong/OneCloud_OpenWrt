@@ -3,18 +3,18 @@
 # Description: Use Releases file to packaging
 # Cron: min (0 - 59) / hour (0 - 23) / day of month (1 - 31) / month (1 - 12) / day of week (0 - 6)(Sunday - Saturday)
 #========================================================================================================================
-name: 一站式精简onecloud直刷包【多选】
+name: 一站式精简onecloud直刷包【选择】
 
 on:
   #对应的是 UTC 时间，需要转换，0 代表北京时间8点，每个月2日/15日12点编译一次
   #关闭则手动编译
   workflow_dispatch:
     inputs:
-      brun_name:
-        type: multi-choice
+      brun_type:
+        type: choice
         description: 选择需要编译的直刷包类型
         required: true
-        default: "['amlogic6.1','meson6.6','amlogic6.6']"
+        default: "meson6.6"
         options: 
         - amlogic6.1
         - amlogic6.6
@@ -42,11 +42,7 @@ env:
 
 jobs:
   build_brun_firmware:
-    name: 编译固件
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        brun_type: ${{ github.event.inputs.brun_name }}
         
     steps:
     - name: 清理服务器空间(Ubuntu)
@@ -114,7 +110,7 @@ jobs:
           echo "DIY_P3_SH=$DIY_P3_SH" >> $GITHUB_ENV          
           echo "OWRT_FILES=$OWRT_FILES" >> $GITHUB_ENV
           
-          echo "ver=${{ matrix.brun_type }}" >> $GITHUB_ENV
+          echo "ver=${{ github.event.inputs.brun_type }}" >> $GITHUB_ENV
           echo ${{ env.ver }}
           
           if [[ "${{ env.ver }}" == *"meson6.6"* ]]; then
