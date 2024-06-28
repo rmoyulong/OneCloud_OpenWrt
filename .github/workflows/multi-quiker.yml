@@ -14,7 +14,7 @@ on:
         type: multi-choice
         description: 选择需要编译的直刷包类型
         required: true
-        default: 'amlogic6.1,meson6.6,amlogic6.6'
+        default: '[amlogic6.1,meson6.6,amlogic6.6]'
         options: 
         - amlogic6.1
         - amlogic6.6
