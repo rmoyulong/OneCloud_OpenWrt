@@ -41,12 +41,12 @@ env:
   TZ: Asia/Shanghai
 
 jobs:
-  build_burn_onecloud_quick:
+  build_brun_firmware:
     name: 编译固件
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        brun_type: [${{ github.event.inputs.brun_name }}]
+        brun_type: ${{ github.event.inputs.brun_name }}
         
     steps:
     - name: 清理服务器空间(Ubuntu)
