@@ -114,13 +114,13 @@ jobs:
           echo "OWRT_brun_type=$OWRT_brun_type" >> $GITHUB_ENV
           echo ${{ env.OWRT_brun_type }}
           
-          if [[ "${{ env.OWRT_brun_type }}" == *"meson6.6"* ]]; then
+          if [[ "${{ env.OWRT_brun_type }}" == "meson6.6" ]]; then
             OWRT_CFG="Config/quicker.config"
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
-          elif [[ "${{ env.OWRT_brun_type }}" == *"amlogic6.1"* ]]; then
+          elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.1" ]]; then
             OWRT_CFG="Config/quicker-amlogic.config"
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
-          elif [[ "${{ env.OWRT_brun_type }}" == *"amlogic6.6"* ]]; then
+          elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.6" ]]; then
             OWRT_CFG="Config/quicker-amlogic.config"
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
           else
@@ -149,15 +149,15 @@ jobs:
         
         cd openwrt
         
-        if [[ "${{ env.OWRT_brun_type }}" == *"meson6.6"* ]]; then
+        if [[ "${{ env.OWRT_brun_type }}" == "meson6.6" ]]; then
           mv $GITHUB_WORKSPACE/lede6.6/target/linux/meson target/linux/meson
           chmod -Rf 755 target/linux/meson
           ls -l target/linux/meson
-        elif [[ "${{ env.OWRT_brun_type }}" == *"amlogic6.1"* ]]; then
+        elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.1" ]]; then
           mv $GITHUB_WORKSPACE/lede/target/linux/amlogic target/linux/amlogic
           chmod -Rf 755 target/linux/amlogic
           ls -l target/linux/amlogic
-        elif [[ "${{ env.OWRT_brun_type }}" == *"amlogic6.6"* ]]; then
+        elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.6" ]]; then
           mv $GITHUB_WORKSPACE/lede6.6/target/linux/amlogic target/linux/amlogic
           chmod -Rf 755 target/linux/amlogic
           ls -l target/linux/amlogic
