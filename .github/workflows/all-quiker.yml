@@ -27,7 +27,6 @@ env:
   OWRT_IP: 192.168.1.110
   OWRT_NAME: OneCloud
   OWRT_FILES: onecloud/files
-  OWRT_brun_type: none
   TZ: Asia/Shanghai
 
 jobs:
