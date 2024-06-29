@@ -158,7 +158,7 @@ jobs:
           mv $GITHUB_WORKSPACE/lede/target/linux/amlogic target/linux
           chmod -Rf 755 target/linux/amlogic
           ls -l target/linux/amlogic
-          echo "amlogic.1"
+          echo "amlogic6.1"
         elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.6" ]]; then
           mv $GITHUB_WORKSPACE/lede6.6/target/linux/amlogic target/linux
           chmod -Rf 755 target/linux/amlogic
