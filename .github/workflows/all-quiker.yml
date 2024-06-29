@@ -107,7 +107,8 @@ jobs:
           echo "DIY_P3_SH=$DIY_P3_SH" >> $GITHUB_ENV          
           echo "OWRT_FILES=$OWRT_FILES" >> $GITHUB_ENV
           
-          echo "OWRT_brun_type=${{ matrix.brun_type }}" >> $GITHUB_ENV
+          OWRT_brun_type=${{ matrix.brun_type }}
+          echo "OWRT_brun_type=$OWRT_brun_type" >> $GITHUB_ENV
           echo ${{ env.OWRT_brun_type }}
           
           if [[ "${{ env.OWRT_brun_type }}" == "meson6.6" ]]; then
