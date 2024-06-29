@@ -174,6 +174,7 @@ jobs:
               echo "Unknown source code repository."
               exit 1
           fi
+          echo "REPO_BRANCH=$REPO_BRANCH" >> $GITHUB_ENV
           
           df -hT $PWD
           git clone -q --single-branch --depth=1 --branch=${REPO_BRANCH} ${REPO_URL} openwrt          
@@ -196,12 +197,10 @@ jobs:
             cp -rf $GITHUB_WORKSPACE/ax6/$FEEDS_CONF ./feeds.conf.default
           fi
           
-          if [[ "${{ inputs.OWRT_URL }}" == *"immortalwrt"* ]]; then
-            mv $GITHUB_WORKSPACE/lede6.6/target/linux/meson target/linux/meson
-            chmod -Rf 755 target/linux/meson
-            echo "拷贝定义的源文件！"
-            ls -l target/linux/meson
-          fi
+          mv $GITHUB_WORKSPACE/lede6.6/target/linux/meson target/linux/meson
+          chmod -Rf 755 target/linux/meson
+          echo "拷贝定义的源文件！"
+          ls -l target/linux/meson
           
           if [ ! -f target/linux/meson/Makefile ]; then
             echo "Makefile文件不存在！"
@@ -212,6 +211,9 @@ jobs:
           $GITHUB_WORKSPACE/sh/$DIY_P1_SH
           #echo 'src-git kiddin9 https://github.com/kiddin9/openwrt-packages' >> feeds.conf.default
           echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
+          
+          export OWRT_SOURCE=$(echo ${{inputs.OWRT_URL}} | cut -d '/' -f 5-)
+          echo "OWRT_SOURCE=$OWRT_SOURCE" >> $GITHUB_ENV
         
 
       - name: 启动缓存[第二次起生效]
@@ -219,7 +221,7 @@ jobs:
         with:
           ccache: 'true'
           prefix: ${{ github.workspace }}/openwrt
-          mixkey: ${{ env.OWRT_URL }}/tree/${{ env.OWRT_BRANCH }}?device=${{ env.OWRT_CFG }} 
+          mixkey: ${{ env.OWRT_SOURCE }}/tree/${{ env.OWRT_BRANCH }}?device=${{ env.OWRT_CFG }} 
 
       - name: 更新安装订阅源
         working-directory: ./openwrt
@@ -390,7 +392,7 @@ jobs:
             请使用rufus写盘启动！
             ==========🧊 基本信息 🧊==========
             💻 固件源码： ${{env.OWRT_SOURCE}}
-            💝 源码分支： ${REPO_BRANCH}
+            💝 源码分支： ${{env.REPO_BRANCH}}
             🔑 默认密码： password
             🌐 默认地址： ${{env.OWRT_IP}}         
 
@@ -407,7 +409,7 @@ jobs:
             请使用rufus写盘启动！
             ==========🧊 基本信息 🧊==========
             💻 固件源码： ${{env.OWRT_SOURCE}}
-            💝 源码分支： ${REPO_BRANCH}
+            💝 源码分支： ${{env.REPO_BRANCH}}
             🔑 默认密码： password
             🌐 默认地址： ${{env.OWRT_IP}}
             
