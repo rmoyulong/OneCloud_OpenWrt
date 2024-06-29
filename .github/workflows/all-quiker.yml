@@ -107,16 +107,16 @@ jobs:
           echo "DIY_P3_SH=$DIY_P3_SH" >> $GITHUB_ENV          
           echo "OWRT_FILES=$OWRT_FILES" >> $GITHUB_ENV
           
-          echo "OWRT_brun_type=$OWRT_brun_type" >> $GITHUB_ENV
-          echo ${{ matrix.brun_type }}
+          echo "OWRT_brun_type=${{ matrix.brun_type }}" >> $GITHUB_ENV
+          echo ${{ env.OWRT_brun_type }}
           
-          if [[ "${{ matrix.brun_type }}" == "meson6.6" ]]; then
+          if [[ "${{ env.OWRT_brun_type }}" == "meson6.6" ]]; then
             OWRT_CFG="Config/quicker.config"
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
-          elif [[ "${{ matrix.brun_type }}" == "amlogic6.1" ]]; then
+          elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.1" ]]; then
             OWRT_CFG="Config/quicker-amlogic.config"
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
-          elif [[ "${{ matrix.brun_type }}" == "amlogic6.6" ]]; then
+          elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.6" ]]; then
             OWRT_CFG="Config/quicker-amlogic.config"
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
           else
@@ -145,16 +145,18 @@ jobs:
         
         cd openwrt
         
-        if [[ "${{ matrix.brun_type }}" == "meson6.6" ]]; then
-          mv $GITHUB_WORKSPACE/lede6.6/target/linux/meson target/linux/meson
+        if [[ "${{ env.OWRT_brun_type }}" == "meson6.6" ]]; then
+          mv $GITHUB_WORKSPACE/lede6.6/target/linux/meson target/linux
           chmod -Rf 755 target/linux/meson
           ls -l target/linux/meson
-        elif [[ "${{ matrix.brun_type }}" == "amlogic6.1" ]]; then
-          mv $GITHUB_WORKSPACE/lede/target/linux/amlogic target/linux/amlogic
+          echo "meson6.6"
+        elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.1" ]]; then
+          mv $GITHUB_WORKSPACE/lede/target/linux/amlogic target/linux
           chmod -Rf 755 target/linux/amlogic
           ls -l target/linux/amlogic
-        elif [[ "${{ matrix.brun_type }}" == "amlogic6.6" ]]; then
-          mv $GITHUB_WORKSPACE/lede6.6/target/linux/amlogic target/linux/amlogic
+          echo "amlogic.1"
+        elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.6" ]]; then
+          mv $GITHUB_WORKSPACE/lede6.6/target/linux/amlogic target/linux
           chmod -Rf 755 target/linux/amlogic
           ls -l target/linux/amlogic
           echo "amlogic6.6"
@@ -169,7 +171,7 @@ jobs:
       with:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
-        mixkey: ${{ env.OWRT_URL }}/tree/${{ env.OWRT_BRANCH }}?device=${{ env.OWRT_CFG }} 
+        mixkey: ${{ matrix.brun_type }}/tree/${{ env.OWRT_BRANCH }}?device=${{ env.OWRT_CFG }} 
         
     - name: 安装订阅源
       run: |
@@ -287,7 +289,7 @@ jobs:
           请使用双USB公头线刷机！
           ==========🧊 基本信息 🧊==========
           💻 固件源码： ${{env.OWRT_SOURCE}}
-          💝 源码分支： ${{ env.REPO_BRANCH }}
+          💝 源码分支： ${{ env.OWRT_BRANCH }}
           🔑 默认密码： password
           🌐 默认地址： ${{env.OWRT_IP}}
 
