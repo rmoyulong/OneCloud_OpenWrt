@@ -286,12 +286,13 @@ jobs:
         tag_name: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
         files: ${{ env.FIRMWARE }}/*
         body: |
-          自用玩客云一站式直刷固件[${{ env.OWRT_brun_type }}]！使用双USB公头线刷机！
-          =============基本信息============
-
-          源码：${{env.OWRT_SOURCE}}
-          密码：password
-          地址：${{env.OWRT_IP}}
+          自用玩客云一站式直刷固件[${{ env.OWRT_brun_type }}]！
+          请使用双USB公头线刷机！
+          ==========🧊 基本信息 🧊==========
+          💻 固件源码： ${{env.OWRT_SOURCE}}
+          💝 源码分支： ${{ env.REPO_BRANCH }}
+          🔑 默认密码： password
+          🌐 默认地址： ${{env.OWRT_IP}}
 
     - name: 清理Releases
       uses: rmoyulong/delete-older-releases@master
