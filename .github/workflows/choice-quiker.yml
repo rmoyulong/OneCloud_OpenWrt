@@ -207,7 +207,7 @@ jobs:
          
           #删除冲突的插件 
           #rm -rf feeds/kenzok8/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
-          $GITHUB_WORKSPACE/sh/remove.sh
+          $GITHUB_WORKSPACE/$DIY_P3_SH
                
     - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
       working-directory: ./openwrt
