@@ -13,6 +13,7 @@ rm -rf  package/openwrt-passwall/shadowsocks-rust
 git clone https://github.com/rmoyulong/AX6-Actions_Lede rmoyulong
 rm -rf feeds/packages/net/shadowsocks-libev
 cp -rf ./rmoyulong/shadowsocks-libev feeds/packages/net/
+cp -rf ./rmoyulong/shadowsocks-libev package
 
 rm -rf package/libs/mbedtls
 rm -rf package/libs/ustream-ssl
