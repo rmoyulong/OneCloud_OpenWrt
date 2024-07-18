@@ -35,7 +35,7 @@ config globals 'globals'
 
 config interface 'lan'
 	option proto 'static'
-	option ipaddr '$3'
+	option ipaddr '$ip'
 	option netmask '255.255.255.0'
 	option ip6assign '60'
 	option device 'br-lan'
