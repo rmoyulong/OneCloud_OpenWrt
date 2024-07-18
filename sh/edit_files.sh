@@ -37,10 +37,12 @@ config interface 'lan'
 	option proto 'static'
 	option ipaddr '$ip'
 	option netmask '255.255.255.0'
-	option ip6assign '60'
+	option ip6assign '64'
 	option device 'br-lan'
 	option gateway '$ip_server'
-	list dns '$ip_server'
+	option delegate '0'
+	option ip6ifaceid 'eui64'
+	list dns '$ip'
 
 config interface 'utun'
 	option proto 'none'
@@ -61,12 +63,7 @@ config device
 	option name 'br-lan'
 	option type 'bridge'
 	list ports 'eth0'
-
-config interface 'lan6'
-	option proto 'dhcpv6'
-	option reqaddress 'try'
-	option reqprefix 'auto'
-	option device 'br-lan'">files/etc/config/network
+">files/etc/config/network
 else
 	echo "主路由IP地址 $ip 不符合规范。"
 	exit 1
