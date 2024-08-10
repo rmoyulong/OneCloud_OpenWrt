@@ -57,7 +57,7 @@ git_sparse_clone master https://github.com/kiddin9/openwrt-packages shadow-tls
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages lua-neturl
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages redsocks2
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
-git_sparse_clone master https://github.com/kiddin9/openwrt-packages lua-maxminddb
+git_sparse_clone main https://github.com/kenzok8/small-package lua-maxminddb
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages shadowsocks-rust
 #git_sparse_clone main https://github.com/kenzok8/small-package luci-app-kodexplorer
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-usb-printer
