@@ -3,7 +3,7 @@
 # Description: Use Releases file to packaging
 # Cron: min (0 - 59) / hour (0 - 23) / day of month (1 - 31) / month (1 - 12) / day of week (0 - 6)(Sunday - Saturday)
 #========================================================================================================================
-name: 一站式精简onecloud直刷包【三联编】
+name: 一站式精简onecloud直刷包【二联编】
 
 on:
   #对应的是 UTC 时间，需要转换，0 代表北京时间8点，每个月2日/15日12点编译一次
@@ -37,7 +37,7 @@ jobs:
       fail-fast: false
       matrix:
         brun_type:
-          - amlogic6.1
+          #- amlogic6.1
           - amlogic6.6
           - meson6.6
         

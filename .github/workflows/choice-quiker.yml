@@ -16,7 +16,7 @@ on:
         required: true
         default: "meson6.6"
         options: 
-        - amlogic6.1
+        #- amlogic6.1
         - amlogic6.6
         - meson6.6
         
