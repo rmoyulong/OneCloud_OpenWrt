@@ -54,7 +54,7 @@ git_sparse_clone main https://github.com/kiddin9/kwrt-packages v2dat
 git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-mosdns
 git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-ssr-plus
 git_sparse_clone main https://github.com/kiddin9/kwrt-packages shadow-tls
-git_sparse_clone main https://github.com/kiddin9/kwrt-packages lua-neturl
+#git_sparse_clone main https://github.com/kiddin9/kwrt-packages lua-neturl
 git_sparse_clone main https://github.com/kiddin9/kwrt-packages redsocks2
 git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-turboacc
 git_sparse_clone main https://github.com/kenzok8/small-package lua-maxminddb
