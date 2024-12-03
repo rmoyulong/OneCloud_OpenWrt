@@ -3,6 +3,7 @@
 rm -rf feeds/luci/applications/luci-app-turboacc
 rm -rf feeds/packages/net/homeproxy
 rm -rf feeds/luci/applications/luci-app-homeproxy
+rm -rf feeds/kenzo/taskd
 rm -rf feeds/kenzo/homeproxy
 rm -rf feeds/kenzo/luci-app-homeproxy
 rm -rf feeds/packages/lang/ruby
