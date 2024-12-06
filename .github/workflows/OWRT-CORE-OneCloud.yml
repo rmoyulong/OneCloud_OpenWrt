@@ -158,22 +158,25 @@ jobs:
         working-directory: /workdir
         run: |
           # Set up compilation source code
-          if [[ "${{ inputs.OWRT_URL }}" == *"openwrt"* ]]; then
+          if [[ "${{ inputs.OWRT_URL }}" == *"openwrt/openwrt"* ]]; then
               REPO_URL="https://github.com/openwrt/openwrt"
               REPO_BRANCH="main"
-              TAGS_NAME="official"
-          elif [[ "${{ inputs.OWRT_URL }}" == *"lede"* ]]; then
+          elif [[ "${{ inputs.OWRT_URL }}" == *"coolsnowwolf/lede"* ]]; then
               REPO_URL="https://github.com/coolsnowwolf/lede"
               REPO_BRANCH="master"
-              TAGS_NAME="lede"
-          elif [[ "${{ inputs.OWRT_URL }}" == *"immortalwrt"* ]]; then
+          elif [[ "${{ inputs.OWRT_URL }}" == *"immortalwrt/immortalwrt"* ]]; then
               REPO_URL="https://github.com/immortalwrt/immortalwrt"
               REPO_BRANCH="master"
-              TAGS_NAME="immortalwrt"
           else
-              echo "Unknown source code repository."
-              exit 1
+              REPO_URL="${{ inputs.OWRT_URL }}"
+              REPO_BRANCH="${{ inputs.OWRT_BRANCH }}"
           fi
+          
+          if [[ $CORE_LINUX == *"5.15"* ]] ; then
+              REPO_URL="${{ inputs.OWRT_URL }}"
+              REPO_BRANCH="${{ inputs.OWRT_BRANCH }}"
+          fi
+          
           echo "REPO_BRANCH=$REPO_BRANCH" >> $GITHUB_ENV
           
           df -hT $PWD
