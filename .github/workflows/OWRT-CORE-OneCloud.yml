@@ -383,30 +383,12 @@ jobs:
           fi
           
       - name: 上传IMAGES[卡刷版或直刷版]
-        uses: rmoyulong/action-gh-release@master
+        uses: ncipollo/release-action@v1
         if: env.OWRT_DOCKER == 'false'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
-          files: ${{ env.FIRMWARE }}/*
-          body: |
-            玩客云${{ env.OWRT_TYPE }}[meson6.6]卡刷包！
-            请使用rufus写盘启动！
-            ==========🧊 基本信息 🧊==========
-            💻 固件源码： ${{env.OWRT_SOURCE}}
-            💝 源码分支： ${{env.REPO_BRANCH}}
-            🔑 默认密码： password
-            🌐 默认地址： ${{env.OWRT_IP}}         
-
-      - name: 上传IMAGES[Hub Docker版]
-        uses: rmoyulong/action-gh-release@master
-        if: env.OWRT_DOCKER == 'true'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: Docker_${{ env.OWRT_TAGS }}
-          files: ${{ env.FIRMWARE }}/*
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
           body: |
             玩客云${{ env.OWRT_TYPE }}[meson6.6]卡刷包！
             请使用rufus写盘启动！
@@ -415,6 +397,24 @@ jobs:
             💝 源码分支： ${{env.REPO_BRANCH}}
             🔑 默认密码： password
             🌐 默认地址： ${{env.OWRT_IP}}
+          artifacts: ${{ env.FIRMWARE }}/*
+
+      - name: 上传IMAGES[Hub Docker版]
+        uses: ncipollo/release-action@v1
+        if: env.OWRT_DOCKER == 'true'
+        with:
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: Docker_${{ env.OWRT_TAGS }}
+          body: |
+            玩客云${{ env.OWRT_TYPE }}[meson6.6]卡刷包！
+            请使用rufus写盘启动！
+            ==========🧊 基本信息 🧊==========
+            💻 固件源码： ${{env.OWRT_SOURCE}}
+            💝 源码分支： ${{env.REPO_BRANCH}}
+            🔑 默认密码： password
+            🌐 默认地址： ${{env.OWRT_IP}}
+          artifacts: ${{ env.FIRMWARE }}/*
             
       - name: 清理Releases
         uses: rmoyulong/delete-older-releases@master
