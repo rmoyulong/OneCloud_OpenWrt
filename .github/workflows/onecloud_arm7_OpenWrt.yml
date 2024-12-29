@@ -152,12 +152,12 @@ jobs:
         fi
   
     - name: 上传直刷固件
-      uses: rmoyulong/action-gh-release@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: ncipollo/release-action@v1
       with:
-        tag_name: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
-        files: ${{ env.FIRMWARE }}/*
+        allowUpdates: true
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
+        #name: ${{ env.CORE_NAME }}
         body: |
           自用玩客云${{ env.OWRT_TYPE }}直刷固件！使用双USB公头线刷机！
           =============基本信息============
@@ -165,6 +165,7 @@ jobs:
           源码：${{env.OWRT_SOURCE}}
           密码：password
           地址：${{env.OWRT_IP}}
+        artifacts: ${{ env.FIRMWARE }}/*
         
     - name: 清理Releases
       uses: rmoyulong/delete-older-releases@master
