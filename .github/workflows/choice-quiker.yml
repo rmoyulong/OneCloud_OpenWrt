@@ -300,12 +300,11 @@ jobs:
         echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
 
     - name: 上传直刷固件
-      uses: rmoyulong/action-gh-release@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: ncipollo/release-action@v1
       with:
-        tag_name: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
-        files: ${{ env.FIRMWARE }}/*
+        allowUpdates: true
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
         body: |
           自用玩客云一站式直刷固件[${{ env.OWRT_brun_type }}]！
           请使用双USB公头线刷机！
@@ -314,7 +313,8 @@ jobs:
           💝 源码分支： ${{ env.OWRT_BRANCH }}
           🔑 默认密码： password
           🌐 默认地址： ${{env.OWRT_IP}}
-
+        artifacts: ${{ env.FIRMWARE }}/*
+        
     - name: 清理Releases
       uses: rmoyulong/delete-older-releases@master
       with:
