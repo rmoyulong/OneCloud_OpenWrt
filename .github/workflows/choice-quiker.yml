@@ -39,7 +39,7 @@ env:
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: Config/quicker.config
   #DIY_P1_SH: sh/quick.sh
-  DIY_P1_SH: sh/immortalwrt.sh
+  DIY_P1_SH: sh/new_immortalwrt.sh
   DIY_P2_SH: sh/lean2.sh
   DIY_P3_SH: sh/remove.sh
   DIY_P4_SH: sh/edit_files.sh
