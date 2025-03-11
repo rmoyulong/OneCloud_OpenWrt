@@ -38,6 +38,6 @@ jobs:
       OWRT_TYPE: OneCloud-docker
       OWRT_LINUX: 6.1.68
       OWRT_FILES: onecloud/files
-      DIY_P1_SH: immortalwrt.sh
+      DIY_P1_SH: new_immortalwrt.sh
       DIY_P2_SH: lean2.sh
       OWRT_DOCKER: true
