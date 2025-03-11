@@ -62,7 +62,9 @@ env:
   OWRT_LINUX: ${{inputs.OWRT_LINUX}}
   OWRT_FILES: ${{inputs.OWRT_FILES}}
   DIY_P1_SH: ${{inputs.DIY_P1_SH}}
-  DIY_P2_SH: ${{inputs.DIY_P2_SH}}
+  DIY_P2_SH: ${{inputs.DIY_P2_SH}}  
+  DIY_P3_SH: sh/remove.sh
+  DIY_P4_SH: sh/openclash32.sh
   OWRT_DOCKER: ${{inputs.OWRT_DOCKER}}
   FEEDS_CONF: feeds.conf.default
   TZ: Asia/Shanghai
@@ -240,7 +242,7 @@ jobs:
          
           #删除冲突的插件 
           #rm -rf feeds/kenzok8/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
-          $GITHUB_WORKSPACE/sh/remove.sh
+          $GITHUB_WORKSPACE/$DIY_P3_SH
                
       - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
         working-directory: ./openwrt
@@ -288,7 +290,7 @@ jobs:
           fi
           
           #openclash 32
-          $GITHUB_WORKSPACE/sh/openclash32.sh
+          $GITHUB_WORKSPACE/$DIY_P4_SH
         
       - name: 下载编译环境
         working-directory: ./openwrt
