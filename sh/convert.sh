@@ -2,7 +2,7 @@ if [ ! -z "$1" ];then
 	idtype=$1
 fi
 
-sudo apt install img2simg
+sudo apt install android-sdk-libsparse-utils
 ver="v0.3.2"
 curl -L -o ./AmlImg https://github.com/rmoyulong/AmlImg/releases/download/$ver/AmlImg_${ver}_linux_amd64
 chmod +x ./AmlImg
