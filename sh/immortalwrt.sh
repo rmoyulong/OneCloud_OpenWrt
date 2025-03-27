@@ -64,7 +64,7 @@ echo 'src-git kenzo https://github.com/kenzok8/openwrt-packages' >> feeds.conf.d
 git clone --depth=1 https://github.com/immortalwrt/homeproxy package/homeproxy
 #git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-homeproxy
 ######################################################################################
-#git clone --depth=1 -b main https://github.com/fw876/helloworld package/luci-app-ssr-plus
+git clone --depth=1 -b main https://github.com/fw876/helloworld package/luci-app-ssr-plus
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/luci-app-passwall
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2 package/luci-app-passwall2
@@ -77,7 +77,6 @@ git_sparse_clone master https://github.com/rmoyulong/AX6-Actions_Lede ruby
 #git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-zerotier
 git_sparse_clone main https://github.com/kiddin9/kwrt-packages v2dat
 git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-mosdns
-git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-ssr-plus
 git_sparse_clone main https://github.com/kiddin9/kwrt-packages shadow-tls
 #git_sparse_clone main https://github.com/kiddin9/kwrt-packages lua-neturl
 git_sparse_clone main https://github.com/kiddin9/kwrt-packages redsocks2
