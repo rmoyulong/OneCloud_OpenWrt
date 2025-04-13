@@ -30,7 +30,7 @@ jobs:
       #默认源码
       OWRT_URL: https://github.com/immortalwrt/immortalwrt
       #源码版本
-      OWRT_BRANCH: master
+      OWRT_BRANCH: openwrt-24.10
       #自定义config
       OWRT_CFG: arm7_mini.config
       #设备类型
