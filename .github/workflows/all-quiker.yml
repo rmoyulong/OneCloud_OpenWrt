@@ -13,7 +13,7 @@ on:
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   REPO_URL: https://github.com/immortalwrt/immortalwrt
-  REPO_BRANCH: master
+  REPO_BRANCH: openwrt-24.10
   FEEDS_CONF: feeds.conf.default
   #DIY_P1_SH: sh/quick.sh
   DIY_P1_SH: sh/new_immortalwrt.sh
@@ -79,10 +79,18 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-          sudo -E apt-get -qq update
-          sudo -E apt-get -qq install $(cat $GITHUB_WORKSPACE/Ubuntu-2204.txt)
+          sudo -E apt-get -qq update --fix-missing
+          sudo -E apt-get -qq full-upgrade
+          
+          if [[ "${{ inputs.CORE_BRANCH }}" == *"openwrt-24.10"* ]]; then
+            sudo -E apt-get -qq install -y $(curl -fsSL https://raw.githubusercontent.com/rmoyulong/AX6-Actions_Lede/master/Ubuntu-2410.txt)
+           else
+            sudo -E apt-get -y install $(cat $GITHUB_WORKSPACE/Ubuntu-2204.txt)           
+          fi
+          
           sudo -E apt-get -qq autoremove --purge
           sudo -E apt-get -qq clean
+          sudo -E systemctl daemon-reload
           sudo timedatectl set-timezone "$TZ"
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
