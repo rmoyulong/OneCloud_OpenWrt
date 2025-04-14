@@ -385,7 +385,7 @@ jobs:
             请使用rufus写盘启动！
             ==========🧊 基本信息 🧊==========
             💻 固件源码： ${{env.OWRT_SOURCE}}
-            💝 源码分支： ${{env.REPO_BRANCH}}
+            💝 源码分支： ${{ inputs.OWRT_BRANCH }}
             🔑 默认密码： password
             🌐 默认地址： ${{env.OWRT_IP}}
           artifacts: ${{ env.FIRMWARE }}/*
@@ -402,7 +402,7 @@ jobs:
             请使用rufus写盘启动！
             ==========🧊 基本信息 🧊==========
             💻 固件源码： ${{env.OWRT_SOURCE}}
-            💝 源码分支： ${{env.REPO_BRANCH}}
+            💝 源码分支： ${{ inputs.OWRT_BRANCH }}
             🔑 默认密码： password
             🌐 默认地址： ${{env.OWRT_IP}}
           artifacts: ${{ env.FIRMWARE }}/*
