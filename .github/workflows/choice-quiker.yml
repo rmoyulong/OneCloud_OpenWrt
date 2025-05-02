@@ -182,7 +182,7 @@ jobs:
           ls -l target/linux/meson
           echo "meson6.6"
         elif [[ "${{ env.OWRT_brun_type }}" == "meson6.12" ]]; then
-          mv $GITHUB_WORKSPACE/lede6.6/target/linux/meson target/linux
+          mv $GITHUB_WORKSPACE/lede6.12/target/linux/meson target/linux
           chmod -Rf 755 target/linux/meson
           ls -l target/linux/meson
           echo "meson6.12"
