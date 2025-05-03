@@ -149,6 +149,8 @@ jobs:
             echo "REPO_BRANCH=$REPO_BRANCH" >> $GITHUB_ENV
             #DIY_P1_SH=“sh/openwrt_orther.sh”
             #echo "DIY_P1_SH=$DIY_P1_SH" >> $GITHUB_ENV
+            echo "OWRT_URL=$REPO_URL" >> $GITHUB_ENV
+            echo "OWRT_BRANCH=$REPO_BRANCH" >> $GITHUB_ENV
           elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.6" ]]; then
             OWRT_CFG="Config/quicker-amlogic.config"
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
