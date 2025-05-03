@@ -4,30 +4,28 @@
 
 include $(TOPDIR)/rules.mk
 
-ARCH:=arm
-BOARD:=meson
+BOARD:=amlogic
+BOARDNAME:=Amlogic
 BOARDNAME:=Amlogic Meson family
-FEATURES:=boot-part ext4 fpu legacy-sdcard squashfs usbgadget
+FEATURES:=boot-part ext4 audio usb fpu legacy-sdcard squashfs usbgadget display gpio fpu pci pcie
 SUBTARGETS:=meson8b
 
 KERNEL_PATCHVER:=6.12
 
 define Target/Description
 	Build firmware image for Amlogic Meson SoC devices.
-	Currently produces Amlogic Burn Image.
+	Currently produces SD Card/USB disk image.
 endef
 
 include $(INCLUDE_DIR)/target.mk
 
 DEFAULT_PACKAGES += \
 	e2fsprogs \
-	kmod-usb-hid \
-	losetup \
 	mkf2fs \
 	automount \
-	parted \
+	resize2fs \
 	partx-utils \
-	resize2fs
+	losetup htop autocore-arm
 
 KERNELNAME:=Image dtbs
 
