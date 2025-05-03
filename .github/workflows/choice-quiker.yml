@@ -144,11 +144,11 @@ jobs:
             OWRT_CFG="Config/quicker.config"            
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
             REPO_URL="https://github.com/LiBwrt/openwrt-6.x"
-            echo "OWRT_URL=$REPO_URL" >> $GITHUB_ENV
+            echo "REPO_URL=$REPO_URL" >> $GITHUB_ENV
             REPO_BRANCH="kernel-6.12"
-            echo "OWRT_BRANCH=$REPO_BRANCH" >> $GITHUB_ENV
-            DIY_P1_SH=“sh/openwrt_orther.sh”
-            echo "DIY_P1_SH=$DIY_P1_SH" >> $GITHUB_ENV
+            echo "REPO_BRANCH=$REPO_BRANCH" >> $GITHUB_ENV
+            #DIY_P1_SH=“sh/openwrt_orther.sh”
+            #echo "DIY_P1_SH=$DIY_P1_SH" >> $GITHUB_ENV
           elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.6" ]]; then
             OWRT_CFG="Config/quicker-amlogic.config"
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
