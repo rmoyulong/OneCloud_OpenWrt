@@ -6,6 +6,7 @@ rm -rf feeds/luci/applications/luci-app-homeproxy
 rm -rf feeds/kenzo/homeproxy
 rm -rf feeds/kenzo/luci-app-homeproxy
 rm -rf feeds/packages/lang/ruby
+rm -rf feeds/packages/net/aria2
 ###############################
 rm -rf  package/openwrt-passwall/shadowsocks-rust
 ####################################################
