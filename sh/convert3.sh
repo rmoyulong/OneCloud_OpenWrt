@@ -33,7 +33,7 @@ sudo sync
 sudo umount ${boot_img_mnt}
 sudo umount ${rootfs_img_mnt}
 #sudo img2simg ${loop}p1 burn/boot.simg
-mv $GITHUB_WORKSPACE/lede6.11/boot.PARTITION burn/boot.simg
+mv $GITHUB_WORKSPACE/lede6.12/boot.PARTITION burn/boot.simg
 sudo img2simg openwrt.img burn/rootfs.simg
 sudo rm -rf *.img
 sudo losetup -d $loop
