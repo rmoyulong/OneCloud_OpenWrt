@@ -255,7 +255,7 @@ jobs:
         
     - name: 制作直刷包
       run: |
-          if [[ "${{ env.OWRT_brun_type }}" == "amlogic6.12" ]]; then
+          if [[ "${{ matrix.brun_type }}" == "amlogic6.12" ]]; then
             $GITHUB_WORKSPACE/sh/convert3.sh
           else
             $GITHUB_WORKSPACE/sh/convert2.sh
