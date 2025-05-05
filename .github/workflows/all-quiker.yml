@@ -3,7 +3,7 @@
 # Description: Use Releases file to packaging
 # Cron: min (0 - 59) / hour (0 - 23) / day of month (1 - 31) / month (1 - 12) / day of week (0 - 6)(Sunday - Saturday)
 #========================================================================================================================
-name: 一站式精简onecloud直刷包【二联编】
+name: 一站式精简onecloud直刷包【三联编】
 
 on:
   #对应的是 UTC 时间，需要转换，0 代表北京时间8点，每个月2日/15日12点编译一次
@@ -37,7 +37,7 @@ jobs:
       fail-fast: false
       matrix:
         brun_type:
-          #- amlogic6.1
+          - amlogic6.11
           - amlogic6.6
           - meson6.6
         
@@ -118,7 +118,7 @@ jobs:
           if [[ "${{ matrix.brun_type }}" == "meson6.6" ]]; then
             OWRT_CFG="Config/quicker.config"
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
-          elif [[ "${{ matrix.brun_type }}" == "amlogic6.1" ]]; then
+          elif [[ "${{ matrix.brun_type }}" == "amlogic6.11" ]]; then
             OWRT_CFG="Config/quicker-amlogic.config"
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
           elif [[ "${{ matrix.brun_type }}" == "amlogic6.6" ]]; then
@@ -155,11 +155,11 @@ jobs:
           chmod -Rf 755 target/linux/meson
           ls -l target/linux/meson
           echo "meson6.6"
-        elif [[ "${{ matrix.brun_type }}" == "amlogic6.1" ]]; then
-          mv $GITHUB_WORKSPACE/lede/target/linux/amlogic target/linux
+        elif [[ "${{ matrix.brun_type }}" == "amlogic6.11" ]]; then
+          mv $GITHUB_WORKSPACE/lede6.6/target/linux/amlogic target/linux
           chmod -Rf 755 target/linux/amlogic
           ls -l target/linux/amlogic
-          echo "amlogic6.1"
+          echo "amlogic6.11"
         elif [[ "${{ matrix.brun_type }}" == "amlogic6.6" ]]; then
           mv $GITHUB_WORKSPACE/lede6.6/target/linux/amlogic target/linux
           chmod -Rf 755 target/linux/amlogic
@@ -255,7 +255,11 @@ jobs:
         
     - name: 制作直刷包
       run: |
-          $GITHUB_WORKSPACE/sh/convert2.sh
+          if [[ "${{ env.OWRT_brun_type }}" == "amlogic6.11" ]]; then
+            $GITHUB_WORKSPACE/sh/convert3.sh
+          else
+            $GITHUB_WORKSPACE/sh/convert2.sh
+          fi
           
     - name: 整理固件
       id: organize
