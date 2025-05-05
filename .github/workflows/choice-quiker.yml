@@ -16,7 +16,7 @@ on:
         required: true
         default: "meson6.6"
         options: 
-        - amlogic6.11
+        - amlogic6.12
         - amlogic6.6
         - meson6.6
         
@@ -140,7 +140,7 @@ jobs:
           if [[ "${{ env.OWRT_brun_type }}" == "meson6.6" ]]; then
             OWRT_CFG="Config/quicker.config"
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
-          elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.11" ]]; then
+          elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.12" ]]; then
             OWRT_CFG="Config/quicker-amlogic.config"            
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
             #REPO_URL="https://github.com/LiBwrt/openwrt-6.x"
@@ -185,11 +185,11 @@ jobs:
           chmod -Rf 755 target/linux/meson
           ls -l target/linux/meson
           echo "meson6.6"
-        elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.11" ]]; then
+        elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.12" ]]; then
           mv $GITHUB_WORKSPACE/lede6.6/target/linux/amlogic target/linux
           chmod -Rf 755 target/linux/amlogic
           ls -l target/linux/amlogic
-          echo "amlogic6.11"
+          echo "amlogic6.12"
         elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.6" ]]; then
           mv $GITHUB_WORKSPACE/lede6.6/target/linux/amlogic target/linux
           chmod -Rf 755 target/linux/amlogic
@@ -288,7 +288,7 @@ jobs:
         
     - name: 制作直刷包
       run: |
-          if [[ "${{ env.OWRT_brun_type }}" == "amlogic6.11" ]]; then
+          if [[ "${{ env.OWRT_brun_type }}" == "amlogic6.12" ]]; then
             $GITHUB_WORKSPACE/sh/convert3.sh
           else
             $GITHUB_WORKSPACE/sh/convert2.sh
