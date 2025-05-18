@@ -19,6 +19,7 @@ on:
         - amlogic6.12
         - amlogic6.6
         - meson6.6
+        - meson6.12
         
       OP_IP:
         description: '玩客云IP选项'     
@@ -140,6 +141,9 @@ jobs:
           if [[ "${{ env.OWRT_brun_type }}" == "meson6.6" ]]; then
             OWRT_CFG="Config/quicker.config"
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
+          elif [[ "${{ env.OWRT_brun_type }}" == "meson6.12" ]]; then
+            OWRT_CFG="Config/quicker.config"
+            echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV          
           elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.12" ]]; then
             OWRT_CFG="Config/quicker-amlogic.config"            
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
@@ -185,6 +189,11 @@ jobs:
           chmod -Rf 755 target/linux/meson
           ls -l target/linux/meson
           echo "meson6.6"
+        elif [[ "${{ env.OWRT_brun_type }}" == "meson6.12" ]]; then
+          mv $GITHUB_WORKSPACE/lede6.12/target/linux/meson target/linux
+          chmod -Rf 755 target/linux/meson
+          ls -l target/linux/meson
+          echo "meson6.12"       
         elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.12" ]]; then
           mv $GITHUB_WORKSPACE/lede6.6/target/linux/amlogic target/linux
           chmod -Rf 755 target/linux/amlogic
