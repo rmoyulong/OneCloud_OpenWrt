@@ -19,7 +19,7 @@ on:
         - amlogic6.12
         - amlogic6.6
         - meson6.6
-        - meson6.12
+        #- meson6.12
         
       OP_IP:
         description: '玩客云IP选项'     
