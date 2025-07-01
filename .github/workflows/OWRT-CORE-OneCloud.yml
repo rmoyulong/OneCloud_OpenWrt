@@ -65,6 +65,7 @@ env:
   DIY_P2_SH: ${{inputs.DIY_P2_SH}}  
   DIY_P3_SH: sh/remove.sh
   DIY_P4_SH: sh/openclash32.sh
+  DIY_P5_SH: sh/python3.patch.sh
   OWRT_DOCKER: ${{inputs.OWRT_DOCKER}}
   FEEDS_CONF: feeds.conf.default
   TZ: Asia/Shanghai
@@ -279,7 +280,10 @@ jobs:
           fi
           
           #openclash 32
-          $GITHUB_WORKSPACE/$DIY_P4_SH
+          $GITHUB_WORKSPACE/sh/openclash32.sh
+          
+          #python3.patch.sh
+          $GITHUB_WORKSPACE/$DIY_P5_SH
         
       - name: 下载编译环境
         working-directory: ./openwrt
