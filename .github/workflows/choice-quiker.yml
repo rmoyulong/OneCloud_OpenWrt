@@ -44,6 +44,7 @@ env:
   DIY_P2_SH: sh/lean2.sh
   DIY_P3_SH: sh/remove.sh
   DIY_P4_SH: sh/edit_files.sh
+  DIY_P5_SH: sh/python3.patch.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
@@ -270,6 +271,9 @@ jobs:
           
           #openclash 32
           $GITHUB_WORKSPACE/sh/openclash32.sh
+          
+          #python3.patch.sh
+          $GITHUB_WORKSPACE/$DIY_P5_SH
         
     - name: 下载编译环境
       working-directory: ./openwrt
