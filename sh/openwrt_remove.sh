@@ -21,6 +21,12 @@ rm -rf  package/openwrt-passwall/hysteria
 rm -rf feeds/packages/net/shadowsocks-libev
 cp -rf ./package/shadowsocks-libev feeds/packages/net/
 #####################################################
+####################################################
+#解决shadowsocksr-libev编译错误
+rm -rf feeds/packages/net/shadowsocksr-libev
+cp -rf ./package/shadowsocksr-libev feeds/packages/net/
+rm -rf  package/openwrt-passwall/shadowsocksr-libev
+#####################################################
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang feeds/packages/lang/golang
 #####################################################
