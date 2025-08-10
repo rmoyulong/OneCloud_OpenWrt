@@ -1,4 +1,4 @@
-# openwrt-onecloud-玩客云<br>
+# openwrt-onecloud-玩客云三代(WS1608)<br>
 ---------------------------------------------------------------<br>
 使用MosDns作为默认的DNS解析<br>
 请根据自己的需求自行修改<br>
@@ -57,3 +57,4 @@ jobs:<br>
 &nbsp;&nbsp;&nbsp;- uses: actions/setup-node@v4<br>
 &nbsp;&nbsp;&nbsp;&nbsp;with:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;node-version: ${{ matrix.version }}<br>
+
