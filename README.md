@@ -1,4 +1,5 @@
 # openwrt-onecloud-玩客云三代(WS1608)<br>
+[![build](https://img.shields.io/github/actions/workflow/status/rmoyulong/OneCloud_OpenWrt/all-quiker.yml)](https://github.com/rmoyulong/OneCloud_OpenWrt/actions/workflows/all-quiker.yml) [![downloads](https://img.shields.io/github/downloads/rmoyulong/OneCloud_OpenWrt/total)](https://github.com/rmoyulong/OneCloud_OpenWrt/releases) [![downloads@latest](https://img.shields.io/github/downloads/rmoyulong/OneCloud_OpenWrt/latest/total)](https://github.com/rmoyulong/OneCloud_OpenWrt/releases/latest)
 ---------------------------------------------------------------<br>
 使用MosDns作为默认的DNS解析<br>
 请根据自己的需求自行修改<br>
@@ -57,4 +58,5 @@ jobs:<br>
 &nbsp;&nbsp;&nbsp;- uses: actions/setup-node@v4<br>
 &nbsp;&nbsp;&nbsp;&nbsp;with:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;node-version: ${{ matrix.version }}<br>
+
 
