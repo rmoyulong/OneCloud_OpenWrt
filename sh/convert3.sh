@@ -43,9 +43,9 @@ sudo tar -xzvf $GITHUB_WORKSPACE/lede6.12/boot1.tar.gz
 sudo tar -xzvf $GITHUB_WORKSPACE/lede6.12/boot2.tar.gz
 sync
 cd ..
-umount ./mnt
-sudo img2simg boot.img burn/boot.simg
 ls ./mnt
+sudo umount ./mnt
+sudo img2simg boot.img burn/boot.simg
 #mv $GITHUB_WORKSPACE/lede6.12/boot.PARTITION burn/boot.simg
 
 sudo img2simg openwrt.img burn/rootfs.simg
