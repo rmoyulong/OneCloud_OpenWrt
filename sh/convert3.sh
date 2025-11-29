@@ -36,16 +36,16 @@ sudo umount ${rootfs_img_mnt}
 
 mkdir -p mnt
 mv $GITHUB_WORKSPACE/lede6.12/boot.PARTITION ./boot.simg
-simg2img boot.simg boot.ext4
-mount boot.ext4 mnt
+sudo simg2img ./boot.simg ./boot.img
+sudo mount ./boot.img ./mnt
 cd mnt
-tar -xzvf $GITHUB_WORKSPACE/lede6.12/boot1.tar.gz
-tar -xzvf $GITHUB_WORKSPACE/lede6.12/boot2.tar.gz
+sudo tar -xzvf $GITHUB_WORKSPACE/lede6.12/boot1.tar.gz
+sudo tar -xzvf $GITHUB_WORKSPACE/lede6.12/boot2.tar.gz
 sync
 cd ..
-umount mnt
-img2simg boot.ext4 burn/boot.simg
-ls mnt
+umount ./mnt
+sudo img2simg boot.img burn/boot.simg
+ls ./mnt
 #mv $GITHUB_WORKSPACE/lede6.12/boot.PARTITION burn/boot.simg
 
 sudo img2simg openwrt.img burn/rootfs.simg
