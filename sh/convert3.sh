@@ -35,7 +35,8 @@ sudo umount ${rootfs_img_mnt}
 #sudo img2simg ${loop}p1 burn/boot.simg
 
 mkdir -p mnt
-simg2img $GITHUB_WORKSPACE/lede6.12/boot.PARTITION boot.ext4
+mv $GITHUB_WORKSPACE/lede6.12/boot.PARTITION ./boot.simg
+simg2img boot.simg boot.ext4
 mount boot.ext4 mnt
 cd mnt
 tar -xzvf $GITHUB_WORKSPACE/lede6.12/boot1.tar.gz
