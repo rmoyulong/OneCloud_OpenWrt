@@ -5,7 +5,7 @@
 请根据自己的需求自行修改<br>
 使用openclash，请使用HTTP(S)&SOCKS5 混合代理端口（默认1092）<br>
 ---------------------------------------------------------------<br>
-登录192.168.1.110
+登录192.168.31.110
 
 ssh登录
 
@@ -22,7 +22,7 @@ USB_Burning_Tool下载地址： https://xd1314.lanzoul.com/iXHbz17bqjhc<br>
 hub docker版是为hub.docker.com特意编译的版本。本质是个armbian用docker方式装入的op的文件。<br>
 食用方法：<br>
 ip link set eth0 promisc on<br>
-docker network create -d macvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o parent=eth0 macnet<br>
+docker network create -d macvlan --subnet=192.168.31.0/24 --gateway=192.168.31.1 -o parent=eth0 macnet<br>
 docker pull mojialin/openwrt_onecloud:latest<br>
 docker run -itd --name=onecloud --restart=unless-stopped --network=macnet --privileged=true mojialin/openwrt_onecloud:latest /sbin/init<br>
 --------------------------------------------------------------------------<br>
@@ -34,7 +34,7 @@ https://github.com/hzyitc/armbian-onecloud/releases/download/ci-20240311-162146-
 把immortalwrt-meson-meson8b-thunder-onecloud-rootfs.tar.gz改名op.tar.gz <br>
 ssh armbian输入以下命令 <br>
 1.ip link set eth0 promisc on <br>
-2.docker network create -d macvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o parent=eth0 macnet <br>
+2.docker network create -d macvlan --subnet=192.168.31.0/24 --gateway=192.168.31.1 -o parent=eth0 macnet <br>
 3.docker import op.tar.gz onecloud_openwrt <br>
 4.docker run -itd --name=onecloud --restart=unless-stopped --network=macnet --privileged=true onecloud_openwrt /sbin/init <br>
 ---------------------------------------------------------------------------<br>
