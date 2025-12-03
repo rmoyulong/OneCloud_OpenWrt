@@ -34,7 +34,7 @@ env:
   DIY_P3_SH: op3.sh
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
-  OWRT_IP: 192.168.1.110
+  OWRT_IP: 192.168.31.110
   OWRT_NAME: OneCloud
   OWRT_FILES: onecloud/files
   OWRT_TYPE: 转化版
