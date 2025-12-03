@@ -24,13 +24,13 @@ on:
       OP_IP:
         description: '玩客云IP选项'     
         required: true
-        default: '192.168.1.110'
+        default: '192.168.31.110'
         type: string        
 
       SERVER_IP:
         description: '主路由IP选项'     
         required: true
-        default: '192.168.1.1'
+        default: '192.168.31.1'
         type: string
         
 env:
