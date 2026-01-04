@@ -19,6 +19,7 @@ env:
   DIY_P1_SH: sh/new_immortalwrt.sh
   DIY_P2_SH: sh/lean2.sh
   DIY_P3_SH: sh/remove.sh
+  DIY_P4_SH: sh/edit_files.sh
   DIY_P5_SH: sh/python3.patch.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
@@ -113,7 +114,8 @@ jobs:
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
           echo "DIY_P1_SH=$DIY_P1_SH" >> $GITHUB_ENV
           echo "DIY_P2_SH=$DIY_P2_SH" >> $GITHUB_ENV
-          echo "DIY_P3_SH=$DIY_P3_SH" >> $GITHUB_ENV          
+          echo "DIY_P3_SH=$DIY_P3_SH" >> $GITHUB_ENV
+          echo "DIY_P4_SH=$DIY_P4_SH" >> $GITHUB_ENV           
           echo "OWRT_FILES=$OWRT_FILES" >> $GITHUB_ENV
           
           if [[ "${{ matrix.brun_type }}" == "meson6.6" ]]; then
@@ -240,6 +242,11 @@ jobs:
           
           #python3.patch.sh
           $GITHUB_WORKSPACE/$DIY_P5_SH
+          
+          #设置主路由
+          OWRT_SERVER_IP=${OWRT_IP%.*}.1
+          $GITHUB_WORKSPACE/$DIY_P4_SH "${{ env.OWRT_IP }}" "$OWRT_SERVER_IP"
+          
         
     - name: 下载编译环境
       working-directory: ./openwrt
