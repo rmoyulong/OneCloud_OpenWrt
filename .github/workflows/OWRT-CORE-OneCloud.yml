@@ -284,6 +284,10 @@ jobs:
           
           #python3.patch.sh
           $GITHUB_WORKSPACE/$DIY_P5_SH
+          
+          #设置主路由
+          OWRT_SERVER_IP=${OWRT_IP%.*}.1
+          $GITHUB_WORKSPACE/sh/edit_files.sh "${{ env.OWRT_IP }}" "$OWRT_SERVER_IP"
         
       - name: 下载编译环境
         working-directory: ./openwrt
