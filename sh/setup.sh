@@ -8,6 +8,9 @@ source $GITHUB_WORKSPACE/sh/functions.sh
 #cp -f $GITHUB_WORKSPACE/patch/mbedtls/Makefile package/libs/mbedtls/Makefile
 git_sparse_clone master https://github.com/kenzok8/small luci-app-ssr-plus
 
+rm -rf feeds/packages/lang/rust
+merge_package master https://github.com/coolsnowwolf/packages package lang/rust
+
 cd package
 $GITHUB_WORKSPACE/sh/Packages.sh
 $GITHUB_WORKSPACE/sh/Handles.sh
