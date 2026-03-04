@@ -8,7 +8,7 @@ UPDATE_PACKAGE() {
 	local PKG_SPECIAL=$4
 	local PKG_LIST=("$PKG_NAME" $5)  # 第5个参数为自定义名称列表
 	local REPO_NAME=${PKG_REPO#*/}
-
+	
 	echo " "
 
 	# 删除本地可能存在的不同名称的软件包
@@ -74,7 +74,6 @@ UPDATE_PACKAGE "qmodem" "FUjr/QModem" "main"
 UPDATE_PACKAGE "quickfile" "sbwml/luci-app-quickfile" "main"
 UPDATE_PACKAGE "viking" "VIKINGYFY/packages" "main" "" "luci-app-timewol luci-app-wolplus"
 UPDATE_PACKAGE "vnt" "lmq8267/luci-app-vnt" "main"
-UPDATE_PACKAGE "kenzok8" "kenzok8/small" "master" "" "luci-app-ssr-plus"
 UPDATE_PACKAGE "onliner" "rmoyulong/luci-app-onliner" "main"
 UPDATE_PACKAGE "istore-ui" "linkease/istore-ui" "main"
 UPDATE_PACKAGE "istore-luci" "linkease/istore" "main"
