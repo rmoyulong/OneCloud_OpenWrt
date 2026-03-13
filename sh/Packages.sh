@@ -78,7 +78,6 @@ UPDATE_PACKAGE "onliner" "rmoyulong/luci-app-onliner" "main"
 UPDATE_PACKAGE "istore-ui" "linkease/istore-ui" "main"
 UPDATE_PACKAGE "istore-luci" "linkease/istore" "main"
 UPDATE_PACKAGE "amlogic" "ophub/luci-app-amlogic" "main"
-UPDATE_PACKAGE "sing-box" "kenzok8/small" "master" "" "luci-app-ssr-plus sing-box hysteria mosdns luci-app-mosdns v2ray-plugin xray-core shadowsocks-libev"
 
 #更新软件包版本
 UPDATE_VERSION() {
