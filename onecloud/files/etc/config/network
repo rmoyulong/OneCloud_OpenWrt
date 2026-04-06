@@ -9,11 +9,11 @@ config globals 'globals'
 
 config interface 'lan'
 	option proto 'static'
-	option ipaddr '192.168.1.110'
+	option ipaddr '192.168.31.110'
 	option netmask '255.255.255.0'
 	option ip6assign '60'
 	option device 'br-lan'
-	option gateway '192.168.1.1'
+	option gateway '192.168.31.1'
 	list dns '192.168.1.1'
 
 config interface 'utun'
