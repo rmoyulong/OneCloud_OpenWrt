@@ -58,6 +58,10 @@ jobs:<br>
 &nbsp;&nbsp;&nbsp;- uses: actions/setup-node@v4<br>
 &nbsp;&nbsp;&nbsp;&nbsp;with:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;node-version: ${{ matrix.version }}<br>
+<br>
+---------------------------------------------------------------------<br>
+如果homeproxy无法启动，请将homeproxy.7z下载解压，然后用winscp类型的工具上传到路由器，替换路由器上的相同文件。<br>
+然后执行/etc/init.d/homeproxy restart 并重启路由器即可！
 
 
 
