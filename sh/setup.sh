@@ -18,7 +18,7 @@ git_sparse_clone main https://github.com/Openwrt-Passwall/openwrt-passwall-packa
 git_sparse_clone main https://github.com/Openwrt-Passwall/openwrt-passwall-packages geoview
 
 rm -rf feeds/luci/applications/luci-app-homeproxy
-merge_package mian https://github.com/VIKINGYFY/homeproxy package luci-app-homeproxy
+git clone https://github.com/VIKINGYFY/homeproxy package package/luci-app-homeproxy
 
 cd package
 $GITHUB_WORKSPACE/sh/Packages.sh
