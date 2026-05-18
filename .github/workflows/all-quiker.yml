@@ -196,11 +196,11 @@ jobs:
          
           #删除冲突的插件 
           #rm -rf feeds/kenzok8/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
-          if [[ "$DIY_P3_SH" == *"false"* ]]; then
-            echo "无设置不执行！"
+          if [[ "${DIY_P3_SH}" == *"false"* ]]; then
+            echo "不需要执行此选项"
           else
-            $GITHUB_WORKSPACE/$DIY_P3_SH
-          fi
+            ${GITHUB_WORKSPACE}/${DIY_P3_SH}
+          fi          
                
     - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
       working-directory: ./openwrt
