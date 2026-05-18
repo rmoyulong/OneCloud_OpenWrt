@@ -14,8 +14,9 @@ merge_package master https://github.com/kenzok8/small/ package sing-box
 merge_package master https://github.com/kenzok8/small/ package luci-app-ssr-plus
 
 rm -rf package/helloworld/xray-core
-git_sparse_clone main https://github.com/Openwrt-Passwall/openwrt-passwall-packages xray-core
-git_sparse_clone main https://github.com/Openwrt-Passwall/openwrt-passwall-packages geoview
+rm -rf package/helloworld/geoview
+merge_package master https://github.com/kenzok8/small/ package xray-core
+merge_package master https://github.com/kenzok8/small/ package geoview
 
 rm -rf feeds/luci/applications/luci-app-homeproxy
 git clone https://github.com/VIKINGYFY/homeproxy package/luci-app-homeproxy
