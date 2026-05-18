@@ -20,7 +20,7 @@ env:
   DIY_P2_SH: sh/lean2.sh
   DIY_P3_SH: sh/false
   DIY_P4_SH: sh/edit_files.sh
-  DIY_P5_SH: sh/python3.patch.sh
+  DIY_P5_SH: sh/false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
@@ -244,9 +244,12 @@ jobs:
           #openclash 32
           $GITHUB_WORKSPACE/sh/openclash32.sh
           
-          #python3.patch.sh
-          $GITHUB_WORKSPACE/$DIY_P5_SH
-          
+          if [[ "${DIY_P5_SH}" == *"false"* ]]; then
+            echo "不需要执行此选项"
+          else
+            ${GITHUB_WORKSPACE}/${DIY_P5_SH}
+          fi          
+         
           #设置主路由
           OWRT_SERVER_IP=${OWRT_IP%.*}.1
           $GITHUB_WORKSPACE/$DIY_P4_SH "${{ env.OWRT_IP }}" "$OWRT_SERVER_IP"
@@ -255,18 +258,17 @@ jobs:
     - name: 下载编译环境
       working-directory: ./openwrt
       run: |      
-        make defconfig
-        make download -j$(nproc)
-        find dl -size -1024c -exec ls -l {} \;
-        find dl -size -1024c -exec rm -f {} \;
+          make defconfig
+          make download -j$(( $(nproc) * 2 ))
+          find dl -size -1k -exec rm -f {} \;
 
     - name: 编译固件
       working-directory: ./openwrt
       run: |
-        echo -e "$(nproc) thread compile"
-        make -j$(nproc) || make -j1 || make -j1 V=s
-        echo "status=success" >> $GITHUB_OUTPUT
-        echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV 
+          echo -e "$(nproc) thread compile"
+          make -j$(( $(nproc) + 1 )) || make -j1 V=s
+          echo "status=success" >> $GITHUB_OUTPUT
+          echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV 
         
     - name: 制作直刷包
       run: |
