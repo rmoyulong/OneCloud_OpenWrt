@@ -5,7 +5,7 @@ source $GITHUB_WORKSPACE/Scripts/functions.sh
 ./scripts/feeds install -a
 
 rm -rf feeds/luci/applications/luci-app-homeproxy
-git clone https://github.com/VIKINGYFY/homeproxy package/homeproxy
+merge_package main https://github.com/VIKINGYFY/packages package homeproxy
 
 rm -rf feeds/luci/applications/luci-app-amlogic
 git clone https://github.com/ophub/luci-app-amlogic package/luci-app-amlogic
@@ -25,7 +25,7 @@ rm -rf package/helloworld/v2ray-geodata
 git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 
 rm -rf feeds/packages/net/sing-box
-merge_package main https://github.com/kiddin9/op-packages  feeds/packages/net sing-box
+merge_package main https://github.com/VIKINGYFY/packages  feeds/packages/net sing-box
 
 cd package
 $GITHUB_WORKSPACE/Scripts/Packages.sh
