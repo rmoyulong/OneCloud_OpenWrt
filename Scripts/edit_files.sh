@@ -42,7 +42,7 @@ config interface 'lan'
 	option gateway '$ip_server'
 	option delegate '0'
 	option ip6ifaceid 'eui64'
-	list dns '$ip'
+	list dns '$ip_server'
 
 config interface 'utun'
 	option proto 'none'
