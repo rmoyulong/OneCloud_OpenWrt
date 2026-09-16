@@ -126,6 +126,7 @@ jobs:
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
             REPO_BRANCH="openwrt-25.12"
             echo "OWRT_BRANCH=$REPO_BRANCH" >> $GITHUB_ENV
+            echo "REPO_BRANCH=$REPO_BRANCH" >> $GITHUB_ENV
           elif [[ "${{ matrix.brun_type }}" == "amlogic6.6" ]]; then
             OWRT_CFG="Config/quicker-amlogic.config"
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
