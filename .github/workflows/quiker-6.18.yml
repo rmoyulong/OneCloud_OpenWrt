@@ -152,10 +152,8 @@ jobs:
       run: |
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
         
-        cd openwrt
+        cd openwrt 
         
-        #公用函数
-        #source $GITHUB_WORKSPACE/Scripts/functions.sh
         git clone -q --single-branch --depth=1 --branch=master https://github.com/coolsnowwolf/lede lede
         mv ./lede/target/linux/amlogic target/linux
         ls -l target/linux/amlogic
