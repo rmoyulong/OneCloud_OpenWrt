@@ -1,0 +1,316 @@
+#========================================================================================================================
+# https://github.com/ophub/amlogic-s9xxx-openwrt
+# Description: Use Releases file to packaging
+# Cron: min (0 - 59) / hour (0 - 23) / day of month (1 - 31) / month (1 - 12) / day of week (0 - 6)(Sunday - Saturday)
+#========================================================================================================================
+name: 一站式精简onecloud直刷包【6.18】
+
+on:
+  #对应的是 UTC 时间，需要转换，0 代表北京时间8点，每个月2日/15日12点编译一次
+  #关闭则手动编译
+  workflow_dispatch:
+    inputs:
+      OP_IP:
+        description: '玩客云IP选项'     
+        required: true
+        default: '192.168.31.110'
+        type: string        
+
+      SERVER_IP:
+        description: '主路由IP选项'     
+        required: true
+        default: '192.168.31.1'
+        type: string
+        
+env:
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  REPO_URL: https://github.com/immortalwrt/immortalwrt
+  REPO_BRANCH: master
+  FEEDS_CONF: feeds.conf.default
+  CONFIG_FILE: Config/quicker.config
+  #DIY_P1_SH: Scripts/quick.sh
+  DIY_P1_SH: Scripts/setup.sh
+  DIY_P2_SH: Scripts/Settings.sh
+  DIY_P3_SH: Scripts/false
+  DIY_P4_SH: Scripts/openclash32.sh
+  DIY_P5_SH: Scripts/false
+  DIY_P6_SH: Scripts/edit_files.sh
+  UPLOAD_BIN_DIR: false
+  UPLOAD_FIRMWARE: true
+  UPLOAD_COWTRANSFER: false
+  UPLOAD_WETRANSFER: false
+  UPLOAD_RELEASE: true
+  OWRT_IP: ${{ github.event.inputs.OP_IP }}
+  OWRT_SERVER_IP: ${{ github.event.inputs.SERVER_IP }}
+  OWRT_NAME: OneCloud
+  OWRT_FILES: onecloud/files
+  OWRT_brun_type: amlogic6.18
+  TZ: Asia/Shanghai
+
+jobs:
+  build_brun_firmware:
+    runs-on: ubuntu-latest
+        
+    steps:
+    - name: 清理服务器空间(Ubuntu)
+      uses: rmoyulong/free-disk-space@main
+      with:
+        # this might remove tools that are actually needed,
+        # if set to "true" but frees about 6 GB
+        tool-cache: true
+
+        # all of these default to true, but feel free to set to
+        # "false" if necessary for your workflow
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        docker-images: true
+        swap-storage: true
+        
+    - name: 检查项目
+      uses: actions/checkout@main
+ 
+    - name: 检查分配的服务器性能
+      run: |
+        echo "警告⚠"
+        echo "分配的服务器性能有限，若选择的插件过多，务必注意CPU性能！"
+        echo -e "已知CPU型号（降序）： 9V74 7763，8370C，8272CL，8171M，E5-2673 \n"
+        echo "--------------------------CPU信息--------------------------"
+        echo "CPU物理数量：$(cat /proc/cpuinfo | grep "physical id" | sort | uniq | wc -l)"
+        echo -e "CPU核心信息：$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c) \n"
+        echo "--------------------------内存信息--------------------------"
+        echo "已安装内存详细信息："
+        echo -e "$(sudo lshw -short -C memory | grep GiB) \n"
+        echo "--------------------------硬盘信息--------------------------"
+        echo "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT 
+
+    - name: 初始化编译环境
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+          sudo -E apt-get -qq update --fix-missing
+          sudo -E apt-get -qq full-upgrade
+          
+          if [[ "${{ inputs.CORE_BRANCH }}" == *"openwrt-24.10"* ]]; then
+            sudo -E apt-get -qq install -y $(curl -fsSL https://raw.githubusercontent.com/rmoyulong/AX6-Actions_Lede/master/Ubuntu-2410.txt)
+           else
+            sudo -E apt-get -y install $(cat $GITHUB_WORKSPACE/Ubuntu-2204.txt)           
+          fi
+          
+          sudo -E apt-get -qq autoremove --purge
+          sudo -E apt-get -qq clean
+          sudo -E systemctl daemon-reload
+          sudo timedatectl set-timezone "$TZ"
+          sudo mkdir -p /workdir
+          sudo chown $USER:$GROUPS /workdir
+          echo "status=success" >> ${GITHUB_OUTPUT}
+          df -Th
+
+    - name: 初始化变量
+      run: |
+          export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+          export OWRT_SOURCE=$(echo $REPO_URL | cut -d '/' -f 5-)
+          #export OWRT_TYPE="cortex-a53"
+          
+          echo "OWRT_URL=$REPO_URL" >> $GITHUB_ENV
+          echo "OWRT_BRANCH=$REPO_BRANCH" >> $GITHUB_ENV
+          echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
+          echo "OWRT_SOURCE=$OWRT_SOURCE" >> $GITHUB_ENV
+          echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
+          echo "OWRT_NAME=$OWRT_NAME" >> $GITHUB_ENV
+          echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
+          echo "OWRT_SERVER_IP=$OWRT_SERVER_IP" >> $GITHUB_ENV
+          echo "DIY_P1_SH=$DIY_P1_SH" >> $GITHUB_ENV
+          echo "DIY_P2_SH=$DIY_P2_SH" >> $GITHUB_ENV
+          echo "DIY_P3_SH=$DIY_P3_SH" >> $GITHUB_ENV          
+          echo "OWRT_FILES=$OWRT_FILES" >> $GITHUB_ENV
+          
+          echo "OWRT_brun_type=$OWRT_brun_type" >> $GITHUB_ENV
+          echo ${{ env.OWRT_brun_type }}
+          
+          OWRT_CFG="Config/quicker-amlogic.config"            
+          echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
+
+        
+        
+    - name: 克隆源仓库
+      working-directory: /workdir
+      run: |
+        df -hT $PWD
+        git clone $REPO_URL -b $REPO_BRANCH openwrt
+        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+        
+    - name: 检查脚本
+      run: |
+        cd ./Scripts
+
+        dos2unix ./*.sh
+        chmod +x ./*.sh          
+        
+    - name: 设置soc
+      run: |
+        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
+        
+        cd openwrt
+        
+        #公用函数
+        #source $GITHUB_WORKSPACE/Scripts/functions.sh
+        git clone -q --single-branch --depth=1 --branch=master https://github.com/coolsnowwolf/lede lede
+        mv ./lede/target/linux/amlogic target/linux
+        ls -l target/linux/amlogic
+        echo "amlogic6.12"
+        rm -rf ./lede
+ 
+    - name: 启动缓存[第二次起生效]
+      uses: rmoyulong/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        prefix: ${{ github.workspace }}/openwrt
+        mixkey: ${{ env.OWRT_brun_type }}/tree/${{ env.OWRT_BRANCH }}?device=${{ env.OWRT_CFG }} 
+        
+    - name: 安装订阅源
+      run: |
+          cd openwrt
+        
+          #更新到最新插件
+          $GITHUB_WORKSPACE/$DIY_P1_SH
+          echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV      
+        
+    - name:  加载自定义配置
+      working-directory: ./openwrt
+      run: |          
+          #通用设置和ssh登录图案
+          curl -L -o package/base-files/files/etc/banner https://raw.githubusercontent.com/rmoyulong/AX6-Actions_Lede/master/ax6/cats_banner
+          $GITHUB_WORKSPACE/$DIY_P2_SH
+         
+          #rm -rf feeds/kenzok8/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
+          if [[ "${DIY_P3_SH}" == *"false"* ]]; then
+            echo "不需要执行此选项"
+          else
+            ${GITHUB_WORKSPACE}/${DIY_P3_SH}
+          fi 
+               
+    - name: 自定义IMAGS格式 - meson8b cortex-a5+vfpv4
+      working-directory: ./openwrt
+      run: | 
+          dos2unix $GITHUB_WORKSPACE/$OWRT_FILES/etc/*.sh
+          dos2unix $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
+          chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/*.sh
+          chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/rc.*
+          chmod -Rf 755 $GITHUB_WORKSPACE/$OWRT_FILES/etc/init.d/*
+          
+          #aria2
+          chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/etc/aria2
+          chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/aria2
+          chmod -R 777 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/aria2/download
+          chmod -R 755 $GITHUB_WORKSPACE/$OWRT_FILES/mnt/sda1/share
+          
+          rm -rf ./tmp* ./.config*
+          [ -e $GITHUB_WORKSPACE/${{ env.OWRT_CFG }}  ] && mv $GITHUB_WORKSPACE/${{ env.OWRT_CFG }}  .config
+          
+          #如果files文件夹不存在，创建文件夹
+          if [ ! -d "./files" ]; then
+            mkdir ./files
+          fi          
+          cp -rf $GITHUB_WORKSPACE/$OWRT_FILES/* ./files
+          
+          ls -l files
+          if [ ! -f files/etc/rc.local ]; then
+            echo "rc.local文件不存在！"
+          else
+            cat files/etc/rc.local
+          fi
+          
+          #设置主路由
+          $GITHUB_WORKSPACE/$DIY_P6_SH "${{ env.OWRT_IP }}" "${{ env.OWRT_SERVER_IP }}"
+          
+          #web控制台去掉443监听补丁
+          if [[ "${{ inputs.OWRT_TYPE }}" == *"OneCloud-docker"* ]]; then
+            cp -rf $GITHUB_WORKSPACE/ax6/uhttpd ./files/etc/config
+          else
+            #去掉多余的dhcp文件，让首次启动有dhcp服务
+            rm -rf ./files/etc/config/dhcp
+          fi
+          
+          #openclash 32
+          $GITHUB_WORKSPACE/$DIY_P4_SH
+          
+          #python3.patch.sh
+          if [[ "${DIY_P5_SH}" == *"false"* ]]; then
+            echo "不需要执行此选项"
+          else
+            ${GITHUB_WORKSPACE}/${DIY_P5_SH}
+          fi 
+        
+    - name: 下载编译环境
+      working-directory: ./openwrt
+      run: |      
+          make defconfig
+          make download -j$(( $(nproc) * 2 ))
+          find dl -size -1k -exec rm -f {} \;
+
+    - name: 编译固件
+      working-directory: ./openwrt
+      run: |
+          echo -e "$(nproc) thread compile"
+          make -j$(( $(nproc) + 1 )) || make -j1 V=s
+          echo "status=success" >> $GITHUB_OUTPUT
+          echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV 
+        
+    - name: 制作直刷包
+      run: |
+          $GITHUB_WORKSPACE/Scripts/convert2.sh
+          
+    - name: 整理固件
+      id: organize
+      run: |
+        cd openwrt
+        mkdir outfile
+        cp -rf bin/targets/*/*/*.tar ./outfile
+        cp -rf bin/targets/*/*/*.xz ./outfile
+        cp -rf .config ./outfile/config.txt
+        rm -rf bin/targets/*/*/packages
+        
+        cd outfile
+        
+        if [[ $REPO_URL == *"immortalwrt"* ]]; then
+          gzip *.tar
+        fi
+        
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        echo "::set-output name=status::success"
+        
+        #信息
+        export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+        export OWRT_SOURCE=$(echo $REPO_URL | cut -d '/' -f 5-)
+        echo "OWRT_SOURCE=$OWRT_SOURCE" >> $GITHUB_ENV
+        echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
+
+    - name: 上传直刷固件
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag: OpenWrt_${{ env.OWRT_SOURCE }}_${{ env.OWRT_DATE }}
+        body: |
+          自用玩客云一站式直刷固件[${{ env.OWRT_brun_type }}]！
+          请使用双USB公头线刷机！
+          ==========🧊 基本信息 🧊==========
+          💻 固件源码： ${{env.OWRT_SOURCE}}
+          💝 源码分支： ${{ env.OWRT_BRANCH }}
+          🔑 默认密码： password
+          🌐 默认地址： ${{env.OWRT_IP}}
+        artifacts: ${{ env.FIRMWARE }}/*
+        
+    - name: 清理Releases
+      uses: rmoyulong/delete-older-releases@master
+      with:
+        keep_latest: 10
+        delete_tags: true
+
+    - name: 清理Workflows
+      uses: rmoyulong/delete-workflow-runs@main
+      with:
+        retain_days: 0
+        keep_minimum_runs: 1
