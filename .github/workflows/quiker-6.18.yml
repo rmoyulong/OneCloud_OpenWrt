@@ -159,7 +159,7 @@ jobs:
         git clone -q --single-branch --depth=1 --branch=master https://github.com/coolsnowwolf/lede lede
         mv ./lede/target/linux/amlogic target/linux
         ls -l target/linux/amlogic
-        echo "amlogic6.12"
+        echo "amlogic6.18"
         rm -rf ./lede
  
     - name: 启动缓存[第二次起生效]
