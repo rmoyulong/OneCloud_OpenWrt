@@ -143,7 +143,7 @@ jobs:
           if [[ "${{ env.OWRT_brun_type }}" == "meson6.6" ]]; then
             OWRT_CFG="Config/quicker.config"
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
-            $REPO_BRANCH="openwrt-24.10"
+            REPO_BRANCH="openwrt-24.10"
             echo "OWRT_BRANCH=$REPO_BRANCH" >> $GITHUB_ENV
           elif [[ "${{ env.OWRT_brun_type }}" == "meson6.12" ]]; then
             OWRT_CFG="Config/quicker.config"
@@ -154,7 +154,7 @@ jobs:
           elif [[ "${{ env.OWRT_brun_type }}" == "amlogic6.6" ]]; then
             OWRT_CFG="Config/quicker-amlogic.config"
             echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
-            $REPO_BRANCH="openwrt-24.10"
+            REPO_BRANCH="openwrt-24.10"
             echo "OWRT_BRANCH=$REPO_BRANCH" >> $GITHUB_ENV
           else
              echo "没有选择编译任何类型"
