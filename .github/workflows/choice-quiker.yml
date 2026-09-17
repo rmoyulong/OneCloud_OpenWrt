@@ -318,6 +318,7 @@ jobs:
         mkdir outfile
         cp -rf bin/targets/*/*/*.tar ./outfile
         cp -rf bin/targets/*/*/*.xz ./outfile
+        cp -rf bin/targets/*/*/*.gz ./outfile
         cp -rf .config ./outfile/config.txt
         rm -rf bin/targets/*/*/packages
         
