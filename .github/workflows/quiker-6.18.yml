@@ -274,6 +274,8 @@ jobs:
         
         if [[ $REPO_URL == *"immortalwrt"* ]]; then
           gzip *.tar
+        elif [[ $REPO_URL == *"lede"* ]]; then
+          gzip *.tar        
         fi
         
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
