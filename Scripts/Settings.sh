@@ -22,10 +22,18 @@ sed -i 's/time.ustc.edu.cn/cn.ntp.org.cn/' package/base-files/files/bin/config_g
 sed -i 's/cn.pool.ntp.org/pool.ntp.org/' package/base-files/files/bin/config_generate
 
 #固件版本号添加个人标识和日期
-[ -e package/lean/default-settings/files/zzz-default-settings ] && sed -i "/DISTRIB_DESCRIPTION='*'/d" package/lean/default-settings/files/zzz-default-settings
-[ -e package/lean/default-settings/files/zzz-default-settings ] && && echo "DISTRIB_DESCRIPTION='Openwrt LEDE 莫小小($(TZ=UTC-8 date +%Y.%m.%d))'" >> package/lean/default-settings/files/zzz-default-settings
-[ ! -e package/lean/default-settings/files/zzz-default-settings ] && sed -i "/DISTRIB_DESCRIPTION='*'/d" package/base-files/files/etc/openwrt_release
-[ ! -e package/lean/default-settings/files/zzz-default-settings ] && echo "DISTRIB_DESCRIPTION='ImmortalWRT SNAPSHOT 莫小小($(TZ=UTC-8 date +%Y.%m.%d))'" >> package/base-files/files/etc/openwrt_release
+FILE="package/lean/default-settings/files/zzz-default-settings"
+dist_info="Openwrt LEDE 莫小小($(TZ=UTC-8 date +%Y.%m.%d))"
+
+#如果FILE文件不存在，则不是lede系统
+if [ ! -d $FILE ]; then
+  FILE="package/base-files/files/etc/openwrt_release"
+  dist_info="Openwrt SNAPSHOT 莫小小($(TZ=UTC-8 date +%Y.%m.%d))"
+fi
+
+# 删除所有 DISTRIB_DESCRIPTION 行，并追加新的赋值
+sed -i "/^DISTRIB_DESCRIPTION=/d" "$FILE"
+echo "DISTRIB_DESCRIPTION='$dist_info'" >> "$FILE"
 
 # 设置密码为password
 sed -i 's/root:::0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.:0:0:99999:7:::/' package/base-files/files/etc/shadow
