@@ -21,6 +21,8 @@ sed -i 's/time1.cloud.tencent.com/ntp.aliyun.com/' package/base-files/files/bin/
 sed -i 's/time.ustc.edu.cn/cn.ntp.org.cn/' package/base-files/files/bin/config_generate
 sed -i 's/cn.pool.ntp.org/pool.ntp.org/' package/base-files/files/bin/config_generate
 
+######################################################################################################
+
 #固件版本号添加个人标识和日期
 FILE="package/lean/default-settings/files/zzz-default-settings"
 dist_info="Openwrt LEDE 莫小小($(TZ=UTC-8 date +%Y.%m.%d))"
@@ -35,18 +37,17 @@ fi
 sed -i "/^DISTRIB_DESCRIPTION=/d" "$FILE"
 echo "DISTRIB_DESCRIPTION='$dist_info'" >> "$FILE"
 
+#添加编译日期标识
+cur_time=$(TZ=UTC-8 date +%y.%m.%d_%H.%M.%S)
+sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ $cur_time')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
+#修改默认WIFI名
+sed -i "s/\.ssid=.*/\.ssid=Openwrt_WiFi/g" $(find ./package/kernel/mac80211/ ./package/network/config/ -type f -name "mac80211.*")
+
 # 设置密码为password
 sed -i 's/root:::0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.:0:0:99999:7:::/' package/base-files/files/etc/shadow
 
 #连接数
 sed -i '/customized in this file/a fs.file-max=102400\nnet.ipv4.neigh.default.gc_thresh1=512\nnet.ipv4.neigh.default.gc_thresh2=2048\nnet.ipv4.neigh.default.gc_thresh3=4096\nnet.netfilter.nf_conntrack_max=65535' package/base-files/files/etc/sysctl.conf
-
-# 修改默认wifi名称ssid为moyulong
-sed -i 's/ssid=OpenWrt/ssid=moyulong/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
-
-# 修改默认wifi密码key为password
-sed -i 's/encryption=none/encryption=psk2/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
-sed -i '/set wireless.default_radio${devidx}.encryption=psk2/a\set wireless.default_radio${devidx}.key=password' package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
 # 修改 argon 为默认主题
 #sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
