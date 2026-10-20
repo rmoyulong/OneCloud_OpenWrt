@@ -24,8 +24,8 @@ wget -qO- "$CORE_URL" | tar xOvz > files/etc/openclash/core/clash_meta
 chmod +x files/etc/openclash/core/clash_meta
 
 echo ">>> 下载地理数据（失败不中断，刷好后可在界面里再下载）"
-wget ${$GEOIP_URL}    > files/etc/openclash/GeoIP.dat    || { echo "  GeoIP 失败，跳过";       rm -f files/etc/openclash/GeoIP.dat; }
-wget ${$GEOSITE_URL}  > files/etc/openclash/GeoSite.dat  || { echo "  GeoSite 失败，跳过";     rm -f files/etc/openclash/GeoSite.dat; }
-wget ${$GEO_MMDB_URL} > files/etc/openclash/Country.mmdb || { echo "  Country.mmdb 失败，跳过"; rm -f files/etc/openclash/Country.mmdb; }
+wget ${GEOIP_URL}    > files/etc/openclash/GeoIP.dat    || { echo "  GeoIP 失败，跳过";       rm -f files/etc/openclash/GeoIP.dat; }
+wget ${GEOSITE_URL}  > files/etc/openclash/GeoSite.dat  || { echo "  GeoSite 失败，跳过";     rm -f files/etc/openclash/GeoSite.dat; }
+wget ${GEO_MMDB_URL} > files/etc/openclash/Country.mmdb || { echo "  Country.mmdb 失败，跳过"; rm -f files/etc/openclash/Country.mmdb; }
 
 ls -lh files/etc/openclash/core files/etc/openclash
