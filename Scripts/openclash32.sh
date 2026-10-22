@@ -20,7 +20,7 @@ GEOSITE_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/dow
 GEO_MMDB_URL="https://github.com/alecthw/mmdb_china_ip_list/raw/release/lite/Country.mmdb"
 
 echo ">>> 下载 clash_meta 内核"
-wget -qO- "$CORE_URL" | tar xOvz > files/etc/openclash/core/clash_meta
+wget ${CORE_URL} | tar xOvz > files/etc/openclash/core/clash_meta
 chmod +x files/etc/openclash/core/clash_meta
 
 echo ">>> 下载地理数据（失败不中断，刷好后可在界面里再下载）"
