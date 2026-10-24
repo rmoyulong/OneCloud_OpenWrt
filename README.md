@@ -35,28 +35,55 @@ https://github.com/hzyitc/armbian-onecloud/releases/download/ci-20240311-162146-
 ssh armbian输入以下命令 <br>
 1.ip link set eth0 promisc on <br>
 2.docker network create -d macvlan --subnet=192.168.31.0/24 --gateway=192.168.31.1 -o parent=eth0 macnet <br>
+[↑自己根据 盒子 所在网段修改，如：盒子IP:192.168.1.175，则192.168.31.0/24 改成 192.168.1.0/24，192.168.31.1改成主路由地址]<br>
 3.docker import op.tar.gz onecloud_openwrt <br>
 4.docker run -itd --name=onecloud --restart=unless-stopped --network=macnet --privileged=true onecloud_openwrt /sbin/init <br>
+5.修改创建的openwrt 默认lan口配置<br>
+(须结合实际网络情况，不能照抄配置)
+docker exec -it onecloud bash
+vi etc/config/network
+
+[按下键盘 Ins 键切至输入状态]
+config interface 'loopback'
+option ifname 'lo'
+option proto 'static'
+option ipaddr '127.0.0.1'
+option netmask '255.0.0.0'
+
+config globals 'globals'
+
+config interface 'lan'
+option type 'bridge'
+option ifname 'eth0'
+option proto 'static'
+option ipaddr '192.168.31.110' # 填写openwrt容器的IP
+option netmask '255.255.255.0'
+option getway '192.168.31.1' # 修改为你自己主路由的IP
+option dns '192.168.31.1' # DNS 可填主路由IP 也可填公共DNS
+
+config interface 'utun'
+option proto 'none'
+option ifname 'utun'
+option device 'utun'
+
+config interface 'docker'
+option ifname 'docker0'
+option proto 'none'
+option auto '0'
+
+config device
+option type 'bridge'
+option name 'docker0'<br>
+
+[按下键盘 Esc 键退出输入状态，英文键盘输入 :wq 回车 保存退出]<br>
+
+重启容器网络服务<br>
+/etc/init.d/network restart<br>
+
+退出容器<br>
+exit<br>
 ---------------------------------------------------------------------------<br>
 
 启动命令在/etc/rc.local中修改<br>
 下载目录更改需要修改/etc/aria2/aria2.conf.main<br>
 并赋予下载目录777权限<br>
-
----------------------------------------------------------------------------
-编译固件的小知识：<br>
-一个脚本执行多个任务---可以指定单个变量来创建单维矩阵来分别执行任务。<br>
-
-例如，以下工作流使用值 [10, 12, 14] 定义变量 version。 工作流将运行三个作业，其中针对变量中的每个值提供一个作业。 每个作业都会通过 matrix.version 上下文访问 version 值，并此值作为 node-version 传递给 actions/setup-node 操作。<br>
-<br>
-jobs:<br>
-&nbsp;example_matrix:<br>
-&nbsp;&nbsp;strategy:<br>
-&nbsp;&nbsp;&nbsp;matrix:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;version: [10, 12, 14]<br>
-&nbsp;&nbsp;steps:<br>
-&nbsp;&nbsp;&nbsp;- uses: actions/setup-node@v4<br>
-&nbsp;&nbsp;&nbsp;&nbsp;with:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;node-version: ${{ matrix.version }}<br>
-
-
