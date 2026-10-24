@@ -37,7 +37,7 @@ ssh armbian输入以下命令 <br>
 2.docker network create -d macvlan --subnet=192.168.31.0/24 --gateway=192.168.31.1 -o parent=eth0 macnet <br>
 [↑自己根据 盒子 所在网段修改，如：盒子IP:192.168.1.175，则192.168.31.0/24 改成 192.168.1.0/24，192.168.31.1改成主路由地址]<br>
 3.docker import op.tar.gz onecloud_openwrt <br>
-4.docker run -itd --name=onecloud --restart=unless-stopped --network=macnet --privileged=true onecloud_openwrt /sbin/init <br>
+4.docker run --restart always --name onecloud -d --network macnet --ip 192.168.31.110 --privileged onecloud_openwrt /sbin/init <br>
 5.修改创建的openwrt 默认lan口配置<br>
 (须结合实际网络情况，不能照抄配置)<br>
 docker exec -it onecloud bash<br>
