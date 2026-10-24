@@ -39,47 +39,47 @@ ssh armbian输入以下命令 <br>
 3.docker import op.tar.gz onecloud_openwrt <br>
 4.docker run -itd --name=onecloud --restart=unless-stopped --network=macnet --privileged=true onecloud_openwrt /sbin/init <br>
 5.修改创建的openwrt 默认lan口配置<br>
-(须结合实际网络情况，不能照抄配置)
-docker exec -it onecloud bash
-vi etc/config/network
+(须结合实际网络情况，不能照抄配置)<br>
+docker exec -it onecloud bash<br>
+vi etc/config/network<br>
 
-[按下键盘 Ins 键切至输入状态]
-config interface 'loopback'
-option ifname 'lo'
-option proto 'static'
-option ipaddr '127.0.0.1'
-option netmask '255.0.0.0'
-
-config globals 'globals'
-
-config interface 'lan'
-option type 'bridge'
-option ifname 'eth0'
-option proto 'static'
-option ipaddr '192.168.31.110' # 填写openwrt容器的IP
-option netmask '255.255.255.0'
-option getway '192.168.31.1' # 修改为你自己主路由的IP
-option dns '192.168.31.1' # DNS 可填主路由IP 也可填公共DNS
-
-config interface 'utun'
-option proto 'none'
-option ifname 'utun'
-option device 'utun'
-
-config interface 'docker'
-option ifname 'docker0'
-option proto 'none'
-option auto '0'
-
-config device
-option type 'bridge'
+[按下键盘 Ins 键切至输入状态]<br>
+config interface 'loopback'<br>
+option ifname 'lo'<br>
+option proto 'static'<br>
+option ipaddr '127.0.0.1'<br>
+option netmask '255.0.0.0'<br>
+<br>
+config globals 'globals'<br>
+<br>
+config interface 'lan'<br>
+option type 'bridge'<br>
+option ifname 'eth0'<br>
+option proto 'static'<br>
+option ipaddr '192.168.31.110' # 填写openwrt容器的IP<br>
+option netmask '255.255.255.0'<br>
+option getway '192.168.31.1' # 修改为你自己主路由的IP<br>
+option dns '192.168.31.1' # DNS 可填主路由IP 也可填公共DNS<br>
+<br>
+config interface 'utun'<br>
+option proto 'none'<br>
+option ifname 'utun'<br>
+option device 'utun'<br>
+<br>
+config interface 'docker'<br>
+option ifname 'docker0'<br>
+option proto 'none'<br>
+option auto '0'<br>
+<br>
+config device<br>
+option type 'bridge'<br>
 option name 'docker0'<br>
-
+<br>
 [按下键盘 Esc 键退出输入状态，英文键盘输入 :wq 回车 保存退出]<br>
-
+<br>
 重启容器网络服务<br>
 /etc/init.d/network restart<br>
-
+<br>
 退出容器<br>
 exit<br>
 ---------------------------------------------------------------------------<br>
