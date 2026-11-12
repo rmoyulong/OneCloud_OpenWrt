@@ -73,7 +73,7 @@ env:
   
 jobs:
   owrt_core_OneCloud:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     
     steps:
     
@@ -133,7 +133,7 @@ jobs:
           sudo -E apt -yqq autoremove --purge
           sudo -E apt -yqq autoclean
           sudo -E apt -yqq clean
-          sudo -E apt -yqq install dos2unix libfuse-dev libxml2 python3-setools python3-setuptools libffi-dev pkg-config lib32z1-dev libpcre3 libpcre3-dev
+          sudo -E apt -yqq install dos2unix libfuse-dev libxml2-dev python3-setools python3-setuptools libffi-dev pkg-config lib32z1-dev libpcre2-dev
           sudo bash -c 'bash <(curl -sL https://build-scripts.immortalwrt.org/init_build_environment.sh)'
           
           sudo -E systemctl daemon-reload
@@ -143,7 +143,7 @@ jobs:
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
           echo "status=success" >> ${GITHUB_OUTPUT}
-          df -Th         
+          df -Th          
 
       - name: 初始化变量
         run: |
